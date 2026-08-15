@@ -1,0 +1,363 @@
+/* Faryita custom pages: home, our-story, shop — shared styles */
+/* Bảng màu chủ đạo: trắng ngà + xanh lá (trước đây vàng/cam/kem). Đổi giá trị các biến này
+   là đủ đổi màu toàn bộ site vì mọi rule bên dưới đều tham chiếu qua var(--fy-...). */
+.fy-home{--fy-yellow:#3CAA6B;--fy-cream:#F7F2E7;--fy-green:#0f7a44;--fy-orange:#1F8A52;--fy-dark:#173226;font-family:inherit}
+.fy-home section{position:relative}
+.fy-home .fy-container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Hero (trang chủ) */
+.fy-hero{background:linear-gradient(160deg,#7FC99A 0%,var(--fy-orange) 100%);position:relative;padding:70px 0 130px;text-align:center;overflow:hidden}
+.fy-hero .fy-eyebrow{color:#fff;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px}
+.fy-hero-wave{position:absolute;left:0;bottom:-1px;width:100%;height:110px;display:block;z-index:1}
+.fy-hero-wave path{fill:var(--fy-cream)}
+.fy-hero h1{font-size:56px;line-height:1.1;color:var(--fy-dark);margin:10px 0 18px}
+.fy-hero p{max-width:560px;margin:0 auto 26px;color:rgba(23,50,34,.78)}
+.fy-hero-fruits{margin-top:30px;font-size:64px;line-height:1;display:flex;justify-content:center;gap:6px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.08))}
+.fy-hero-banner{margin-top:36px;max-width:900px;margin-left:auto;margin-right:auto}
+.fy-hero-banner img{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,.15)}
+.fy-hero-banner .fy-wave-image .fy-wave{display:none}
+.fy-hero-banner .fy-wave-image img{border-radius:20px}
+.fy-wave-image{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.15)}
+.fy-wave-image img{border-radius:0;box-shadow:none}
+.fy-wave-image .fy-wave{position:absolute;left:0;bottom:-2px;width:100%;height:70px;display:block}
+.fy-wave-image .fy-wave path{fill:var(--fy-cream)}
+
+/* Khối bo tròn trang trí phía sau hero (mượn phong cách blob) */
+.fy-blob{position:absolute;border-radius:58% 42% 65% 35% / 45% 55% 45% 55%;z-index:0;opacity:.55}
+.fy-blob-1{width:340px;height:340px;background:var(--fy-yellow);top:-90px;left:-100px}
+.fy-blob-2{width:260px;height:260px;background:var(--fy-orange);bottom:-70px;right:-80px;opacity:.35}
+.fy-hero .fy-container{position:relative;z-index:1}
+
+/* Icon nổi bồng bềnh quanh hero (mượn phong cách ảnh trái cây bay) */
+.fy-floaties{position:absolute;inset:0;z-index:1;pointer-events:none}
+.fy-float-item{position:absolute;font-size:40px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.1));animation:fy-float 3.2s ease-in-out infinite}
+.fy-float-1{top:14%;left:6%;animation-delay:.1s}
+.fy-float-2{top:64%;left:3%;font-size:32px;animation-delay:.6s}
+.fy-float-3{top:20%;right:7%;animation-delay:.3s}
+.fy-float-4{top:58%;right:4%;font-size:30px;animation-delay:.8s}
+.fy-float-5{top:2%;left:46%;font-size:26px;animation-delay:1s}
+@media(max-width:900px){.fy-floaties{display:none}.fy-blob-1{width:220px;height:220px}.fy-blob-2{width:180px;height:180px}}
+
+/* Nút dọc cố định cạnh phải màn hình (mượn phong cách Order Now / Contact Us) */
+.fy-side-cta{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column}
+.fy-side-cta a{writing-mode:vertical-rl;text-orientation:mixed;background:var(--fy-orange);color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em;text-decoration:none;padding:18px 10px;text-align:center}
+.fy-side-cta a:nth-child(2){background:var(--fy-dark)}
+.fy-side-cta a:hover{padding-right:16px}
+@media(max-width:700px){.fy-side-cta{display:none}}
+
+/* Page hero (trang con: our story / shop) */
+.fy-page-hero{background:var(--fy-cream);padding:60px 0;text-align:center}
+.fy-page-hero .fy-eyebrow{color:var(--fy-orange);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px}
+.fy-page-hero h1{font-size:44px;color:var(--fy-dark);margin:10px 0 14px}
+.fy-page-hero p{max-width:600px;margin:0 auto;color:#4a4a4a}
+
+/* Page hero riêng cho Sản Phẩm: tông cam vàng giống thiết kế gốc */
+.fy-page-hero-shop{background:linear-gradient(160deg,#7FC99A 0%,var(--fy-orange) 100%);position:relative;overflow:hidden;padding-bottom:130px}
+.fy-hero-deco{position:absolute;bottom:20px;width:190px;height:190px;z-index:1}
+.fy-hero-deco img{position:absolute;top:0;left:0;width:190px;height:190px;border-radius:16px;object-fit:cover;display:block;box-shadow:0 12px 26px rgba(0,0,0,.18)}
+.fy-hero-deco-left{left:40px;transform:rotate(-6deg)}
+.fy-hero-deco-right{right:40px;transform:rotate(6deg)}
+@media(max-width:1100px){.fy-hero-deco{display:none}}
+.fy-page-hero-shop-wave{position:absolute;left:0;bottom:-1px;width:100%;height:110px;display:block}
+.fy-page-hero-shop-wave path{fill:var(--fy-cream)}
+.fy-page-hero-shop .fy-eyebrow{color:#fff}
+.fy-page-hero-shop h1{color:var(--fy-dark)}
+.fy-page-hero-shop p{color:rgba(23,50,34,.78)}
+.fy-page-hero-shop .fy-breadcrumb{color:rgba(23,50,34,.75)}
+.fy-page-hero-shop .fy-breadcrumb a{color:var(--fy-dark)}
+.fy-page-hero-desc{max-width:600px;margin:10px auto 0;color:rgba(23,50,34,.78);font-size:14px}
+
+.fy-btn{display:inline-block;background:var(--fy-yellow);color:var(--fy-dark);font-weight:700;padding:14px 32px;border-radius:999px;text-decoration:none;transition:transform .15s ease;border:none;cursor:pointer;font-size:15px}
+.fy-btn:hover{transform:translateY(-2px);color:var(--fy-dark)}
+.fy-btn-outline{background:transparent;border:2px solid var(--fy-dark);color:var(--fy-dark)}
+
+/* Intro (trang chủ) */
+.fy-intro{background:var(--fy-cream);padding:60px 0 80px}
+.fy-intro .fy-row{display:flex;align-items:center;gap:60px;flex-wrap:wrap}
+.fy-intro .fy-col{flex:1 1 420px}
+.fy-intro .fy-leaf{font-size:34px}
+.fy-intro h2{font-size:34px;color:var(--fy-dark);margin:10px 0 16px;line-height:1.25}
+.fy-intro p.fy-desc{color:#4a4a4a;margin-bottom:22px}
+.fy-stats{display:flex;gap:28px;margin-bottom:26px;flex-wrap:wrap}
+.fy-stats div{border-left:3px solid var(--fy-green);padding-left:12px}
+.fy-stats .fy-num{font-size:24px;font-weight:800;color:var(--fy-dark)}
+.fy-intro .fy-visual{flex:1 1 320px;text-align:center;font-size:120px}
+.fy-visual-photo{flex:1 1 380px;position:relative}
+.fy-visual-photo img{width:100%;height:auto;display:block}
+.fy-visual-photo .fy-wave-image{box-shadow:0 16px 32px rgba(0,0,0,.12)}
+
+/* Huy hiệu tròn xoay "100% Trà Nguyên Chất" */
+.fy-badge{position:absolute;right:-18px;bottom:-18px;width:130px;height:130px;border-radius:50%;background:var(--fy-cream);box-shadow:0 12px 24px rgba(0,0,0,.18);color:var(--fy-dark)}
+.fy-badge svg{width:100%;height:100%;animation:fy-spin 16s linear infinite}
+.fy-badge-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px}
+@keyframes fy-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@media(max-width:600px){.fy-badge{width:96px;height:96px;right:-10px;bottom:-10px}.fy-badge-icon{font-size:24px}}
+
+/* Marquee strip */
+.fy-strip{background:var(--fy-orange);color:#fff;padding:16px 0;overflow:hidden;white-space:nowrap}
+.fy-strip .fy-track{display:inline-flex;gap:48px;align-items:center;font-weight:800;letter-spacing:.04em;animation:fy-scroll 22s linear infinite}
+.fy-strip .fy-track span{font-size:22px}
+@keyframes fy-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Product grid (dùng chung cho trang chủ & shop) */
+.fy-products{background:var(--fy-cream);padding:70px 0}
+.fy-products h2{text-align:center;font-size:34px;color:var(--fy-dark);margin-bottom:44px}
+.fy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.fy-card{text-align:center;display:block;text-decoration:none;color:inherit}
+.fy-circle{width:230px;height:230px;margin:0 auto 20px;border-radius:50%;background:var(--fy-cream);display:flex;align-items:center;justify-content:center;font-size:96px;position:relative}
+.fy-circle::before{content:"";position:absolute;top:-24px;left:-24px;right:-24px;bottom:-24px;background:url(../images/brand/circle-frame.png) center/contain no-repeat;z-index:2;pointer-events:none;transition:opacity .25s ease;filter:hue-rotate(100deg) saturate(0.75) brightness(0.8)}
+.fy-circle img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;transition:box-shadow .25s ease}
+.fy-sale{position:absolute;top:-8px;right:-8px;background:var(--fy-green);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;z-index:3;line-height:1}
+.fy-card h3{font-size:19px;color:var(--fy-dark);margin:52px 0 4px}
+.fy-card .fy-price,.fy-card .fy-old{display:none}
+.fy-card .fy-cat{display:inline-block;font-size:12px;font-weight:700;color:var(--fy-green);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.fy-card .fy-addcart{margin-top:12px;display:inline-block;background:var(--fy-green);color:#fff;font-weight:700;padding:8px 20px;border-radius:999px;text-decoration:none;font-size:13px;border:none;cursor:pointer}
+.fy-card .fy-addcart:hover{background:var(--fy-dark);color:#fff}
+
+/* Trang chi tiết sản phẩm */
+.fy-breadcrumb{margin-top:10px;font-size:14px;color:#6b6b6b}
+.fy-breadcrumb a{color:var(--fy-dark);text-decoration:underline}
+.fy-breadcrumb span{margin:0 8px;opacity:.6}
+.fy-detail{background:#fff;padding:60px 0 80px}
+.fy-detail-grid{display:flex;gap:60px;align-items:flex-start;flex-wrap:wrap}
+.fy-detail-image{flex:1 1 320px;display:flex;justify-content:center}
+.fy-detail-photo{position:relative;width:100%;max-width:420px}
+.fy-detail-photo img{width:100%;height:auto;border-radius:20px;object-fit:cover;object-position:center;display:block;box-shadow:0 18px 30px rgba(0,0,0,.12)}
+.fy-detail-photo .fy-sale{top:-8px;right:-8px;z-index:2}
+.fy-detail-info{flex:1 1 420px}
+.fy-detail-info h2{font-size:34px;color:var(--fy-dark);margin:6px 0 16px}
+.fy-detail-price{font-size:22px;font-weight:800;color:var(--fy-dark);margin-bottom:18px}
+.fy-detail-price del{color:#999;font-weight:500;opacity:.8;margin-right:8px}
+.fy-detail-price ins{text-decoration:none}
+.fy-detail-desc{color:#4a4a4a;font-size:16px;margin-bottom:26px}
+.fy-detail-info h4{font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--fy-dark);margin:0 0 10px}
+.fy-ingredient-list{list-style:none;margin:0 0 26px;padding:0}
+.fy-ingredient-list li{padding:8px 0 8px 26px;position:relative;color:#4a4a4a;border-bottom:1px solid #f0ece0}
+.fy-ingredient-list li::before{content:"✓";position:absolute;left:0;color:var(--fy-green);font-weight:800}
+.fy-benefit-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.fy-benefit-chips .fy-chip{background:var(--fy-cream);color:var(--fy-dark);font-size:13px;font-weight:700;padding:8px 16px;border-radius:999px}
+.fy-detail-cart{margin-bottom:22px}
+.fy-detail-cart .cart{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.fy-detail-cart .quantity{display:inline-block}
+.fy-detail-cart .qty{width:70px;padding:12px 14px;border:2px solid var(--fy-cream);border-radius:999px;font-size:15px;color:var(--fy-dark)}
+.fy-detail-cart .single_add_to_cart_button{background:var(--fy-green);color:#fff;font-weight:700;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;font-size:15px;text-decoration:none;display:inline-block;transition:background .2s ease}
+.fy-detail-cart .single_add_to_cart_button:hover{background:var(--fy-dark);color:#fff}
+.fy-detail-cart .stock{width:100%;color:#6b6b6b;font-size:14px}
+
+/* Khối Mô Tả + Lợi Ích Dinh Dưỡng + Thông Tin Thêm + Sản Phẩm Liên Quan (dưới trang chi tiết sản phẩm) */
+/* Các section này bị include trong cột nội dung hẹp (#primary.lay-width, 68% width) của WooCommerce,
+   nên "phá khung" ra full-width bằng kỹ thuật 100vw + margin âm, giống banner. */
+.fy-product-info,
+.fy-related-products{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw}
+.fy-product-info{background:var(--fy-cream);padding:60px 0 80px}
+.fy-info-grid{display:flex;gap:50px;align-items:flex-start;flex-wrap:wrap}
+.fy-info-main{flex:1 1 480px}
+.fy-info-side{flex:1 1 340px;max-width:400px}
+.fy-info-title{font-size:22px;font-weight:800;color:var(--fy-dark);margin:40px 0 16px}
+.fy-info-main .fy-info-title:first-child{margin-top:0}
+.fy-info-main .fy-detail-desc{margin-bottom:0}
+.fy-nutrition-note{color:#4a4a4a;font-size:15px;line-height:1.7;margin:0 0 22px;max-width:520px}
+.fy-badge-row{display:flex;flex-wrap:wrap;gap:18px}
+.fy-badge-pill{width:104px;height:104px;border-radius:50%;border:2px solid var(--fy-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;box-sizing:border-box}
+.fy-badge-pill span{display:block;font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--fy-dark);line-height:1.3}
+.fy-addinfo-card{background:#fff;border:2px solid var(--fy-dark);border-radius:20px;padding:28px}
+.fy-addinfo-card .fy-info-title{text-align:center;margin:0 0 20px;font-size:19px}
+.fy-addinfo-card table.woocommerce-product-attributes{width:100%;border-collapse:collapse}
+.fy-addinfo-card table.woocommerce-product-attributes th,
+.fy-addinfo-card table.woocommerce-product-attributes td{padding:12px 14px;border:1px solid #e7ddba;font-size:14px;text-align:left;vertical-align:top}
+.fy-addinfo-card table.woocommerce-product-attributes th{width:42%;font-weight:700;color:var(--fy-dark)}
+.fy-addinfo-card table.woocommerce-product-attributes td{color:#4a4a4a;font-style:italic}
+.fy-addinfo-card table.woocommerce-product-attributes tr:nth-child(even){background:var(--fy-cream)}
+.fy-addinfo-card table.woocommerce-product-attributes p{margin:0}
+
+/* Promo + menu (trang chủ) */
+.fy-promo{display:flex;flex-wrap:wrap}
+.fy-promo .fy-promo-left{flex:1 1 380px;background:var(--fy-orange);color:#fff;padding:80px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.fy-promo-left .fy-jar{font-size:110px;margin-bottom:18px}
+.fy-promo-left h3{font-size:32px;line-height:1.3;margin:0;text-transform:uppercase}
+.fy-promo .fy-promo-right{flex:1 1 480px;background:var(--fy-green);color:#fff;padding:70px 40px}
+.fy-promo-right h2{font-size:32px;margin:0 0 30px}
+.fy-menu-item{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.15)}
+.fy-menu-item:last-child{border-bottom:none}
+.fy-menu-emoji{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0}
+.fy-menu-info{flex:1}
+.fy-menu-info .fy-menu-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.fy-menu-info h4{margin:0;font-size:19px}
+.fy-menu-info .fy-price{font-weight:800;white-space:nowrap}
+.fy-menu-info p{margin:4px 0 0;font-size:14px;color:rgba(255,255,255,.8)}
+
+/* CTA cuối trang */
+.fy-cta{background:var(--fy-dark);color:#fff;text-align:center;padding:70px 24px}
+.fy-cta h2{font-size:30px;margin:0 0 20px}
+
+/* Our Story: giá trị cốt lõi */
+.fy-values{background:#fff;padding:70px 0}
+.fy-values h2{text-align:center;font-size:34px;color:var(--fy-dark);margin-bottom:12px}
+.fy-values .fy-sub{text-align:center;color:#666;max-width:560px;margin:0 auto 44px}
+.fy-values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.fy-value-card{background:var(--fy-cream);border-radius:20px;padding:36px 26px;text-align:center}
+.fy-value-card .fy-icon{font-size:48px;margin-bottom:14px}
+.fy-value-card h3{font-size:20px;color:var(--fy-dark);margin:0 0 10px}
+.fy-value-card p{color:#555;font-size:14px;margin:0}
+
+/* Our Story: dòng thời gian */
+.fy-timeline{background:var(--fy-cream);padding:70px 0}
+.fy-timeline h2{text-align:center;font-size:34px;color:var(--fy-dark);margin-bottom:44px}
+.fy-timeline-list{max-width:720px;margin:0 auto;border-left:3px solid var(--fy-green);padding-left:30px}
+.fy-timeline-item{position:relative;margin-bottom:36px}
+.fy-timeline-item:last-child{margin-bottom:0}
+.fy-timeline-item::before{content:"";position:absolute;left:-38px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--fy-orange);border:3px solid var(--fy-cream)}
+.fy-timeline-item .fy-year{font-weight:800;color:var(--fy-orange);font-size:18px}
+.fy-timeline-item h4{margin:4px 0 6px;color:var(--fy-dark);font-size:19px}
+.fy-timeline-item p{margin:0;color:#555;font-size:14px}
+
+/* Our Story: đội ngũ */
+.fy-story-text{background:#fff;padding:70px 0}
+.fy-story-text .fy-row{display:flex;align-items:center;gap:60px;flex-wrap:wrap}
+.fy-story-text .fy-col{flex:1 1 420px}
+.fy-story-text .fy-visual{flex:1 1 320px;text-align:center;font-size:130px}
+.fy-story-text h2{font-size:34px;color:var(--fy-dark);margin:0 0 16px;line-height:1.25}
+.fy-story-text p{color:#4a4a4a;margin-bottom:16px}
+
+@media(max-width:900px){
+	.fy-hero h1{font-size:38px}
+	.fy-grid{grid-template-columns:repeat(2,1fr)}
+	.fy-values-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+	.fy-grid{grid-template-columns:1fr}
+	.fy-hero-fruits{font-size:44px}
+	.fy-page-hero h1{font-size:32px}
+}
+
+/* Hiệu ứng xuất hiện khi cuộn trang */
+.fy-reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease, transform .7s ease}
+.fy-reveal.is-visible{opacity:1;transform:translateY(0)}
+.fy-reveal-d1.is-visible{transition-delay:.1s}
+.fy-reveal-d2.is-visible{transition-delay:.2s}
+.fy-reveal-d3.is-visible{transition-delay:.3s}
+.fy-reveal-d4.is-visible{transition-delay:.4s}
+.fy-reveal-d5.is-visible{transition-delay:.5s}
+@media (prefers-reduced-motion: reduce){
+	.fy-reveal{opacity:1;transform:none;transition:none}
+}
+
+/* Icon trái cây bồng bềnh ở hero */
+@keyframes fy-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.fy-hero-fruits span{display:inline-block;animation:fy-float 2.8s ease-in-out infinite}
+.fy-hero-fruits span:nth-child(2){animation-delay:.15s}
+.fy-hero-fruits span:nth-child(3){animation-delay:.3s}
+.fy-hero-fruits span:nth-child(4){animation-delay:.45s}
+.fy-hero-fruits span:nth-child(5){animation-delay:.6s}
+.fy-hero-fruits span:nth-child(6){animation-delay:.75s}
+
+/* Hover cho thẻ sản phẩm */
+.fy-card{transition:transform .25s ease}
+.fy-card:hover{transform:translateY(-8px)}
+.fy-circle{transition:transform .25s ease, box-shadow .25s ease}
+.fy-card:hover .fy-circle{transform:scale(1.06)}
+.fy-card:hover .fy-circle::before{background-image:url(../images/brand/circle-frame-orange.png);filter:hue-rotate(105deg) saturate(0.85) brightness(0.65)}
+
+/* Hover cho thẻ giá trị cốt lõi */
+.fy-value-card{transition:transform .25s ease, box-shadow .25s ease}
+.fy-value-card:hover{transform:translateY(-6px);box-shadow:0 16px 28px rgba(0,0,0,.08)}
+
+/* Marquee dừng khi hover để dễ đọc */
+.fy-strip:hover .fy-track{animation-play-state:paused}
+
+/* ===================== Trang Shop WooCommerce (archive-product.php) ===================== */
+.archive-product.fy-home{background:var(--fy-cream);padding:60px 0 10px;margin:0;box-shadow:0 0 0 100vmax var(--fy-cream);clip-path:inset(0 -100vmax)}
+.archive-product.fy-home .lay-width{padding:0}
+
+/* Bộ đếm kết quả + sắp xếp */
+.archive-product .woocommerce-result-count{color:#6b6b6b;font-size:14px}
+.archive-product .woocommerce-ordering select{border:2px solid var(--fy-cream);border-radius:999px;padding:8px 18px;font-weight:700;color:var(--fy-dark);background-color:#fff}
+
+/* Lưới sản phẩm — khớp theo bản demo gốc: 4 cột, không khung card, viền tròn vẽ tay (circle-frame.png) */
+.archive-product ul.products{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;list-style:none;margin:0 0 40px;padding:0}
+.archive-product ul.products::before,.archive-product ul.products::after{display:none !important;content:none !important}
+.woocommerce .archive-product ul.products li.product{width:100% !important;box-sizing:border-box;text-align:center;margin:0;background:none !important;padding:0 !important;border-radius:0 !important;box-shadow:none !important}
+.archive-product ul.products li.product .woocommerce-loop-product__link{display:block;text-decoration:none;color:inherit;position:relative;padding-top:24px;margin-bottom:20px}
+.archive-product ul.products li.product .woocommerce-loop-product__link::before{content:"";position:absolute;top:0;left:50%;width:325px;height:325px;transform:translateX(-50%);background:url(../images/brand/circle-frame.png) center/contain no-repeat;pointer-events:none;z-index:2;transition:transform .3s ease, opacity .3s ease;filter:hue-rotate(100deg) saturate(0.75) brightness(0.8)}
+.archive-product ul.products li.product .fy-thumb-clip{display:block;width:277px;height:277px;max-width:100%;margin:0 auto;border-radius:50%;overflow:hidden;background:var(--fy-cream)}
+.woocommerce .archive-product ul.products li.product .fy-thumb-clip img{width:100% !important;height:100% !important;display:block;object-fit:cover;object-position:center;border:none;box-shadow:none;border-radius:0;transition:transform .3s ease}
+.woocommerce .archive-product ul.products li.product:hover .fy-thumb-clip img{transform:scale(1.08)}
+.archive-product ul.products li.product .woocommerce-loop-product__link:hover::before{background-image:url(../images/brand/circle-frame-orange.png);filter:hue-rotate(105deg) saturate(0.85) brightness(0.65)}
+.archive-product ul.products li.product .onsale{background:var(--fy-green);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;min-height:0;min-width:0;line-height:1;top:8px;right:8px}
+.archive-product ul.products li.product .woocommerce-loop-product__title{font-size:18px;color:var(--fy-dark);margin:48px 0 4px;font-weight:700}
+.archive-product ul.products li.product .price{display:none}
+.archive-product ul.products li.product .button{display:inline-block;margin-top:14px;background:var(--fy-green);color:#fff;font-weight:700;padding:8px 22px;border-radius:999px;text-decoration:none;font-size:13px;border:none;cursor:pointer;transition:background .2s ease}
+.archive-product ul.products li.product .button:hover{background:var(--fy-dark);color:#fff}
+@media(max-width:1100px){.archive-product ul.products{grid-template-columns:repeat(3,1fr)}}
+
+@media(max-width:900px){.archive-product ul.products{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.archive-product ul.products{grid-template-columns:1fr}}
+
+/* Phân trang */
+.archive-product nav.woocommerce-pagination{text-align:center;margin-bottom:20px}
+.archive-product nav.woocommerce-pagination ul{display:inline-flex;gap:10px;list-style:none;margin:0;padding:0;border:none}
+.archive-product nav.woocommerce-pagination ul li{border:none}
+.archive-product nav.woocommerce-pagination .page-numbers{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;padding:0 10px;border-radius:999px;background:#fff;color:var(--fy-dark);font-weight:700;text-decoration:none}
+.archive-product nav.woocommerce-pagination .page-numbers.current,.archive-product nav.woocommerce-pagination .page-numbers:hover{background:var(--fy-dark);color:#fff}
+
+/* Không tìm thấy sản phẩm */
+.archive-product .woocommerce-info{background:#fff;border-radius:16px;padding:24px;text-align:center;color:var(--fy-dark);border:2px solid var(--fy-cream);list-style:none}
+
+/* Slider "Sản Phẩm Liên Quan" (trang chi tiết sản phẩm) — 1 hàng, dùng Owl Carousel.
+   Ghi đè display:grid của .archive-product ul.products vì slider cần layout dạng flex/track
+   (tiêu đề h2 đã có style sẵn từ .fy-products h2 ở trên). */
+.fy-related-carousel.products{display:block !important}
+.fy-related-carousel .product{width:100%}
+.fy-related-carousel .owl-stage{display:flex;align-items:flex-start}
+.fy-related-carousel .owl-nav{text-align:center;margin-top:10px}
+.fy-related-carousel .owl-nav button.owl-prev,
+.fy-related-carousel .owl-nav button.owl-next{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 6px;border-radius:50%;background:var(--fy-dark);color:#fff !important;font-size:20px;line-height:1}
+.fy-related-carousel .owl-nav button.owl-prev:hover,
+.fy-related-carousel .owl-nav button.owl-next:hover{background:var(--fy-orange)}
+.fy-related-carousel .owl-nav button.disabled{opacity:.3;cursor:default}
+
+/* Ảnh trong slider "Sản Phẩm Liên Quan" nhỏ hơn 25% so với lưới sản phẩm chính */
+.fy-related-carousel li.product .woocommerce-loop-product__link{padding-top:18px !important}
+.fy-related-carousel li.product .woocommerce-loop-product__link::before{width:244px !important;height:244px !important}
+.fy-related-carousel li.product .fy-thumb-clip{width:208px !important;height:208px !important}
+.fy-related-carousel li.product .woocommerce-loop-product__title{margin-top:36px !important}
+
+/* ===================== Trang Tin Tức (page-faryita-news.php) ===================== */
+.fy-news{background:var(--fy-cream);padding:60px 0 80px}
+.fy-news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.fy-news-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.06);display:flex;flex-direction:column}
+.fy-news-thumb{display:block;aspect-ratio:16/10;overflow:hidden}
+.fy-news-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.fy-news-card:hover .fy-news-thumb img{transform:scale(1.06)}
+.fy-news-body{padding:22px 24px 26px;flex:1;display:flex;flex-direction:column}
+.fy-news-date{color:var(--fy-orange);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.03em}
+.fy-news-body h3{font-size:19px;margin:8px 0 10px;line-height:1.35}
+.fy-news-body h3 a{color:var(--fy-dark);text-decoration:none}
+.fy-news-body h3 a:hover{color:var(--fy-orange)}
+.fy-news-body p{color:#4a4a4a;font-size:14px;line-height:1.6;margin:0 0 16px;flex:1}
+.fy-news-more{color:var(--fy-green);font-weight:700;font-size:14px;text-decoration:none;align-self:flex-start}
+.fy-news-more:hover{color:var(--fy-dark)}
+.fy-news-empty{text-align:center;color:#6b6b6b}
+@media(max-width:1000px){.fy-news-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.fy-news-grid{grid-template-columns:1fr}}
+
+/* Phân trang dùng chung (Tin Tức, ...) */
+.fy-pagination{text-align:center;margin-top:44px}
+.fy-pagination .page-numbers{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;padding:0 10px;margin:0 4px;border-radius:999px;background:#fff;color:var(--fy-dark);font-weight:700;text-decoration:none}
+.fy-pagination .page-numbers.current,.fy-pagination .page-numbers:hover{background:var(--fy-dark);color:#fff}
+.fy-pagination .page-numbers.dots{background:none}
+
+/* ===================== Trang Cửa Hàng (page-faryita-store.php) ===================== */
+.fy-store{background:#fff;padding:70px 0 90px}
+.fy-store-grid{display:flex;gap:50px;align-items:stretch;flex-wrap:wrap}
+.fy-store-info{flex:1 1 360px;background:var(--fy-cream);border-radius:20px;padding:40px}
+.fy-store-info h2{font-size:28px;color:var(--fy-dark);margin:0 0 22px}
+.fy-store-meta{list-style:none;margin:0 0 30px;padding:0}
+.fy-store-meta li{display:flex;align-items:flex-start;gap:14px;padding:10px 0;border-bottom:1px solid rgba(23,50,34,.1);color:#4a4a4a}
+.fy-store-meta li:last-child{border-bottom:none}
+.fy-store-meta li i{color:var(--fy-orange);font-size:16px;margin-top:3px;width:18px;text-align:center}
+.fy-store-meta li a{color:#4a4a4a;text-decoration:none}
+.fy-store-meta li a:hover{color:var(--fy-orange)}
+.fy-store-map{flex:1 1 420px;min-height:420px;border-radius:20px;overflow:hidden;box-shadow:0 18px 30px rgba(0,0,0,.12)}
+.fy-store-map iframe{display:block}
+@media(max-width:900px){.fy-store-map{min-height:320px}}

@@ -1,0 +1,54 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: faryita_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - faryita_net
+
+  wordpress:
+    image: wordpress:latest
+    container_name: faryita_wp
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - wp_data:/var/www/html
+      - ./theme:/var/www/html/wp-content/themes/faryita
+    networks:
+      - faryita_net
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: faryita_pma
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+    networks:
+      - faryita_net
+
+volumes:
+  db_data:
+  wp_data:
+
+networks:
+  faryita_net:

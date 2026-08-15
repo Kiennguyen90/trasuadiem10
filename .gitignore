@@ -1,0 +1,7 @@
+# Large binaries / exports - not source code, don't track in git
+*.zip
+*.sql
+faryita-juice-shop-health-drinks-shopify-store/
+
+# Editor/session
+.claude/
