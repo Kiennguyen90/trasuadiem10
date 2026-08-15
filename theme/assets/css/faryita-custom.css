@@ -1,12 +1,10 @@
 /* Faryita custom pages: home, our-story, shop — shared styles */
-/* Bảng màu chủ đạo: trắng ngà + xanh lá (trước đây vàng/cam/kem). Đổi giá trị các biến này
-   là đủ đổi màu toàn bộ site vì mọi rule bên dưới đều tham chiếu qua var(--fy-...). */
-.fy-home{--fy-yellow:#3CAA6B;--fy-cream:#F7F2E7;--fy-green:#0f7a44;--fy-orange:#1F8A52;--fy-dark:#173226;font-family:inherit}
+.fy-home{--fy-yellow:#f6c945;--fy-cream:#fdeec3;--fy-green:#0f7a44;--fy-orange:#f2911b;--fy-dark:#173226;font-family:inherit}
 .fy-home section{position:relative}
 .fy-home .fy-container{max-width:1200px;margin:0 auto;padding:0 24px}
 
 /* Hero (trang chủ) */
-.fy-hero{background:linear-gradient(160deg,#7FC99A 0%,var(--fy-orange) 100%);position:relative;padding:70px 0 130px;text-align:center;overflow:hidden}
+.fy-hero{background:linear-gradient(160deg,#ffcf6b 0%,var(--fy-orange) 100%);position:relative;padding:70px 0 130px;text-align:center;overflow:hidden}
 .fy-hero .fy-eyebrow{color:#fff;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px}
 .fy-hero-wave{position:absolute;left:0;bottom:-1px;width:100%;height:110px;display:block;z-index:1}
 .fy-hero-wave path{fill:var(--fy-cream)}
@@ -52,7 +50,7 @@
 .fy-page-hero p{max-width:600px;margin:0 auto;color:#4a4a4a}
 
 /* Page hero riêng cho Sản Phẩm: tông cam vàng giống thiết kế gốc */
-.fy-page-hero-shop{background:linear-gradient(160deg,#7FC99A 0%,var(--fy-orange) 100%);position:relative;overflow:hidden;padding-bottom:130px}
+.fy-page-hero-shop{background:linear-gradient(160deg,#ffcf6b 0%,var(--fy-orange) 100%);position:relative;overflow:hidden;padding-bottom:130px}
 .fy-hero-deco{position:absolute;bottom:20px;width:190px;height:190px;z-index:1}
 .fy-hero-deco img{position:absolute;top:0;left:0;width:190px;height:190px;border-radius:16px;object-fit:cover;display:block;box-shadow:0 12px 26px rgba(0,0,0,.18)}
 .fy-hero-deco-left{left:40px;transform:rotate(-6deg)}
@@ -105,7 +103,7 @@
 .fy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
 .fy-card{text-align:center;display:block;text-decoration:none;color:inherit}
 .fy-circle{width:230px;height:230px;margin:0 auto 20px;border-radius:50%;background:var(--fy-cream);display:flex;align-items:center;justify-content:center;font-size:96px;position:relative}
-.fy-circle::before{content:"";position:absolute;top:-24px;left:-24px;right:-24px;bottom:-24px;background:url(../images/brand/circle-frame.png) center/contain no-repeat;z-index:2;pointer-events:none;transition:opacity .25s ease;filter:hue-rotate(100deg) saturate(0.75) brightness(0.8)}
+.fy-circle::before{content:"";position:absolute;top:-24px;left:-24px;right:-24px;bottom:-24px;background:url(../images/brand/circle-frame.png) center/contain no-repeat;z-index:2;pointer-events:none;transition:opacity .25s ease}
 .fy-circle img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;transition:box-shadow .25s ease}
 .fy-sale{position:absolute;top:-8px;right:-8px;background:var(--fy-green);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;z-index:3;line-height:1}
 .fy-card h3{font-size:19px;color:var(--fy-dark);margin:52px 0 4px}
@@ -256,7 +254,7 @@
 .fy-card:hover{transform:translateY(-8px)}
 .fy-circle{transition:transform .25s ease, box-shadow .25s ease}
 .fy-card:hover .fy-circle{transform:scale(1.06)}
-.fy-card:hover .fy-circle::before{background-image:url(../images/brand/circle-frame-orange.png);filter:hue-rotate(105deg) saturate(0.85) brightness(0.65)}
+.fy-card:hover .fy-circle::before{background-image:url(../images/brand/circle-frame-orange.png)}
 
 /* Hover cho thẻ giá trị cốt lõi */
 .fy-value-card{transition:transform .25s ease, box-shadow .25s ease}
@@ -278,11 +276,11 @@
 .archive-product ul.products::before,.archive-product ul.products::after{display:none !important;content:none !important}
 .woocommerce .archive-product ul.products li.product{width:100% !important;box-sizing:border-box;text-align:center;margin:0;background:none !important;padding:0 !important;border-radius:0 !important;box-shadow:none !important}
 .archive-product ul.products li.product .woocommerce-loop-product__link{display:block;text-decoration:none;color:inherit;position:relative;padding-top:24px;margin-bottom:20px}
-.archive-product ul.products li.product .woocommerce-loop-product__link::before{content:"";position:absolute;top:0;left:50%;width:325px;height:325px;transform:translateX(-50%);background:url(../images/brand/circle-frame.png) center/contain no-repeat;pointer-events:none;z-index:2;transition:transform .3s ease, opacity .3s ease;filter:hue-rotate(100deg) saturate(0.75) brightness(0.8)}
+.archive-product ul.products li.product .woocommerce-loop-product__link::before{content:"";position:absolute;top:0;left:50%;width:325px;height:325px;transform:translateX(-50%);background:url(../images/brand/circle-frame.png) center/contain no-repeat;pointer-events:none;z-index:2;transition:transform .3s ease, opacity .3s ease}
 .archive-product ul.products li.product .fy-thumb-clip{display:block;width:277px;height:277px;max-width:100%;margin:0 auto;border-radius:50%;overflow:hidden;background:var(--fy-cream)}
 .woocommerce .archive-product ul.products li.product .fy-thumb-clip img{width:100% !important;height:100% !important;display:block;object-fit:cover;object-position:center;border:none;box-shadow:none;border-radius:0;transition:transform .3s ease}
 .woocommerce .archive-product ul.products li.product:hover .fy-thumb-clip img{transform:scale(1.08)}
-.archive-product ul.products li.product .woocommerce-loop-product__link:hover::before{background-image:url(../images/brand/circle-frame-orange.png);filter:hue-rotate(105deg) saturate(0.85) brightness(0.65)}
+.archive-product ul.products li.product .woocommerce-loop-product__link:hover::before{background-image:url(../images/brand/circle-frame-orange.png)}
 .archive-product ul.products li.product .onsale{background:var(--fy-green);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;min-height:0;min-width:0;line-height:1;top:8px;right:8px}
 .archive-product ul.products li.product .woocommerce-loop-product__title{font-size:18px;color:var(--fy-dark);margin:48px 0 4px;font-weight:700}
 .archive-product ul.products li.product .price{display:none}

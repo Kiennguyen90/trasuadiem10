@@ -4,7 +4,7 @@ Theme URI: https://www.revolutionwp.com/products/art-blog
 Author: revolutionwp
 Author URI: https://www.revolutionwp.com/
 Description: The Art Blog WordPress Theme is a visually refined and feature-rich template designed for creatives, writers, and hobbyists looking to share their ideas and inspirations. Whether you're running a personal, design, or photography blog, this theme provides a clean, stylish platform to express yourself. Fully responsive and retina-ready, it ensures your content looks sharp on any device. With flexible layout options and drag-and-drop customization, even beginners can create a polished blog without coding skills. The theme's elegant use of white space, thoughtful typography, and visual balance make it ideal for showcasing art, photos, or long-form writing. Built-in social sharing tools, SEO optimization, and customizable widgets help grow your audience and increase visibility. Whether you're exploring travel, wellness, self-improvement, or creative storytelling, the Art Blog Theme offers a modern, minimal aesthetic that adapts to your unique voice.
-Version: 1.0.665
+Version: 1.0.664
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 7.2
@@ -1310,16 +1310,16 @@ aside .widget a,
 /*** Global ***/
 
 :root {
-	--primary-color: #3CAA6B;
-	--secondary-color: #173226;
+	--primary-color: #58BCB3;
+	--secondary-color: #000;
 	--body-font: "Montserrat", sans-serif;
 	padding: 0;
 }
 
 body {
 	font-family: var(--body-font);
-	color: var(--secondary-color);
-	background: #FBF8F1;
+	color: #000;
+	background: #fff;
 	padding: 0;
 }
   

@@ -74,7 +74,7 @@
 
     /*-------------------- Primary Color -------------------*/
 
-	$art_blog_primary_color = get_theme_mod('art_blog_primary_color', '#3CAA6B'); // Add a fallback if the color isn't set
+	$art_blog_primary_color = get_theme_mod('art_blog_primary_color', '#58BCB3'); // Add a fallback if the color isn't set
 
 	if ($art_blog_primary_color) {
 		$art_blog_custom_css .= ':root {';
