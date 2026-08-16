@@ -248,6 +248,82 @@ function faryita_custom_logo_override( $html ) {
 }
 add_filter( 'get_custom_logo', 'faryita_custom_logo_override' );
 
+/**
+ * Chia menu chính (menu-1) thành 2 nửa trái/phải để hiển thị hai bên logo (giữa header),
+ * theo layout tham khảo từ wujiateavn.com. Menu hiện tại của Faryita chỉ có các mục cấp 1
+ * (không có submenu), nên chỉ cần lọc theo menu_item_parent = 0 là đủ.
+ *
+ * @return array{0: WP_Post[], 1: WP_Post[]} [mục bên trái, mục bên phải]
+ */
+function faryita_get_split_menu_items() {
+	$locations = get_nav_menu_locations();
+	if ( empty( $locations['menu-1'] ) ) {
+		return array( array(), array() );
+	}
+
+	$menu_items = wp_get_nav_menu_items( $locations['menu-1'] );
+	if ( ! $menu_items ) {
+		return array( array(), array() );
+	}
+
+	// wp_get_nav_menu_items() trả về class gốc (thường rỗng) — class "current-menu-item"
+	// chỉ được WordPress tính và gắn thêm khi wp_nav_menu() gọi hàm này; vì ta không dùng
+	// wp_nav_menu() ở đây (để tự chia trái/phải) nên phải gọi lại thủ công.
+	if ( function_exists( '_wp_menu_item_classes_by_context' ) ) {
+		_wp_menu_item_classes_by_context( $menu_items );
+	}
+
+	$top_level = array_values(
+		array_filter(
+			$menu_items,
+			function ( $item ) {
+				return (int) $item->menu_item_parent === 0;
+			}
+		)
+	);
+
+	usort(
+		$top_level,
+		function ( $a, $b ) {
+			return $a->menu_order <=> $b->menu_order;
+		}
+	);
+
+	$split = (int) ceil( count( $top_level ) / 2 );
+	return array( array_slice( $top_level, 0, $split ), array_slice( $top_level, $split ) );
+}
+
+/**
+ * In ra danh sách <li> cho một nửa menu (dùng cùng faryita_get_split_menu_items()).
+ *
+ * @param WP_Post[] $items
+ */
+function faryita_render_split_menu_items( $items ) {
+	foreach ( $items as $item ) {
+		$classes    = ! empty( $item->classes ) ? array_filter( (array) $item->classes ) : array();
+		$is_current = in_array( 'current-menu-item', $classes, true ) || in_array( 'current_page_item', $classes, true );
+
+		// Mục "Sản Phẩm" trỏ tới trang Shop của WooCommerce, nhưng khi xem trang Shop
+		// (hoặc danh mục/chi tiết sản phẩm) thì WordPress query thực tế là post-type
+		// archive chứ không phải trang đơn — nên _wp_menu_item_classes_by_context() (hàm
+		// gốc của WP) không tự nhận diện "current" được cho trường hợp này. Bổ sung riêng.
+		if ( ! $is_current && function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() || is_product() ) ) {
+			$shop_page_id = function_exists( 'wc_get_page_id' ) ? wc_get_page_id( 'shop' ) : 0;
+			if ( $shop_page_id && (int) $item->object_id === (int) $shop_page_id ) {
+				$is_current = true;
+			}
+		}
+
+		printf(
+			'<li class="%1$s"><a href="%2$s"%3$s>%4$s</a></li>',
+			esc_attr( $is_current ? 'current-menu-item' : '' ),
+			esc_url( $item->url ),
+			$item->target ? ' target="' . esc_attr( $item->target ) . '"' : '',
+			esc_html( $item->title )
+		);
+	}
+}
+
 // related post
 if (!function_exists('art_blog_related_post')) :
     /**

@@ -41,10 +41,16 @@
             $art_blog_header_image_url = '';
         }
         ?>
+        <?php list( $art_blog_menu_left, $art_blog_menu_right ) = faryita_get_split_menu_items(); ?>
         <div class="header-menu-box" style="background-image: url('<?php echo $art_blog_header_image_url; ?>');">
             <div class="container">
-                <div class="flex-row">
-                    <div class="nav-menu-header-left">
+                <div class="flex-row fy-header-flex">
+                    <div class="nav-menu-header-left fy-header-nav-side">
+                        <ul class="fy-split-menu">
+                            <?php faryita_render_split_menu_items( $art_blog_menu_left ); ?>
+                        </ul>
+                    </div>
+                    <div class="nav-menu-header-center fy-header-brand">
                         <div class="site-branding">
                             <?php
                             the_custom_logo();
@@ -66,22 +72,11 @@
                             endif; ?>
                         </div>
                     </div>
-                    <div class="nav-menu-header-center">
-                        <nav id="site-navigation" class="main-navigation">
-                            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                                <span class="screen-reader-text"><?php esc_html_e('Primary Menu', 'art-blog'); ?></span>
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            <?php
-                            wp_nav_menu(array(
-                                'theme_location' => 'menu-1',
-                                'menu_id'        => 'primary-menu',
-                            ));
-                            ?>
-                        </nav>
-                    </div>
-                    <div class="nav-menu-header-right">
-                        <?php if (class_exists('WooCommerce')): ?> 
+                    <div class="nav-menu-header-right fy-header-nav-side">
+                        <ul class="fy-split-menu">
+                            <?php faryita_render_split_menu_items( $art_blog_menu_right ); ?>
+                        </ul>
+                        <?php if (class_exists('WooCommerce')): ?>
                             <div class="product-search">
                                 <form method="get" class="woocommerce-product-search" action="<?php echo esc_url(home_url('/')); ?>">
                                     <label for="product-search-field" class="screen-reader-text"><?php esc_html_e('Search Here', 'art-blog'); ?></label>
@@ -96,6 +91,20 @@
                         <?php endif; ?>
                     </div>
                 </div>
+
+                <?php // Menu đầy đủ + nút hamburger — chỉ hiển thị trên mobile (thay cho menu chia 2 bên). ?>
+                <nav id="site-navigation" class="main-navigation fy-mobile-nav">
+                    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                        <span class="screen-reader-text"><?php esc_html_e('Primary Menu', 'art-blog'); ?></span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'menu-1',
+                        'menu_id'        => 'primary-menu',
+                    ));
+                    ?>
+                </nav>
             </div>
         </div>
     </header>

@@ -4,7 +4,7 @@ Theme URI: https://www.revolutionwp.com/products/art-blog
 Author: revolutionwp
 Author URI: https://www.revolutionwp.com/
 Description: The Art Blog WordPress Theme is a visually refined and feature-rich template designed for creatives, writers, and hobbyists looking to share their ideas and inspirations. Whether you're running a personal, design, or photography blog, this theme provides a clean, stylish platform to express yourself. Fully responsive and retina-ready, it ensures your content looks sharp on any device. With flexible layout options and drag-and-drop customization, even beginners can create a polished blog without coding skills. The theme's elegant use of white space, thoughtful typography, and visual balance make it ideal for showcasing art, photos, or long-form writing. Built-in social sharing tools, SEO optimization, and customizable widgets help grow your audience and increase visibility. Whether you're exploring travel, wellness, self-improvement, or creative storytelling, the Art Blog Theme offers a modern, minimal aesthetic that adapts to your unique voice.
-Version: 1.0.664
+Version: 1.0.666
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 7.2
@@ -4032,32 +4032,94 @@ h1.entry-title {
     color: #000;
     margin: 0 6px;
 }
-/* Faryita: đưa nút menu (hamburger) lên góc phải trên cùng, cùng hàng với logo, trên mobile.
-   Mặc định theme xếp logo / nút menu / ô tìm kiếm thành 3 hàng riêng (mỗi hàng width:100%),
-   khiến nút menu bị dồn xuống giữa. Ở đây cho logo + nút menu chia sẻ 1 hàng, ô tìm kiếm
-   vẫn tự xuống hàng dưới nhờ flex-wrap có sẵn. */
-@media screen and (max-width: 700px) {
-	.header-menu-box .flex-row {
-		flex-wrap: wrap;
+/* Faryita: logo ở giữa header + menu chia 2 bên (giống layout wujiateavn.com).
+   File này (style.css) load ở MỌI trang — kể cả các trang không có faryita-custom.css
+   (Giỏ hàng, Thanh toán, Tài khoản, bài viết blog...) — nên toàn bộ CSS cho header mới
+   phải đặt ở đây, không phải faryita-custom.css, để không bị vỡ layout ở những trang đó.
+
+   Desktop (>=901px): 3 cột — menu trái | logo (giữa) | menu phải + ô tìm kiếm.
+   Nav gốc (hamburger + menu đầy đủ, .fy-mobile-nav) ẩn hoàn toàn.
+
+   Mobile (<=900px): chỉ hiện logo (giữa) + nút hamburger (góc phải, position:absolute)
+   mở dropdown chứa đầy đủ menu; 2 menu chia bên bị ẩn (mặc định display:none, chỉ hiện
+   lại ở @media min-width:901px bên dưới). */
+
+.header-menu-box { position: relative; }
+.header-menu-box .container { position: relative; }
+
+.fy-header-flex { align-items: center; }
+
+/* .fy-split-menu (danh sách <li> chia trái/phải) ẩn theo mặc định (mobile) — chỉ hiện lại
+   ở desktop bên dưới. KHÔNG ẩn cả div .fy-header-nav-side vì bên phải còn chứa ô tìm kiếm
+   (.product-search) cần giữ hiển thị trên mobile như hành vi gốc của theme. */
+.fy-split-menu { list-style: none; margin: 0; padding: 0; display: none; align-items: center; }
+.fy-split-menu li { display: inline-block; }
+.fy-split-menu li a {
+	display: inline-block;
+	padding: 15px 16px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	text-decoration: none;
+	transition: opacity .2s ease;
+}
+.fy-split-menu li a:hover,
+.fy-split-menu li.current-menu-item a {
+	opacity: .75;
+}
+
+@media screen and (min-width: 901px) {
+	.header-menu-box .fy-header-flex {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		gap: 20px;
+	}
+	.fy-header-nav-side {
+		display: flex;
 		align-items: center;
-	}
-	.nav-menu-header-left {
 		width: auto;
-		flex: 1 1 auto;
 	}
-	.nav-menu-header-center {
+	.fy-split-menu {
+		display: flex;
+	}
+	.nav-menu-header-left.fy-header-nav-side {
+		justify-content: flex-end;
+	}
+	.nav-menu-header-right.fy-header-nav-side {
+		justify-content: flex-start;
+		gap: 14px;
+	}
+	.nav-menu-header-right.fy-header-nav-side .product-search {
+		width: 200px;
+	}
+	.fy-header-brand {
+		display: flex;
+		justify-content: center;
 		width: auto;
-		flex: 0 0 auto;
-		text-align: right;
-		position: relative;
 	}
-	.main-navigation #primary-menu {
-		position: absolute;
-		top: 100%;
-		right: 0;
+	.fy-mobile-nav {
+		display: none !important;
 	}
-	.nav-menu-header-right {
+}
+
+@media screen and (max-width: 900px) {
+	.fy-header-flex {
+		justify-content: center;
+	}
+	.fy-header-brand {
 		width: 100%;
+		text-align: center;
+	}
+	.fy-mobile-nav {
+		position: absolute;
+		top: 50%;
+		right: 15px;
+		transform: translateY(-50%);
+		z-index: 60;
+		width: auto; /* .main-navigation{width:100%} (base rule) mới khiến nav phủ hết
+		                chiều rộng container, làm nút hamburger đè lên logo — ghi đè lại. */
 	}
 }
 
