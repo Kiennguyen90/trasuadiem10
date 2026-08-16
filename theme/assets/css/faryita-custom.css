@@ -267,9 +267,13 @@
 .archive-product.fy-home{background:var(--fy-cream);padding:60px 0 10px;margin:0;box-shadow:0 0 0 100vmax var(--fy-cream);clip-path:inset(0 -100vmax)}
 .archive-product.fy-home .lay-width{padding:0}
 
-/* Bộ đếm kết quả + sắp xếp */
-.archive-product .woocommerce-result-count{color:#6b6b6b;font-size:14px}
-.archive-product .woocommerce-ordering select{border:2px solid var(--fy-cream);border-radius:999px;padding:8px 18px;font-weight:700;color:var(--fy-dark);background-color:#fff}
+/* Bộ đếm kết quả (giờ nằm dưới lưới sản phẩm, cạnh phân trang — xem functions.php) */
+.archive-product .woocommerce-result-count{color:#6b6b6b;font-size:14px;float:none;margin:0 0 16px;text-align:center}
+
+/* Ô sắp xếp — rule gốc của theme (style.css: .woocommerce-ordering select{width:100%})
+   khiến select giãn hết chiều rộng cột nổi bên phải, đẩy mũi tên xổ xuống lệch xa khỏi
+   chữ; ghi đè lại width:auto để pill ôm sát nội dung như thiết kế. */
+.archive-product .woocommerce-ordering select{width:auto;border:2px solid var(--fy-cream);border-radius:999px;padding:8px 40px 8px 18px;font-weight:700;color:var(--fy-dark);background-color:#fff}
 
 /* Lưới sản phẩm — khớp theo bản demo gốc: 4 cột, không khung card, viền tròn vẽ tay (circle-frame.png) */
 .archive-product ul.products{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;list-style:none;margin:0 0 40px;padding:0}

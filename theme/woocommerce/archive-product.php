@@ -32,6 +32,7 @@ get_header( 'shop' ); ?>
 	<div class="fy-container fy-reveal">
 		<p class="fy-eyebrow">Faryita Shop</p>
 		<h1><?php woocommerce_page_title(); ?></h1>
+		<?php faryita_render_shop_breadcrumb(); ?>
 		<?php if ( is_shop() ) : ?>
 			<p>Chọn cho mình ly nước ép, sinh tố hay detox yêu thích — tất cả đều tươi mới mỗi ngày.</p>
 		<?php elseif ( is_product_taxonomy() ) : ?>

@@ -506,16 +506,58 @@ add_action( 'customize_register', 'art_blog_remove_customize_register', 11 );
 // vì đã có hero "fy-page-hero-shop" riêng đảm nhiệm việc này (archive-product.php).
 remove_action( 'woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10 );
 
-// Bỏ breadcrumb mặc định của WooCommerce trên trang chi tiết sản phẩm
-// vì content-single-product.php đã tự vẽ breadcrumb riêng trong hero, tránh bị lặp 2 lần.
+// Bỏ breadcrumb mặc định của WooCommerce trên trang sản phẩm (chi tiết/Shop/danh mục)
+// vì mỗi trang đã tự vẽ breadcrumb riêng NẰM TRONG banner cam (content-single-product.php
+// dùng .fy-breadcrumb riêng; archive-product.php dùng faryita_render_shop_breadcrumb() bên
+// dưới) — tránh hiển thị 2 breadcrumb (1 cái nằm dưới banner, trông rời rạc/sai vị trí).
 add_action(
 	'wp',
 	function () {
-		if ( function_exists( 'is_product' ) && is_product() ) {
+		if ( class_exists( 'WooCommerce' ) && ( is_product() || is_shop() || is_product_taxonomy() ) ) {
 			remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
 		}
 	}
 );
+
+/**
+ * In breadcrumb (Trang chủ / Sản Phẩm / ...) theo đúng style .fy-breadcrumb dùng chung,
+ * để đặt NẰM TRONG banner cam của trang Shop/danh mục sản phẩm (archive-product.php),
+ * thay vì banner mặc định của WooCommerce nằm rời phía dưới banner như trước.
+ */
+function faryita_render_shop_breadcrumb() {
+	if ( ! class_exists( 'WC_Breadcrumb' ) ) {
+		return;
+	}
+	// Không có hàm dựng sẵn wc_get_breadcrumb() — WooCommerce tự dựng breadcrumb bằng
+	// class WC_Breadcrumb bên trong woocommerce_breadcrumb(), nên lặp lại đúng cách đó
+	// (thêm crumb "Trang chủ" rồi gọi generate() để nó tự nhận diện Shop/danh mục hiện tại).
+	$fy_wc_breadcrumb = new WC_Breadcrumb();
+	$fy_wc_breadcrumb->add_crumb( _x( 'Home', 'breadcrumb', 'woocommerce' ), apply_filters( 'woocommerce_breadcrumb_home_url', home_url() ) );
+	$crumbs = $fy_wc_breadcrumb->generate();
+	if ( ! $crumbs ) {
+		return;
+	}
+	$last = count( $crumbs ) - 1;
+	echo '<p class="fy-breadcrumb">';
+	foreach ( $crumbs as $i => $crumb ) {
+		if ( $i > 0 ) {
+			echo '<span aria-hidden="true">/</span>';
+		}
+		if ( $i < $last && ! empty( $crumb[1] ) ) {
+			printf( '<a href="%1$s">%2$s</a>', esc_url( $crumb[1] ), esc_html( $crumb[0] ) );
+		} else {
+			echo esc_html( $crumb[0] );
+		}
+	}
+	echo '</p>';
+}
+
+/**
+ * Chuyển "Hiển thị X–Y của Z kết quả" xuống DƯỚI lưới sản phẩm (cạnh phân trang) thay vì
+ * nằm phía trên cùng hàng với ô sắp xếp — theo yêu cầu tách 2 khối riêng biệt.
+ */
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+add_action( 'woocommerce_after_shop_loop', 'woocommerce_result_count', 5 );
 
 add_filter('loop_shop_columns', 'art_blog_loop_columns');
 
