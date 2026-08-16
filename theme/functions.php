@@ -553,11 +553,11 @@ function faryita_render_shop_breadcrumb() {
 }
 
 /**
- * Chuyển "Hiển thị X–Y của Z kết quả" xuống DƯỚI lưới sản phẩm (cạnh phân trang) thay vì
- * nằm phía trên cùng hàng với ô sắp xếp — theo yêu cầu tách 2 khối riêng biệt.
+ * Bỏ hẳn dòng "Hiển thị X–Y của Z kết quả" và ô "Sắp xếp mặc định" khỏi trang Shop/danh
+ * mục sản phẩm — banner giờ chỉ còn breadcrumb + tiêu đề, không cần 2 khối này nữa.
  */
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
-add_action( 'woocommerce_after_shop_loop', 'woocommerce_result_count', 5 );
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 
 add_filter('loop_shop_columns', 'art_blog_loop_columns');
 

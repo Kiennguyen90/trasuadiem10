@@ -30,9 +30,8 @@ get_header( 'shop' ); ?>
 		<div class="fy-hero-deco fy-hero-deco-right"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/brand/hero-smoothie.jpg' ); ?>" alt="" aria-hidden="true"></div>
 	<?php endif; ?>
 	<div class="fy-container fy-reveal">
-		<p class="fy-eyebrow">Faryita Shop</p>
-		<h1><?php woocommerce_page_title(); ?></h1>
 		<?php faryita_render_shop_breadcrumb(); ?>
+		<h1><?php woocommerce_page_title(); ?></h1>
 		<?php if ( is_shop() ) : ?>
 			<p>Chọn cho mình ly nước ép, sinh tố hay detox yêu thích — tất cả đều tươi mới mỗi ngày.</p>
 		<?php elseif ( is_product_taxonomy() ) : ?>
