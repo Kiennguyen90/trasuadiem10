@@ -1,20 +1,33 @@
+/* Logo header — chặn kích thước để không chạm viền header (rule .site-branding img gốc
+   ở style.css:1450 là max-width:150px, và theme_mod art_blog_logo_width thường rỗng nên
+   không có tác dụng — ghi đè cụ thể hơn ở đây, file này load sau style.css). */
+.site-branding img.custom-logo{max-width:92px !important;height:auto}
+
+/* Footer cùng màu với header (--primary-color, xanh lá) thay vì đen mặc định (--secondary-color). */
+.site-footer .footer-top{background:var(--primary-color)}
+
 /* Faryita custom pages: home, our-story, shop — shared styles */
-.fy-home{--fy-yellow:#f6c945;--fy-cream:#fdeec3;--fy-green:#0f7a44;--fy-orange:#f2911b;--fy-dark:#173226;font-family:inherit}
+.fy-home{--fy-yellow:#f6c945;--fy-cream:#fefaee;--fy-green:#0f7a44;--fy-orange:#59ad00;--fy-dark:#173226;font-family:inherit}
 .fy-home section{position:relative}
 .fy-home .fy-container{max-width:1200px;margin:0 auto;padding:0 24px}
 
 /* Hero (trang chủ) */
-.fy-hero{background:linear-gradient(160deg,#ffcf6b 0%,var(--fy-orange) 100%);position:relative;padding:70px 0 130px;text-align:center;overflow:hidden}
+.fy-hero{background:linear-gradient(160deg,var(--fy-cream) 0%,var(--fy-orange) 100%);position:relative;padding:0 0 130px;text-align:center;overflow:hidden}
 .fy-hero .fy-eyebrow{color:#fff;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px}
 .fy-hero-wave{position:absolute;left:0;bottom:-1px;width:100%;height:110px;display:block;z-index:1}
 .fy-hero-wave path{fill:var(--fy-cream)}
 .fy-hero h1{font-size:56px;line-height:1.1;color:var(--fy-dark);margin:10px 0 18px}
 .fy-hero p{max-width:560px;margin:0 auto 26px;color:rgba(23,50,34,.78)}
 .fy-hero-fruits{margin-top:30px;font-size:64px;line-height:1;display:flex;justify-content:center;gap:6px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.08))}
-.fy-hero-banner{margin-top:36px;max-width:900px;margin-left:auto;margin-right:auto}
-.fy-hero-banner img{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,.15)}
-.fy-hero-banner .fy-wave-image .fy-wave{display:none}
-.fy-hero-banner .fy-wave-image img{border-radius:20px}
+.fy-hero-banner{margin-top:0;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);height:60vh;min-height:320px;max-height:620px}
+.fy-hero-banner img{width:100%;height:100%;object-fit:cover;display:block}
+.fy-hero-banner .owl-stage-outer,
+.fy-hero-banner .owl-stage,
+.fy-hero-banner .owl-item,
+.fy-hero-banner .item{height:100%}
+.fy-hero-banner .owl-dots{position:absolute;left:0;right:0;bottom:16px;text-align:center;z-index:2}
+.fy-hero-banner .owl-dots .owl-dot span{display:inline-block;width:10px;height:10px;margin:0 4px;border-radius:50%;background:rgba(255,255,255,.6)}
+.fy-hero-banner .owl-dots .owl-dot.active span{background:#fff}
 .fy-wave-image{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.15)}
 .fy-wave-image img{border-radius:0;box-shadow:none}
 .fy-wave-image .fy-wave{position:absolute;left:0;bottom:-2px;width:100%;height:70px;display:block}
@@ -26,15 +39,7 @@
 .fy-blob-2{width:260px;height:260px;background:var(--fy-orange);bottom:-70px;right:-80px;opacity:.35}
 .fy-hero .fy-container{position:relative;z-index:1}
 
-/* Icon nổi bồng bềnh quanh hero (mượn phong cách ảnh trái cây bay) */
-.fy-floaties{position:absolute;inset:0;z-index:1;pointer-events:none}
-.fy-float-item{position:absolute;font-size:40px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.1));animation:fy-float 3.2s ease-in-out infinite}
-.fy-float-1{top:14%;left:6%;animation-delay:.1s}
-.fy-float-2{top:64%;left:3%;font-size:32px;animation-delay:.6s}
-.fy-float-3{top:20%;right:7%;animation-delay:.3s}
-.fy-float-4{top:58%;right:4%;font-size:30px;animation-delay:.8s}
-.fy-float-5{top:2%;left:46%;font-size:26px;animation-delay:1s}
-@media(max-width:900px){.fy-floaties{display:none}.fy-blob-1{width:220px;height:220px}.fy-blob-2{width:180px;height:180px}}
+@media(max-width:900px){.fy-blob-1{width:220px;height:220px}.fy-blob-2{width:180px;height:180px}}
 
 /* Nút dọc cố định cạnh phải màn hình (mượn phong cách Order Now / Contact Us) */
 .fy-side-cta{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column}
@@ -47,10 +52,10 @@
 .fy-page-hero{background:var(--fy-cream);padding:60px 0;text-align:center}
 .fy-page-hero .fy-eyebrow{color:var(--fy-orange);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px}
 .fy-page-hero h1{font-size:44px;color:var(--fy-dark);margin:10px 0 14px}
-.fy-page-hero p{max-width:600px;margin:0 auto;color:#4a4a4a}
+.fy-page-hero p{max-width:600px;margin:0 auto;color:#4a4a4a;font-size:18px;line-height:1.6}
 
 /* Page hero riêng cho Sản Phẩm: tông cam vàng giống thiết kế gốc */
-.fy-page-hero-shop{background:linear-gradient(160deg,#ffcf6b 0%,var(--fy-orange) 100%);position:relative;overflow:hidden;padding-bottom:130px}
+.fy-page-hero-shop{background:linear-gradient(160deg,var(--fy-cream) 0%,var(--fy-orange) 100%);position:relative;overflow:hidden;padding-bottom:130px}
 .fy-hero-deco{position:absolute;bottom:20px;width:190px;height:190px;z-index:1}
 .fy-hero-deco img{position:absolute;top:0;left:0;width:190px;height:190px;border-radius:16px;object-fit:cover;display:block;box-shadow:0 12px 26px rgba(0,0,0,.18)}
 .fy-hero-deco-left{left:40px;transform:rotate(-6deg)}
@@ -101,6 +106,13 @@
 .fy-products{background:var(--fy-cream);padding:70px 0}
 .fy-products h2{text-align:center;font-size:34px;color:var(--fy-dark);margin-bottom:44px}
 .fy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.fy-grid[hidden]{display:none}
+
+/* Tab lọc sản phẩm trang chủ (Yêu Thích / Bán Chạy / Hot Trend) */
+.fy-tabs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+.fy-tab-btn{background:#fff;border:2px solid var(--fy-cream);color:var(--fy-dark);font-weight:700;font-size:14px;padding:10px 24px;border-radius:999px;cursor:pointer;transition:background .2s ease,color .2s ease}
+.fy-tab-btn:hover{border-color:var(--fy-orange)}
+.fy-tab-btn.is-active{background:var(--fy-green);border-color:var(--fy-green);color:#fff}
 .fy-card{text-align:center;display:block;text-decoration:none;color:inherit}
 .fy-circle{width:230px;height:230px;margin:0 auto 20px;border-radius:50%;background:var(--fy-cream);display:flex;align-items:center;justify-content:center;font-size:96px;position:relative}
 .fy-circle::before{content:"";position:absolute;top:-24px;left:-24px;right:-24px;bottom:-24px;background:url(../images/brand/circle-frame.png) center/contain no-repeat;z-index:2;pointer-events:none;transition:opacity .25s ease}
@@ -108,6 +120,7 @@
 .fy-sale{position:absolute;top:-8px;right:-8px;background:var(--fy-green);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;z-index:3;line-height:1}
 .fy-card h3{font-size:19px;color:var(--fy-dark);margin:52px 0 4px}
 .fy-card .fy-price,.fy-card .fy-old{display:none}
+.fy-card .fy-branch-address{display:block;font-size:13px;color:#4a4a4a;line-height:1.5;margin-top:2px}
 .fy-card .fy-cat{display:inline-block;font-size:12px;font-weight:700;color:var(--fy-green);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
 .fy-card .fy-addcart{margin-top:12px;display:inline-block;background:var(--fy-green);color:#fff;font-weight:700;padding:8px 20px;border-radius:999px;text-decoration:none;font-size:13px;border:none;cursor:pointer}
 .fy-card .fy-addcart:hover{background:var(--fy-dark);color:#fff}
@@ -187,6 +200,39 @@
 /* CTA cuối trang */
 .fy-cta{background:var(--fy-dark);color:#fff;text-align:center;padding:70px 24px}
 .fy-cta h2{font-size:30px;margin:0 0 20px}
+
+/* Section đăng ký nhượng quyền (trang chủ, trước footer) — nền kem đặc, tông trắng-xanh
+   làm chủ đạo để đồng bộ với bảng màu chính của web. */
+.fy-franchise{
+	background:var(--fy-cream);
+	padding:40px 32px;
+	border-radius:22px;
+	margin:0 auto;
+	max-width:1040px;
+	overflow:hidden;
+}
+/* Layout xếp chồng: heading nằm ngang phía trên, form bên dưới, tất cả canh giữa. */
+.fy-franchise .fy-franchise-grid{display:flex;flex-direction:column;align-items:center;gap:22px;max-width:640px;margin:0 auto;text-align:center}
+.fy-franchise-heading{width:100%}
+.fy-franchise-heading h2{font-size:26px;line-height:1.35;color:var(--fy-dark);text-transform:uppercase;margin:0;font-weight:800}
+.fy-franchise-form-wrap{width:100%}
+.fy-franchise-form{display:flex;flex-direction:column;gap:12px;text-align:left}
+.fy-franchise-row{display:flex;gap:14px;flex-wrap:wrap}
+.fy-franchise-field{flex:1 1 180px;display:flex;flex-direction:column;gap:5px}
+.fy-franchise-field-full{width:100%;flex:0 0 auto}
+.fy-franchise-label{color:var(--fy-dark);font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.fy-franchise-control{width:100%;padding:9px 16px;border:2px solid var(--fy-cream);border-radius:999px;font-size:13px;font-family:inherit;color:var(--fy-dark);background:#fff;box-sizing:border-box;appearance:none}
+.fy-franchise-control:focus{outline:none;border-color:var(--fy-green)}
+select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23173226' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:14px;cursor:pointer}
+.fy-franchise-textarea{border-radius:18px;resize:vertical;min-height:100px}
+.fy-franchise-submit{align-self:center;margin-top:2px;display:inline-flex;align-items:center;gap:8px;background:var(--fy-green);color:#fff;font-weight:800;padding:9px 22px;border-radius:999px;border:none;cursor:pointer;font-size:13px;transition:background .2s ease,transform .15s ease}
+.fy-franchise-submit:hover{background:var(--fy-dark);transform:translateY(-2px)}
+.fy-franchise .fy-contact-alert{margin-bottom:14px;font-size:13px;text-align:center}
+@media(max-width:700px){
+	.fy-franchise{padding:30px 20px;border-radius:18px}
+	.fy-franchise-heading h2{font-size:20px}
+	.fy-franchise-row{flex-direction:column}
+}
 
 /* Our Story: giá trị cốt lõi */
 .fy-values{background:#fff;padding:70px 0}
@@ -276,7 +322,7 @@
 .archive-product .woocommerce-ordering select{width:auto;border:2px solid var(--fy-cream);border-radius:999px;padding:8px 40px 8px 18px;font-weight:700;color:var(--fy-dark);background-color:#fff}
 
 /* Lưới sản phẩm — khớp theo bản demo gốc: 4 cột, không khung card, viền tròn vẽ tay (circle-frame.png) */
-.archive-product ul.products{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;list-style:none;margin:0 0 40px;padding:0}
+.archive-product ul.products{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;list-style:none;margin:0 0 40px;padding:0}
 .archive-product ul.products::before,.archive-product ul.products::after{display:none !important;content:none !important}
 .woocommerce .archive-product ul.products li.product{width:100% !important;box-sizing:border-box;text-align:center;margin:0;background:none !important;padding:0 !important;border-radius:0 !important;box-shadow:none !important}
 .archive-product ul.products li.product .woocommerce-loop-product__link{display:block;text-decoration:none;color:inherit;position:relative;padding-top:24px;margin-bottom:20px}
@@ -290,8 +336,6 @@
 .archive-product ul.products li.product .price{display:none}
 .archive-product ul.products li.product .button{display:inline-block;margin-top:14px;background:var(--fy-green);color:#fff;font-weight:700;padding:8px 22px;border-radius:999px;text-decoration:none;font-size:13px;border:none;cursor:pointer;transition:background .2s ease}
 .archive-product ul.products li.product .button:hover{background:var(--fy-dark);color:#fff}
-@media(max-width:1100px){.archive-product ul.products{grid-template-columns:repeat(3,1fr)}}
-
 @media(max-width:900px){.archive-product ul.products{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.archive-product ul.products{grid-template-columns:1fr}}
 
@@ -343,6 +387,48 @@
 @media(max-width:1000px){.fy-news-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.fy-news-grid{grid-template-columns:1fr}}
 
+/* ===================== Trang Cửa Hàng: locator 2 cột (tìm kiếm/lọc/danh sách + bản đồ) ===================== */
+.fy-store-locator{background:#fff;padding:60px 0 90px}
+.fy-locator-grid{display:flex;gap:0;height:560px;border-radius:20px;overflow:hidden;box-shadow:0 18px 34px rgba(0,0,0,.1)}
+.fy-locator-side{flex:0 0 480px;max-width:480px;background:var(--fy-cream);padding:24px;display:flex;flex-direction:column;min-height:0}
+.fy-locator-search,.fy-locator-select{width:100%;padding:12px 18px;border:2px solid #fff;border-radius:999px;font-size:14px;color:var(--fy-dark);background:#fff;margin-bottom:12px;box-sizing:border-box}
+.fy-locator-search:focus,.fy-locator-select:focus{outline:2px solid var(--fy-green)}
+.fy-locator-list{list-style:none;margin:8px 0 0;padding:0 6px 0 0;overflow-y:auto;flex:1 1 auto;min-height:0}
+.fy-locator-item{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer;border:2px solid transparent;transition:border-color .2s ease}
+.fy-locator-item:hover{border-color:var(--fy-yellow)}
+.fy-locator-item.is-active{border-color:var(--fy-green);background:#f3fbf1}
+.fy-locator-item-main{display:flex;flex-direction:column;gap:3px}
+.fy-locator-item-main strong{color:var(--fy-dark);font-size:15px}
+.fy-locator-item-main span{color:#5a5a5a;font-size:13px;line-height:1.5}
+.fy-locator-item-main span.fy-locator-tag{align-self:flex-start;background:var(--fy-green);color:#fff;font-size:10px;font-weight:800;padding:2px 9px;border-radius:999px}
+.fy-locator-item-link{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--fy-green);text-decoration:none}
+.fy-locator-item-link:hover{color:var(--fy-dark)}
+.fy-locator-empty{text-align:center;color:#6b6b6b;padding:20px 0 0}
+.fy-locator-map{flex:1 1 auto}
+.fy-locator-map iframe{display:block;width:100%;height:100%;border:0}
+@media(max-width:900px){
+	.fy-locator-grid{flex-direction:column;height:auto}
+	.fy-locator-side{flex:1 1 auto;max-width:none}
+	.fy-locator-list{max-height:240px;flex:0 0 auto}
+	.fy-locator-map{min-height:360px}
+	.fy-locator-map iframe{min-height:360px}
+}
+
+/* ===================== Trang chi tiết Chi Nhánh (dạng bài viết) ===================== */
+.fy-branch-post{background:#fff;padding:60px 0 90px}
+.fy-branch-post-photo{max-width:900px;margin:0 auto 40px;border-radius:20px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.15)}
+.fy-branch-post-photo img{width:100%;height:auto;display:block}
+.fy-branch-post-body{max-width:720px;margin:0 auto}
+.fy-branch-post-body h2{font-size:30px;color:var(--fy-dark);margin:0 0 18px}
+.fy-branch-post-body .fy-branch-meta{list-style:none;margin:0 0 28px;padding:0}
+.fy-branch-post-body .fy-branch-meta li{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(23,50,34,.1);color:#4a4a4a;font-size:16px;line-height:1.6}
+.fy-branch-post-body .fy-branch-meta li:last-child{border-bottom:none}
+.fy-branch-post-body .fy-branch-meta li i{color:var(--fy-orange);font-size:17px;margin-top:4px;width:18px;text-align:center}
+.fy-branch-post-body .fy-back-link{display:inline-block;margin-top:26px;color:var(--fy-green);font-weight:700;text-decoration:none}
+.fy-branch-post-body .fy-back-link:hover{color:var(--fy-dark)}
+.fy-branch-post-map{max-width:900px;margin:50px auto 0;border-radius:20px;overflow:hidden;box-shadow:0 18px 30px rgba(0,0,0,.12)}
+.fy-branch-post-map iframe{display:block;width:100%;height:380px;border:0}
+
 /* Phân trang dùng chung (Tin Tức, ...) */
 .fy-pagination{text-align:center;margin-top:44px}
 .fy-pagination .page-numbers{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;padding:0 10px;margin:0 4px;border-radius:999px;background:#fff;color:var(--fy-dark);font-weight:700;text-decoration:none}
@@ -363,3 +449,22 @@
 .fy-store-map{flex:1 1 420px;min-height:420px;border-radius:20px;overflow:hidden;box-shadow:0 18px 30px rgba(0,0,0,.12)}
 .fy-store-map iframe{display:block}
 @media(max-width:900px){.fy-store-map{min-height:320px}}
+
+/* ===================== Trang Liên Hệ ===================== */
+.fy-contact-grid{display:flex;gap:50px;align-items:flex-start;flex-wrap:wrap}
+.fy-contact-form-wrap{flex:1 1 480px}
+.fy-contact-form-wrap h2{font-size:28px;color:var(--fy-dark);margin:0 0 10px}
+.fy-contact-form-wrap .fy-desc{margin:0 0 26px}
+.fy-contact-form{display:flex;flex-direction:column;gap:16px}
+.fy-form-row{display:flex;gap:16px;flex-wrap:wrap}
+.fy-form-control{flex:1 1 220px;padding:14px 18px;border:2px solid var(--fy-cream);border-radius:14px;font-size:15px;font-family:inherit;color:var(--fy-dark);background:#fff;box-sizing:border-box}
+.fy-form-control:focus{outline:none;border-color:var(--fy-green)}
+.fy-form-textarea{resize:vertical;min-height:130px}
+.fy-contact-form .fy-btn{align-self:flex-start;margin-top:6px}
+.fy-hp-field{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.fy-contact-alert{padding:14px 18px;border-radius:12px;margin-bottom:20px;font-size:14px;font-weight:600}
+.fy-contact-alert-success{background:#e6f6ea;color:#0f7a44}
+.fy-contact-alert-error{background:#fdeaea;color:#b3261e}
+.fy-contact-info-card{flex:1 1 320px;background:var(--fy-cream);border-radius:20px;padding:40px}
+.fy-contact-info-card h3{font-size:24px;color:var(--fy-dark);margin:0 0 22px}
+@media(max-width:600px){.fy-form-row{flex-direction:column}}

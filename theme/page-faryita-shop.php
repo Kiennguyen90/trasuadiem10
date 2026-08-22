@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Faryita Shop
+ * Template Name: Trà Sữa DIEM10
  * Trang Cửa Hàng - danh sách sản phẩm & trang chi tiết sản phẩm.
  *
  * @package Art Blog
@@ -124,7 +124,7 @@ $fy_shop_url = home_url( '/cua-hang/' );
 
 	<section class="fy-page-hero fy-page-hero-shop">
 		<div class="fy-container fy-reveal">
-			<p class="fy-eyebrow">Faryita Shop</p>
+			<p class="fy-eyebrow">Trà Sữa DIEM10</p>
 			<h1><?php echo esc_html( $fy_current_product['name'] ); ?></h1>
 			<p class="fy-breadcrumb">
 				<a href="<?php echo esc_url( $fy_shop_url ); ?>">Cửa Hàng</a>
@@ -180,7 +180,7 @@ $fy_shop_url = home_url( '/cua-hang/' );
 
 	<section class="fy-page-hero fy-page-hero-shop">
 		<div class="fy-container fy-reveal">
-			<p class="fy-eyebrow">Faryita Shop</p>
+			<p class="fy-eyebrow">Trà Sữa DIEM10</p>
 			<h1>Cửa Hàng</h1>
 			<p>Chọn cho mình ly nước ép, sinh tố hay detox yêu thích — tất cả đều tươi mới mỗi ngày.</p>
 		</div>

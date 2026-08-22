@@ -83,33 +83,6 @@
             </section>
     <?php } ?>
 
-		<div class="footer-bottom">
-			<div class="container">
-				<?php 
-				$art_blog_footer_social = absint(get_theme_mod('art_blog_footer_social_menu', 1));
-				if($art_blog_footer_social == 1){ 
-				?>
-				<div class="social-links">
-					<?php
-						art_blog_social_menu();
-					?>
-				</div>
-				<?php 
-				} 
-				?>
-				<div class="site-info">
-					<div>
-						<?php
-			            if (!get_theme_mod('art_blog_copyright_option') ) { ?>
-			              <?php esc_html_e('Art Blog Theme By Revolution WP','art-blog'); ?>
-				            <?php } else {
-				              echo esc_html(get_theme_mod('art_blog_copyright_option'));
-				            }
-				         ?>
-					</div>
-				</div>
-			</div>
-		</div>
 	</footer>
 	<?php } ?>
 </div>

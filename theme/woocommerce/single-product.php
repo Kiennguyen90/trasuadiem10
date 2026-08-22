@@ -37,7 +37,7 @@ get_header( 'shop' );
 		?>
 		<section class="fy-home fy-page-hero fy-page-hero-shop">
 			<div class="fy-container">
-				<p class="fy-eyebrow">Faryita Shop</p>
+				<p class="fy-eyebrow">Trà Sữa DIEM10</p>
 				<h1><?php echo esc_html( $fy_hero_product->get_name() ); ?></h1>
 				<p class="fy-breadcrumb">
 					<a href="<?php echo esc_url( $fy_hero_shop_url ); ?>">Sản Phẩm</a>

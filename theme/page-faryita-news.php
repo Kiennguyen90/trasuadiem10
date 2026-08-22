@@ -23,9 +23,9 @@ $fy_news_query = new WP_Query(
 
 	<section class="fy-page-hero fy-page-hero-shop">
 		<div class="fy-container fy-reveal">
-			<p class="fy-eyebrow">Faryita Shop</p>
+			<p class="fy-eyebrow">Trà Sữa DIEM10</p>
 			<h1>Tin Tức</h1>
-			<p>Cập nhật tin tức, khuyến mãi và câu chuyện mới nhất từ Faryita.</p>
+			<p>Cập nhật tin tức, khuyến mãi và câu chuyện mới nhất từ Trà Sữa DIEM10.</p>
 		</div>
 		<svg class="fy-wave fy-page-hero-shop-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 			<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>

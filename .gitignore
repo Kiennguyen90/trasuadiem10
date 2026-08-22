@@ -5,3 +5,7 @@ faryita-juice-shop-health-drinks-shopify-store/
 
 # Editor/session
 .claude/
+
+# Sensitive - real credentials / personal ID documents, never commit
+thongtinlogin.txt
+footer.pdf

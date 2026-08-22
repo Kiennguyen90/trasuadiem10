@@ -83,6 +83,26 @@ function faryita_remove_shop_loop_add_to_cart() {
 add_action( 'init', 'faryita_remove_shop_loop_add_to_cart' );
 
 /**
+ * Chế độ "catalog" — site chỉ trưng bày sản phẩm, không bán hàng trực tuyến.
+ * Chặn truy cập Giỏ hàng / Thanh toán / Tài khoản (WooCommerce vẫn tạo các trang này
+ * mặc định dù không có nút "Thêm vào giỏ hàng" nào trỏ tới) — chuyển hướng về trang chủ.
+ * Quản trị viên (đã đăng nhập) vẫn xem được để kiểm tra khi cần.
+ */
+function faryita_catalog_mode_block_cart_pages() {
+	if ( ! function_exists( 'is_cart' ) ) {
+		return;
+	}
+	if ( current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	if ( is_cart() || is_checkout() || is_account_page() ) {
+		wp_safe_redirect( home_url( '/' ), 302 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'faryita_catalog_mode_block_cart_pages' );
+
+/**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.
@@ -217,9 +237,10 @@ function faryita_custom_page_styles() {
         'page-faryita-story.php',
         'page-faryita-news.php',
         'page-faryita-store.php',
+        'page-faryita-contact.php',
     );
     $is_faryita_shop = class_exists( 'WooCommerce' ) && ( is_shop() || is_product_taxonomy() || is_product() );
-    if ( is_page_template( $faryita_templates ) || $is_faryita_shop ) {
+    if ( is_page_template( $faryita_templates ) || $is_faryita_shop || is_singular( 'chi_nhanh' ) ) {
         $css_path = get_template_directory() . '/assets/css/faryita-custom.css';
         $js_path  = get_template_directory() . '/assets/js/faryita-custom.js';
         wp_enqueue_style(
@@ -239,7 +260,7 @@ function faryita_custom_page_styles() {
 }
 add_action('wp_enqueue_scripts', 'faryita_custom_page_styles');
 
-// Logo Trà Sữa Diễm 10 (nền trong suốt, đặt sẵn trong theme)
+// Logo Trà Sữa DIEM 10 (nền trong suốt, đặt sẵn trong theme)
 function faryita_custom_logo_override( $html ) {
     $logo_url = get_template_directory_uri() . '/assets/images/brand/logo-diem10.png';
     return '<a href="' . esc_url( home_url( '/' ) ) . '" class="custom-logo-link" rel="home">'
@@ -532,7 +553,10 @@ function faryita_render_shop_breadcrumb() {
 	// class WC_Breadcrumb bên trong woocommerce_breadcrumb(), nên lặp lại đúng cách đó
 	// (thêm crumb "Trang chủ" rồi gọi generate() để nó tự nhận diện Shop/danh mục hiện tại).
 	$fy_wc_breadcrumb = new WC_Breadcrumb();
-	$fy_wc_breadcrumb->add_crumb( _x( 'Home', 'breadcrumb', 'woocommerce' ), apply_filters( 'woocommerce_breadcrumb_home_url', home_url() ) );
+	// Viết cứng "Trang chủ" thay vì dùng _x('Home','breadcrumb','woocommerce') — chuỗi dịch
+	// đó phụ thuộc gói ngôn ngữ .mo của WooCommerce có được cài trên server hay không, từng
+	// bị hiện "Home" tiếng Anh trên host live dù đã hoạt động đúng ở local.
+	$fy_wc_breadcrumb->add_crumb( 'Trang chủ', apply_filters( 'woocommerce_breadcrumb_home_url', home_url() ) );
 	$crumbs = $fy_wc_breadcrumb->generate();
 	if ( ! $crumbs ) {
 		return;
@@ -741,7 +765,7 @@ function faryita_store_info_fields() {
 	return array(
 		'fy_store_name'    => array(
 			'label'   => __( 'Tên cửa hàng', 'art-blog' ),
-			'default' => 'Trà Sữa Diễm 10',
+			'default' => 'Trà Sữa DIEM 10',
 			'type'    => 'text',
 		),
 		'fy_store_address' => array(
@@ -799,6 +823,138 @@ add_action( 'customize_register', 'faryita_store_customizer' );
 /************************************************************************************/
 
 /**
+ * Mạng xã hội: các nút tròn nổi (Phone, Zalo, Facebook, YouTube, TikTok...) lấy trực tiếp
+ * từ menu điều hướng "Social Menu" (Giao diện → Menu → tạo menu, gán vào vị trí
+ * "Social Menu", thêm link tùy chỉnh cho từng mạng xã hội). Icon tự nhận diện theo URL.
+ */
+function faryita_social_icon_for_url( $url ) {
+	$url = strtolower( $url );
+	if ( 0 === strpos( $url, 'tel:' ) ) {
+		return array( 'icon' => 'fas fa-phone-alt', 'label' => 'phone' );
+	}
+	if ( false !== strpos( $url, 'facebook.com' ) || false !== strpos( $url, 'fb.com' ) ) {
+		return array( 'icon' => 'fab fa-facebook-f', 'label' => 'facebook' );
+	}
+	if ( false !== strpos( $url, 'zalo.me' ) || false !== strpos( $url, 'zalo' ) ) {
+		return array( 'icon' => '', 'label' => 'zalo' );
+	}
+	if ( false !== strpos( $url, 'youtube.com' ) || false !== strpos( $url, 'youtu.be' ) ) {
+		return array( 'icon' => 'fab fa-youtube', 'label' => 'youtube' );
+	}
+	if ( false !== strpos( $url, 'tiktok.com' ) ) {
+		return array( 'icon' => 'fab fa-tiktok', 'label' => 'tiktok' );
+	}
+	if ( false !== strpos( $url, 'instagram.com' ) ) {
+		return array( 'icon' => 'fab fa-instagram', 'label' => 'instagram' );
+	}
+	if ( 0 === strpos( $url, 'mailto:' ) ) {
+		return array( 'icon' => 'fas fa-envelope', 'label' => 'email' );
+	}
+	return array( 'icon' => 'fas fa-link', 'label' => 'link' );
+}
+
+function faryita_render_social_floating_bar() {
+	if ( ! has_nav_menu( 'social-menu' ) ) {
+		return;
+	}
+	$items = wp_get_nav_menu_items( wp_get_nav_menu_object( get_nav_menu_locations()['social-menu'] ) );
+	if ( empty( $items ) ) {
+		return;
+	}
+	?>
+	<style>
+		.fy-social-float{position:fixed;right:18px;bottom:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+		.fy-social-float a{width:48px;height:48px;border-radius:50%;background:#1877f2;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,.25);text-decoration:none;font-size:20px;transition:transform .2s ease}
+		.fy-social-float a:hover{transform:scale(1.08)}
+		.fy-social-float .fy-social-zalo-text{font-size:12px;font-weight:800;font-style:normal;letter-spacing:-.5px}
+		@media(max-width:600px){.fy-social-float{right:10px;bottom:16px}.fy-social-float a{width:42px;height:42px;font-size:17px}}
+	</style>
+	<div class="fy-social-float">
+		<?php
+		foreach ( $items as $item ) :
+			$fy_info = faryita_social_icon_for_url( $item->url );
+			$fy_target = ( 0 === strpos( $item->url, 'tel:' ) || 0 === strpos( $item->url, 'mailto:' ) ) ? '' : ' target="_blank" rel="noopener"';
+			?>
+			<a href="<?php echo esc_url( $item->url ); ?>"<?php echo $fy_target; // phpcs:ignore ?> aria-label="<?php echo esc_attr( $item->title ); ?>" title="<?php echo esc_attr( $item->title ); ?>">
+				<?php if ( 'zalo' === $fy_info['label'] ) : ?>
+					<span class="fy-social-zalo-text">Zalo</span>
+				<?php else : ?>
+					<i class="<?php echo esc_attr( $fy_info['icon'] ); ?>" aria-hidden="true"></i>
+				<?php endif; ?>
+			</a>
+		<?php endforeach; ?>
+	</div>
+	<?php
+}
+add_action( 'wp_footer', 'faryita_render_social_floating_bar' );
+
+/**
+ * Popup "Tư Vấn Nhượng Quyền" — render 1 lần trong footer (toàn site) để nút CTA trên
+ * menu (mọi trang) mở được, kể cả những trang không load faryita-custom.css/js.
+ * JS đóng/mở viết inline ngay tại đây cho tự chứa, không phụ thuộc file JS enqueue có điều kiện.
+ */
+function faryita_render_franchise_modal() {
+	?>
+	<style>
+	/* Popup + nút CTA header — CSS tự chứa (in ngay đây) để áp dụng trên MỌI trang, kể cả
+	   những trang không load faryita-custom.css (chỉ enqueue có điều kiện trên 1 số template). */
+	.fy-modal-overlay{--fy-yellow:#f6c945;--fy-cream:#fefaee;--fy-green:#0f7a44;--fy-orange:#59ad00;--fy-dark:#173226;position:fixed;inset:0;background:rgba(23,50,34,.65);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100000;opacity:0;visibility:hidden;transition:opacity .25s ease}
+	.fy-modal-overlay.is-open{opacity:1;visibility:visible}
+	.fy-modal-box{background:#fefaee;border-radius:22px;padding:36px 32px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform .25s ease;box-sizing:border-box}
+	.fy-modal-overlay.is-open .fy-modal-box{transform:translateY(0)}
+	.fy-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:none;background:#fff;color:#173226;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+	.fy-modal-close:hover{background:#fefaee;box-shadow:inset 0 0 0 2px #173226}
+	.fy-modal-title{font-size:22px;line-height:1.35;color:#173226;text-transform:uppercase;font-weight:800;text-align:center;margin:0 0 22px}
+	body.fy-modal-open{overflow:hidden}
+	.fy-header-cta{display:none;align-items:center;background:#f6c945;color:#173226;font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;padding:10px 20px;border-radius:999px;white-space:nowrap;transition:transform .15s ease}
+	.fy-header-cta:hover{transform:translateY(-2px);color:#173226}
+	@media screen and (min-width:901px){.fy-header-cta{display:inline-flex;margin-left:14px}}
+	</style>
+	<div class="fy-modal-overlay" id="fy-franchise-modal" aria-hidden="true">
+		<div class="fy-modal-box" role="dialog" aria-modal="true" aria-labelledby="fy-franchise-modal-title">
+			<button type="button" class="fy-modal-close" aria-label="Đóng">&times;</button>
+			<h2 id="fy-franchise-modal-title" class="fy-modal-title">Tư Vấn Nhượng Quyền<br>Trà Sữa DIEM 10</h2>
+			<?php faryita_render_franchise_form( 'popup' ); ?>
+		</div>
+	</div>
+	<script>
+	(function () {
+		var modal = document.getElementById('fy-franchise-modal');
+		if (!modal) { return; }
+		function openModal(e) {
+			if (e) { e.preventDefault(); }
+			modal.classList.add('is-open');
+			modal.setAttribute('aria-hidden', 'false');
+			document.body.classList.add('fy-modal-open');
+		}
+		function closeModal() {
+			modal.classList.remove('is-open');
+			modal.setAttribute('aria-hidden', 'true');
+			document.body.classList.remove('fy-modal-open');
+		}
+		document.querySelectorAll('[data-fy-open-franchise]').forEach(function (btn) {
+			btn.addEventListener('click', openModal);
+		});
+		var closeBtn = modal.querySelector('.fy-modal-close');
+		if (closeBtn) { closeBtn.addEventListener('click', closeModal); }
+		modal.addEventListener('click', function (e) {
+			if (e.target === modal) { closeModal(); }
+		});
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape') { closeModal(); }
+		});
+		<?php if ( isset( $_GET['fy_franchise'] ) ) : ?>
+		if (!document.querySelector('#fy-franchise')) { openModal(); }
+		<?php endif; ?>
+	})();
+	</script>
+	<?php
+}
+add_action( 'wp_footer', 'faryita_render_franchise_modal' );
+
+/************************************************************************************/
+
+/**
  * Custom logo
  */
 
@@ -832,3 +988,604 @@ function art_blog_custom_css_for_slider() {
     }
 }
 add_action('wp_head', 'art_blog_custom_css_for_slider');
+
+/************************************************************************************/
+
+/**
+ * Custom Post Type: Chi Nhánh (cửa hàng)
+ * post_excerpt lưu địa chỉ đầy đủ, featured image là ảnh cửa hàng,
+ * meta _fy_coming_soon đánh dấu chi nhánh "Sắp khai trương".
+ */
+function faryita_register_chi_nhanh_cpt() {
+	register_post_type( 'chi_nhanh', array(
+		'labels' => array(
+			'name'               => 'Chi Nhánh',
+			'singular_name'      => 'Chi Nhánh',
+			'add_new_item'       => 'Thêm Chi Nhánh',
+			'edit_item'          => 'Sửa Chi Nhánh',
+			'all_items'          => 'Tất Cả Chi Nhánh',
+			'menu_name'          => 'Chi Nhánh',
+		),
+		'public'       => true,
+		'has_archive'  => false,
+		'menu_icon'    => 'dashicons-store',
+		'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
+		'rewrite'      => array( 'slug' => 'chi-nhanh' ),
+		'show_in_rest' => true,
+	) );
+}
+add_action( 'init', 'faryita_register_chi_nhanh_cpt' );
+
+function faryita_chi_nhanh_metabox() {
+	add_meta_box( 'fy_chi_nhanh_meta', 'Trạng thái chi nhánh', 'faryita_chi_nhanh_metabox_html', 'chi_nhanh', 'side' );
+}
+add_action( 'add_meta_boxes', 'faryita_chi_nhanh_metabox' );
+
+function faryita_chi_nhanh_metabox_html( $post ) {
+	wp_nonce_field( 'fy_chi_nhanh_save', 'fy_chi_nhanh_nonce' );
+	$coming_soon = get_post_meta( $post->ID, '_fy_coming_soon', true );
+	?>
+	<label>
+		<input type="checkbox" name="fy_coming_soon" value="1" <?php checked( $coming_soon, '1' ); ?> />
+		Sắp khai trương (Coming soon)
+	</label>
+	<?php
+}
+
+function faryita_chi_nhanh_save_meta( $post_id ) {
+	if ( ! isset( $_POST['fy_chi_nhanh_nonce'] ) || ! wp_verify_nonce( $_POST['fy_chi_nhanh_nonce'], 'fy_chi_nhanh_save' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	update_post_meta( $post_id, '_fy_coming_soon', isset( $_POST['fy_coming_soon'] ) ? '1' : '' );
+}
+add_action( 'save_post_chi_nhanh', 'faryita_chi_nhanh_save_meta' );
+
+/************************************************************************************/
+
+/**
+ * Trang "Liên Hệ": bảng riêng lưu thông tin khách gửi form + trang quản trị xem/xuất Excel.
+ */
+function faryita_contacts_table_name() {
+	global $wpdb;
+	return $wpdb->prefix . 'fy_contacts';
+}
+
+function faryita_maybe_create_contacts_table() {
+	if ( get_option( 'fy_contacts_table_version' ) === '1.2' ) {
+		return;
+	}
+	global $wpdb;
+	$table           = faryita_contacts_table_name();
+	$charset_collate = $wpdb->get_charset_collate();
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+	$sql = "CREATE TABLE $table (
+		id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		type VARCHAR(20) NOT NULL DEFAULT 'contact',
+		name VARCHAR(190) NOT NULL,
+		email VARCHAR(190) NOT NULL,
+		phone VARCHAR(50) NOT NULL,
+		address VARCHAR(255) NULL,
+		message TEXT NULL,
+		gender VARCHAR(10) NULL,
+		region VARCHAR(190) NULL,
+		created_at DATETIME NOT NULL,
+		ip VARCHAR(45) NULL,
+		PRIMARY KEY (id)
+	) $charset_collate;";
+	dbDelta( $sql );
+	update_option( 'fy_contacts_table_version', '1.2' );
+}
+add_action( 'init', 'faryita_maybe_create_contacts_table' );
+
+/**
+ * Giới hạn số lần gửi form theo IP (chống spam tạm thời trong lúc chưa gắn reCAPTCHA).
+ */
+function faryita_fy_rate_limited( $bucket, $max = 3 ) {
+	$ip  = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) );
+	$key = 'fy_rl_' . $bucket . '_' . md5( $ip );
+	$count = (int) get_transient( $key );
+	if ( $count >= $max ) {
+		return true;
+	}
+	set_transient( $key, $count + 1, HOUR_IN_SECONDS );
+	return false;
+}
+
+/**
+ * Xử lý submit form liên hệ (khách đã đăng nhập hoặc chưa đều đi qua admin-post.php).
+ */
+function faryita_handle_contact_submit() {
+	$redirect = wp_get_referer() ? wp_get_referer() : home_url( '/lien-he/' );
+
+	if ( ! isset( $_POST['fy_contact_nonce'] ) || ! wp_verify_nonce( $_POST['fy_contact_nonce'], 'fy_submit_contact' ) ) {
+		wp_safe_redirect( add_query_arg( 'fy_contact', 'error', $redirect ) );
+		exit;
+	}
+
+	// Honeypot chống spam bot: field ẩn, người dùng thật sẽ không điền.
+	if ( ! empty( $_POST['fy_website'] ) ) {
+		wp_safe_redirect( add_query_arg( 'fy_contact', 'success', $redirect ) );
+		exit;
+	}
+
+	$name    = sanitize_text_field( wp_unslash( $_POST['fy_name'] ?? '' ) );
+	$email   = sanitize_email( wp_unslash( $_POST['fy_email'] ?? '' ) );
+	$phone   = sanitize_text_field( wp_unslash( $_POST['fy_phone'] ?? '' ) );
+	$address = sanitize_text_field( wp_unslash( $_POST['fy_address'] ?? '' ) );
+	$message = sanitize_textarea_field( wp_unslash( $_POST['fy_message'] ?? '' ) );
+
+	if ( '' === $name || '' === $phone || ! is_email( $email ) ) {
+		wp_safe_redirect( add_query_arg( 'fy_contact', 'error', $redirect ) );
+		exit;
+	}
+
+	global $wpdb;
+	$wpdb->insert(
+		faryita_contacts_table_name(),
+		array(
+			'type'       => 'contact',
+			'name'       => $name,
+			'email'      => $email,
+			'phone'      => $phone,
+			'address'    => $address,
+			'message'    => $message,
+			'created_at' => current_time( 'mysql' ),
+			'ip'         => sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) ),
+		)
+	);
+
+	wp_safe_redirect( add_query_arg( 'fy_contact', 'success', $redirect ) );
+	exit;
+}
+add_action( 'admin_post_nopriv_fy_submit_contact', 'faryita_handle_contact_submit' );
+add_action( 'admin_post_fy_submit_contact', 'faryita_handle_contact_submit' );
+
+/**
+ * Render form "Đăng ký nhượng quyền" — dùng chung cho section trang chủ và popup
+ * (mở từ nút "Tư Vấn Nhượng Quyền" trên menu). $id_suffix để tránh trùng id giữa
+ * 2 bản form cùng xuất hiện trên 1 trang (vd. trang chủ có cả section lẫn popup).
+ */
+function faryita_render_franchise_form( $id_suffix = '' ) {
+	$form_id = 'fy-franchise-form' . ( $id_suffix ? '-' . $id_suffix : '' );
+	$fy_franchise_status = isset( $_GET['fy_franchise'] ) ? sanitize_key( $_GET['fy_franchise'] ) : '';
+	?>
+	<?php if ( 'success' === $fy_franchise_status ) : ?>
+		<div class="fy-contact-alert fy-contact-alert-success">Cảm ơn bạn đã quan tâm! Chúng tôi sẽ liên hệ lại sớm nhất.</div>
+	<?php elseif ( 'error' === $fy_franchise_status ) : ?>
+		<div class="fy-contact-alert fy-contact-alert-error">Vui lòng điền đầy đủ Họ tên, Email hợp lệ và Số điện thoại. Nếu bạn vừa gửi nhiều lần liên tiếp, vui lòng thử lại sau.</div>
+	<?php endif; ?>
+
+	<form class="fy-franchise-form" id="<?php echo esc_attr( $form_id ); ?>" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+		<input type="hidden" name="action" value="fy_submit_franchise">
+		<?php wp_nonce_field( 'fy_submit_franchise', 'fy_franchise_nonce' ); ?>
+		<input type="text" name="fy_website" class="fy-hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+		<div class="fy-franchise-row">
+			<label class="fy-franchise-field">
+				<span class="fy-franchise-label">Họ Và Tên</span>
+				<input class="fy-franchise-control" type="text" name="fy_name" placeholder="Họ và tên" required>
+			</label>
+			<label class="fy-franchise-field">
+				<span class="fy-franchise-label">Giới Tính</span>
+				<select class="fy-franchise-control" name="fy_gender">
+					<option value="Nam">Nam</option>
+					<option value="Nữ">Nữ</option>
+					<option value="Khác">Khác</option>
+				</select>
+			</label>
+		</div>
+		<div class="fy-franchise-row">
+			<label class="fy-franchise-field">
+				<span class="fy-franchise-label">Số Điện Thoại</span>
+				<input class="fy-franchise-control" type="text" name="fy_phone" placeholder="Số điện thoại" required>
+			</label>
+			<label class="fy-franchise-field">
+				<span class="fy-franchise-label">Email</span>
+				<input class="fy-franchise-control" type="email" name="fy_email" placeholder="Email" required>
+			</label>
+		</div>
+		<label class="fy-franchise-field fy-franchise-field-full">
+			<span class="fy-franchise-label">Khu Vực Muốn Đăng Ký</span>
+			<input class="fy-franchise-control" type="text" name="fy_region" placeholder="Tỉnh thành">
+		</label>
+
+		<button type="submit" class="fy-franchise-submit">Đăng ký <span aria-hidden="true">→</span></button>
+	</form>
+	<?php
+}
+
+/**
+ * Xử lý submit form "Đăng ký nhượng quyền" (trang chủ, gần footer).
+ * Dùng chung bảng wp_fy_contacts với form liên hệ, chỉ khác cột `type`.
+ */
+function faryita_handle_franchise_submit() {
+	$redirect = wp_get_referer() ? wp_get_referer() : home_url( '/' );
+
+	if ( ! isset( $_POST['fy_franchise_nonce'] ) || ! wp_verify_nonce( $_POST['fy_franchise_nonce'], 'fy_submit_franchise' ) ) {
+		wp_safe_redirect( add_query_arg( 'fy_franchise', 'error', $redirect ) . '#fy-franchise' );
+		exit;
+	}
+
+	// Honeypot chống spam bot: field ẩn, người dùng thật sẽ không điền.
+	if ( ! empty( $_POST['fy_website'] ) ) {
+		wp_safe_redirect( add_query_arg( 'fy_franchise', 'success', $redirect ) . '#fy-franchise' );
+		exit;
+	}
+
+	// TODO: khi có Google reCAPTCHA site/secret key, verify $_POST['g-recaptcha-response'] tại đây trước khi tiếp tục.
+
+	if ( faryita_fy_rate_limited( 'franchise' ) ) {
+		wp_safe_redirect( add_query_arg( 'fy_franchise', 'error', $redirect ) . '#fy-franchise' );
+		exit;
+	}
+
+	$name   = sanitize_text_field( wp_unslash( $_POST['fy_name'] ?? '' ) );
+	$email  = sanitize_email( wp_unslash( $_POST['fy_email'] ?? '' ) );
+	$phone  = sanitize_text_field( wp_unslash( $_POST['fy_phone'] ?? '' ) );
+	$gender = sanitize_text_field( wp_unslash( $_POST['fy_gender'] ?? '' ) );
+	$region = sanitize_text_field( wp_unslash( $_POST['fy_region'] ?? '' ) );
+
+	if ( '' === $name || '' === $phone || ! is_email( $email ) ) {
+		wp_safe_redirect( add_query_arg( 'fy_franchise', 'error', $redirect ) . '#fy-franchise' );
+		exit;
+	}
+
+	global $wpdb;
+	$wpdb->insert(
+		faryita_contacts_table_name(),
+		array(
+			'type'       => 'franchise',
+			'name'       => $name,
+			'email'      => $email,
+			'phone'      => $phone,
+			'address'    => '',
+			'message'    => '',
+			'gender'     => $gender,
+			'region'     => $region,
+			'created_at' => current_time( 'mysql' ),
+			'ip'         => sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) ),
+		)
+	);
+
+	wp_safe_redirect( add_query_arg( 'fy_franchise', 'success', $redirect ) . '#fy-franchise' );
+	exit;
+}
+add_action( 'admin_post_nopriv_fy_submit_franchise', 'faryita_handle_franchise_submit' );
+add_action( 'admin_post_fy_submit_franchise', 'faryita_handle_franchise_submit' );
+
+/**
+ * Trang quản trị "Thông tin liên hệ".
+ */
+function faryita_contacts_admin_menu() {
+	add_menu_page(
+		'Thông tin liên hệ',
+		'Thông tin liên hệ',
+		'manage_options',
+		'fy-contacts',
+		'faryita_contacts_admin_page',
+		'dashicons-email-alt',
+		26
+	);
+}
+add_action( 'admin_menu', 'faryita_contacts_admin_menu' );
+
+function faryita_contacts_admin_page() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	global $wpdb;
+	$table = faryita_contacts_table_name();
+
+	if ( isset( $_GET['action'], $_GET['id'] ) && 'delete' === $_GET['action'] ) {
+		$id = (int) $_GET['id'];
+		check_admin_referer( 'fy_delete_contact_' . $id );
+		$wpdb->delete( $table, array( 'id' => $id ) );
+		echo '<div class="notice notice-success is-dismissible"><p>Đã xoá liên hệ.</p></div>';
+	}
+
+	$fy_type_filter = isset( $_GET['fy_type'] ) ? sanitize_key( $_GET['fy_type'] ) : '';
+	if ( in_array( $fy_type_filter, array( 'contact', 'franchise' ), true ) ) {
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table WHERE type = %s ORDER BY created_at DESC", $fy_type_filter ) );
+	} else {
+		$rows = $wpdb->get_results( "SELECT * FROM $table ORDER BY created_at DESC" );
+	}
+	$export_url  = wp_nonce_url( admin_url( 'admin-post.php?action=fy_export_contacts' ), 'fy_export_contacts' );
+	$fy_labels   = array( 'contact' => 'Liên hệ', 'franchise' => 'Nhượng quyền' );
+	?>
+	<div class="wrap">
+		<h1 class="wp-heading-inline">Thông tin liên hệ</h1>
+		<a href="<?php echo esc_url( $export_url ); ?>" class="page-title-action">Xuất Excel</a>
+		<hr class="wp-header-end">
+		<ul class="subsubsub">
+			<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=fy-contacts' ) ); ?>" <?php echo '' === $fy_type_filter ? 'class="current"' : ''; ?>>Tất cả</a> |</li>
+			<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=fy-contacts&fy_type=contact' ) ); ?>" <?php echo 'contact' === $fy_type_filter ? 'class="current"' : ''; ?>>Liên hệ</a> |</li>
+			<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=fy-contacts&fy_type=franchise' ) ); ?>" <?php echo 'franchise' === $fy_type_filter ? 'class="current"' : ''; ?>>Nhượng quyền</a></li>
+		</ul>
+		<p><?php echo count( $rows ); ?> mục.</p>
+		<table class="wp-list-table widefat fixed striped">
+			<thead>
+				<tr>
+					<th style="width:9%">Loại</th>
+					<th style="width:13%">Họ tên</th>
+					<th style="width:15%">Email</th>
+					<th style="width:9%">Điện thoại</th>
+					<th style="width:7%">Giới tính</th>
+					<th style="width:13%">Địa chỉ / Khu vực</th>
+					<th>Nội dung</th>
+					<th style="width:11%">Thời gian</th>
+					<th style="width:6%">Thao tác</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php if ( $rows ) : ?>
+				<?php foreach ( $rows as $r ) : ?>
+					<tr>
+						<td><?php echo esc_html( $fy_labels[ $r->type ] ?? $r->type ); ?></td>
+						<td><?php echo esc_html( $r->name ); ?></td>
+						<td><a href="mailto:<?php echo esc_attr( $r->email ); ?>"><?php echo esc_html( $r->email ); ?></a></td>
+						<td><?php echo esc_html( $r->phone ); ?></td>
+						<td><?php echo esc_html( $r->gender ); ?></td>
+						<td><?php echo esc_html( $r->address ?: $r->region ); ?></td>
+						<td><?php echo esc_html( $r->message ); ?></td>
+						<td><?php echo esc_html( mysql2date( 'd/m/Y H:i', $r->created_at ) ); ?></td>
+						<td>
+							<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=fy-contacts&action=delete&id=' . $r->id ), 'fy_delete_contact_' . $r->id ) ); ?>"
+								onclick="return confirm('Xoá mục này?');">Xoá</a>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			<?php else : ?>
+				<tr><td colspan="9">Chưa có thông tin nào được gửi.</td></tr>
+			<?php endif; ?>
+			</tbody>
+		</table>
+	</div>
+	<?php
+}
+
+/**
+ * Xuất danh sách liên hệ ra file Excel (.xls) - bảng HTML mà Excel mở trực tiếp được,
+ * không cần thư viện ngoài.
+ */
+function faryita_export_contacts() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'Bạn không có quyền thực hiện thao tác này.' );
+	}
+	check_admin_referer( 'fy_export_contacts' );
+
+	global $wpdb;
+	$rows = $wpdb->get_results( 'SELECT * FROM ' . faryita_contacts_table_name() . ' ORDER BY created_at DESC' );
+
+	nocache_headers();
+	header( 'Content-Type: application/vnd.ms-excel; charset=utf-8' );
+	header( 'Content-Disposition: attachment; filename=lien-he-' . gmdate( 'Y-m-d' ) . '.xls' );
+
+	$fy_labels = array( 'contact' => 'Liên hệ', 'franchise' => 'Nhượng quyền' );
+
+	echo "\xEF\xBB\xBF";
+	echo '<table border="1"><tr>';
+	foreach ( array( 'Loại', 'Họ tên', 'Email', 'Điện thoại', 'Giới tính', 'Địa chỉ / Khu vực', 'Nội dung', 'Thời gian', 'IP' ) as $h ) {
+		echo '<th>' . esc_html( $h ) . '</th>';
+	}
+	echo '</tr>';
+	foreach ( $rows as $r ) {
+		echo '<tr>';
+		echo '<td>' . esc_html( $fy_labels[ $r->type ] ?? $r->type ) . '</td>';
+		echo '<td>' . esc_html( $r->name ) . '</td>';
+		echo '<td>' . esc_html( $r->email ) . '</td>';
+		echo '<td>' . esc_html( $r->phone ) . '</td>';
+		echo '<td>' . esc_html( $r->gender ) . '</td>';
+		echo '<td>' . esc_html( $r->address ?: $r->region ) . '</td>';
+		echo '<td>' . esc_html( $r->message ) . '</td>';
+		echo '<td>' . esc_html( mysql2date( 'd/m/Y H:i', $r->created_at ) ) . '</td>';
+		echo '<td>' . esc_html( $r->ip ) . '</td>';
+		echo '</tr>';
+	}
+	echo '</table>';
+	exit;
+}
+
+/************************************************************************************/
+
+/**
+ * Sắp xếp thứ tự hiển thị sản phẩm (menu_order) ngay trong danh sách Sản phẩm ở wp-admin:
+ * thêm cột "Thứ tự" hiện số + bấm tiêu đề cột để sắp xếp tăng/giảm. Bổ sung cho tính năng
+ * kéo-thả có sẵn của WooCommerce (tab "Sắp xếp" trong Sản phẩm → Tất cả sản phẩm).
+ */
+function faryita_product_order_column( $columns ) {
+	$new_columns = array();
+	foreach ( $columns as $key => $label ) {
+		$new_columns[ $key ] = $label;
+		if ( 'name' === $key ) {
+			$new_columns['fy_order'] = __( 'Thứ tự', 'art-blog' );
+		}
+	}
+	return $new_columns;
+}
+add_filter( 'manage_edit-product_columns', 'faryita_product_order_column' );
+
+function faryita_product_order_column_content( $column, $post_id ) {
+	if ( 'fy_order' === $column ) {
+		printf(
+			'<input type="number" class="fy-order-input" data-id="%1$d" value="%2$d" style="width:60px;text-align:center">',
+			(int) $post_id,
+			(int) get_post_field( 'menu_order', $post_id )
+		);
+	}
+}
+add_action( 'manage_product_posts_custom_column', 'faryita_product_order_column_content', 10, 2 );
+
+/**
+ * Cho phép sửa "Thứ tự" ngay trong ô số ở danh sách sản phẩm - gõ số mới rồi bấm ra
+ * ngoài ô (blur) là tự lưu qua AJAX, không cần mở Quick Edit hay bấm nút Cập nhật.
+ */
+function faryita_product_order_inline_script() {
+	if ( 'product' !== ( $_GET['post_type'] ?? '' ) ) {
+		return;
+	}
+	$nonce = wp_create_nonce( 'fy_save_menu_order' );
+	?>
+	<style>.column-fy_order{width:80px !important;text-align:center}.fy-order-input.fy-saved{background:#e6f6ea}</style>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.querySelectorAll('.fy-order-input').forEach(function (input) {
+			input.addEventListener('change', function () {
+				var data = new URLSearchParams();
+				data.append('action', 'fy_save_menu_order');
+				data.append('nonce', '<?php echo esc_js( $nonce ); ?>');
+				data.append('post_id', input.dataset.id);
+				data.append('menu_order', input.value);
+				fetch(ajaxurl, { method: 'POST', credentials: 'same-origin', body: data })
+					.then(function (r) { return r.json(); })
+					.then(function (res) {
+						if (res && res.success) {
+							input.classList.add('fy-saved');
+							setTimeout(function () { input.classList.remove('fy-saved'); }, 1000);
+						}
+					});
+			});
+		});
+	});
+	</script>
+	<?php
+}
+add_action( 'admin_footer-edit.php', 'faryita_product_order_inline_script' );
+
+function faryita_ajax_save_menu_order() {
+	check_ajax_referer( 'fy_save_menu_order', 'nonce' );
+	if ( ! current_user_can( 'edit_products' ) ) {
+		wp_send_json_error( 'no_permission' );
+	}
+	$post_id = (int) ( $_POST['post_id'] ?? 0 );
+	$order   = (int) ( $_POST['menu_order'] ?? 0 );
+	if ( ! $post_id || 'product' !== get_post_type( $post_id ) ) {
+		wp_send_json_error( 'invalid_post' );
+	}
+	wp_update_post( array( 'ID' => $post_id, 'menu_order' => $order ) );
+	wp_send_json_success();
+}
+add_action( 'wp_ajax_fy_save_menu_order', 'faryita_ajax_save_menu_order' );
+
+function faryita_product_order_sortable_column( $columns ) {
+	$columns['fy_order'] = 'menu_order';
+	return $columns;
+}
+add_filter( 'manage_edit-product_sortable_columns', 'faryita_product_order_sortable_column' );
+
+function faryita_product_order_column_css() {
+	$screen = get_current_screen();
+	if ( ! $screen || 'edit-product' !== $screen->id ) {
+		return;
+	}
+	echo '<style>.column-fy_order{width:70px !important;text-align:center}.fy-menu-order{font-weight:700}</style>';
+}
+add_action( 'admin_head', 'faryita_product_order_column_css' );
+
+function faryita_product_order_default_sort( $query ) {
+	if ( ! is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+	if ( 'product' !== $query->get( 'post_type' ) ) {
+		return;
+	}
+	if ( ! $query->get( 'orderby' ) ) {
+		$query->set( 'orderby', 'menu_order title' );
+		$query->set( 'order', 'ASC' );
+	}
+}
+add_action( 'pre_get_posts', 'faryita_product_order_default_sort' );
+add_action( 'admin_post_fy_export_contacts', 'faryita_export_contacts' );
+
+/************************************************************************************/
+
+/**
+ * Công tắc chế độ bảo trì — checkbox trong Cài đặt > Tổng quan. Khi bật, khách (chưa
+ * đăng nhập hoặc không có quyền quản trị) sẽ thấy trang "Đang bảo trì" thay vì site thật;
+ * admin vẫn xem/test bình thường.
+ */
+function faryita_maintenance_setting_init() {
+	register_setting( 'general', 'fy_maintenance_mode', array(
+		'type'              => 'boolean',
+		'default'           => false,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+	) );
+	add_settings_field(
+		'fy_maintenance_mode',
+		'Chế độ bảo trì',
+		'faryita_maintenance_setting_field',
+		'general'
+	);
+}
+add_action( 'admin_init', 'faryita_maintenance_setting_init' );
+
+function faryita_maintenance_setting_field() {
+	?>
+	<label>
+		<input type="checkbox" name="fy_maintenance_mode" value="1" <?php checked( get_option( 'fy_maintenance_mode' ), 1 ); ?>>
+		Bật chế độ bảo trì (khách sẽ thấy trang "Đang bảo trì", quản trị viên vẫn xem được site bình thường)
+	</label>
+	<?php
+}
+
+function faryita_maintenance_mode_redirect() {
+	if ( ! get_option( 'fy_maintenance_mode' ) ) {
+		return;
+	}
+	if ( current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	// template_redirect không chạy trên wp-login.php/wp-admin nên admin luôn đăng nhập được.
+	nocache_headers();
+	header( 'HTTP/1.1 503 Service Temporarily Unavailable' );
+	header( 'Retry-After: 3600' );
+	wp_die(
+		'<div style="font-family:sans-serif;text-align:center;padding:80px 20px;">' .
+		'<h1 style="font-size:28px;">Website đang bảo trì</h1>' .
+		'<p style="font-size:16px;color:#555;">Chúng tôi đang cập nhật để mang lại trải nghiệm tốt hơn. Vui lòng quay lại sau nhé!</p>' .
+		'</div>',
+		'Đang bảo trì',
+		array( 'response' => 503 )
+	);
+}
+add_action( 'template_redirect', 'faryita_maintenance_mode_redirect' );
+
+/************************************************************************************/
+
+/**
+ * Shortcode cho 2 cột footer bổ sung (Thông tin liên hệ / Cửa Hàng) — dùng trong widget
+ * "Custom HTML" ở Appearance > Widgets > Footer 2 / Footer 3. Đọc cùng theme_mod mà trang
+ * Liên Hệ đang dùng nên khi client cập nhật SĐT/email qua Customizer, footer tự cập nhật theo.
+ */
+function faryita_footer_contact_shortcode() {
+	$phone = get_theme_mod( 'fy_store_phone', '0900 000 000' );
+	$email = get_theme_mod( 'fy_store_email', 'lienhe@faryita.vn' );
+	ob_start();
+	?>
+	<h2 class="widget-title">Thông Tin Liên Hệ</h2>
+	<p>
+		<i class="fas fa-phone-alt" aria-hidden="true"></i>
+		<a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
+	</p>
+	<p>
+		<i class="fas fa-envelope" aria-hidden="true"></i>
+		<a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
+	</p>
+	<p><a href="<?php echo esc_url( home_url( '/lien-he/' ) ); ?>">Gửi liên hệ →</a></p>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'fy_footer_contact', 'faryita_footer_contact_shortcode' );
+
+function faryita_footer_store_shortcode() {
+	ob_start();
+	?>
+	<h2 class="widget-title">Cửa Hàng</h2>
+	<p>Trà Sữa DIEM10 hiện có mặt tại nhiều tỉnh thành trên cả nước.</p>
+	<p><a href="<?php echo esc_url( home_url( '/cua-hang/' ) ); ?>">Xem tất cả chi nhánh →</a></p>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'fy_footer_store', 'faryita_footer_store_shortcode' );

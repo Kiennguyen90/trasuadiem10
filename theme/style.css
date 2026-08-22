@@ -4075,6 +4075,7 @@ h1.entry-title {
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
 		gap: 20px;
+		padding: 14px 0;
 	}
 	.fy-header-nav-side {
 		display: flex;

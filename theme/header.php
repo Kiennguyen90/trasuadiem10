@@ -89,6 +89,7 @@
                                 </form>
                             </div>
                         <?php endif; ?>
+                        <a href="#fy-franchise" class="fy-header-cta" data-fy-open-franchise>Tư Vấn Nhượng Quyền</a>
                     </div>
                 </div>
 

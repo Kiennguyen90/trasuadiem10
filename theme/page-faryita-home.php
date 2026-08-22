@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Faryita Home
- * Trang chủ Trà Sữa Diễm 10: hero, giới thiệu, sản phẩm, menu.
+ * Trang chủ Trà Sữa DIEM 10: hero, giới thiệu, sản phẩm, menu.
  *
  * @package Art Blog
  */
@@ -10,16 +10,25 @@ get_header();
 $fy_banner_url  = get_template_directory_uri() . '/assets/images/brand/shop-banner.jpg';
 $fy_counter_url = get_template_directory_uri() . '/assets/images/brand/shop-counter.jpg';
 
-$fy_img_dir = get_template_directory_uri() . '/assets/images/products/';
-
-$fy_products = array(
-	array( 'image' => $fy_img_dir . 'tra-luu-do-thach-dua.jpg', 'name' => 'Trà Lựu Đỏ Thạch Dừa', 'price' => '35.000₫', 'slug' => 'tra-luu-do-thach-dua' ),
-	array( 'image' => $fy_img_dir . 'tra-xanh-lai-mat-ong.jpg', 'name' => 'Trà Xanh Lài Mật Ong', 'price' => '32.000₫', 'slug' => 'tra-xanh-lai-mat-ong' ),
-	array( 'image' => $fy_img_dir . 'tra-dai-hong-bao.jpg',     'name' => 'Trà Đại Hồng Bào',     'price' => '35.000₫', 'slug' => 'tra-dai-hong-bao' ),
-	array( 'image' => $fy_img_dir . 'hong-tra-latte.jpg',       'name' => 'Hồng Trà Latte',       'price' => '38.000₫', 'slug' => 'hong-tra-latte' ),
-	array( 'image' => $fy_img_dir . 'dau-latte.jpg',            'name' => 'Dâu Latte',            'price' => '38.000₫', 'slug' => 'dau-latte' ),
-	array( 'image' => $fy_img_dir . 'tran-chau-duong-den.jpg',  'name' => 'Trân Châu Đường Đen',  'price' => '36.000₫', 'old_price' => '40.000₫', 'sale' => true, 'slug' => 'tran-chau-duong-den' ),
+// Tab phân loại sản phẩm trang chủ — lấy sản phẩm WooCommerce thật theo tag, client tự
+// gắn/đổi tag ngay trong wp-admin (Sản phẩm > Thẻ) mà không cần sửa code.
+$fy_tabs = array(
+	'yeu-thich' => 'Yêu Thích',
+	'ban-chay'  => 'Bán Chạy',
+	'hot-trend' => 'Hot Trend',
 );
+$fy_tab_products = array();
+if ( class_exists( 'WooCommerce' ) ) {
+	foreach ( $fy_tabs as $fy_tag_slug => $fy_tab_label ) {
+		$fy_tab_products[ $fy_tag_slug ] = wc_get_products( array(
+			'status'  => 'publish',
+			'limit'   => 8,
+			'orderby' => 'menu_order',
+			'order'   => 'ASC',
+			'tag'     => array( $fy_tag_slug ),
+		) );
+	}
+}
 
 $fy_menu = array(
 	array( 'emoji' => '⚪', 'name' => 'Thạch Dừa',        'price' => '5.000₫', 'desc' => 'Giòn sần sật, thơm nhẹ vị dừa tự nhiên.' ),
@@ -37,26 +46,9 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	<section class="fy-hero">
 		<div class="fy-blob fy-blob-1" aria-hidden="true"></div>
 		<div class="fy-blob fy-blob-2" aria-hidden="true"></div>
-		<div class="fy-floaties" aria-hidden="true">
-			<span class="fy-float-item fy-float-1">🍃</span>
-			<span class="fy-float-item fy-float-2">🧋</span>
-			<span class="fy-float-item fy-float-3">🍓</span>
-			<span class="fy-float-item fy-float-4">🫧</span>
-			<span class="fy-float-item fy-float-5">🍯</span>
-		</div>
-		<div class="fy-container">
-			<p class="fy-eyebrow">Đậm Vị Trà – Ngọt Vị Yêu Thương</p>
-			<h1>Trà Sữa Điểm 10</h1>
-			<p>Trà sữa, trân châu và topping tươi mới pha chế mỗi ngày — nơi mỗi ly nước mang trọn tâm huyết gửi đến bạn.</p>
-			<a class="fy-btn" href="#fy-products">Xem Menu</a>
-			<div class="fy-hero-banner">
-				<div class="fy-wave-image">
-					<img src="<?php echo esc_url( $fy_banner_url ); ?>" alt="Không gian quán Trà Sữa Điểm 10">
-					<svg class="fy-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
-						<path d="M0,40 C200,100 400,0 600,40 C800,80 1000,10 1200,50 L1200,120 L0,120 Z"></path>
-					</svg>
-				</div>
-			</div>
+		<div class="fy-hero-banner owl-carousel fy-hero-slider">
+			<div class="item"><img src="<?php echo esc_url( $fy_banner_url ); ?>" alt="Không gian quán Trà Sữa Điểm 10"></div>
+			<div class="item"><img src="<?php echo esc_url( $fy_counter_url ); ?>" alt="Quầy pha chế Trà Sữa Điểm 10"></div>
 		</div>
 		<svg class="fy-wave fy-hero-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 			<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>
@@ -73,7 +65,7 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 			<div class="fy-col fy-reveal">
 				<span class="fy-leaf" aria-hidden="true">🧋</span>
 				<h2>Không Gian Ấm Cúng<br>Hương Trà Nồng Nàn</h2>
-				<p class="fy-desc">Từ quầy pha chế đến từng góc nhỏ, Diễm 10 chăm chút để mỗi lần ghé quán đều là một trải nghiệm thư giãn, trọn vị.</p>
+				<p class="fy-desc">Từ quầy pha chế đến từng góc nhỏ, DIEM 10 chăm chút để mỗi lần ghé quán đều là một trải nghiệm thư giãn, trọn vị.</p>
 				<div class="fy-stats">
 					<div><div class="fy-num">Trà Ngon</div>Nguyên liệu chọn lọc</div>
 					<div><div class="fy-num">Giá Tốt</div>Hợp túi tiền mỗi ngày</div>
@@ -83,7 +75,7 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 			</div>
 			<div class="fy-col fy-visual-photo fy-reveal fy-reveal-d2">
 				<div class="fy-wave-image">
-					<img src="<?php echo esc_url( $fy_counter_url ); ?>" alt="Quầy pha chế Trà Sữa Diễm 10">
+					<img src="<?php echo esc_url( $fy_counter_url ); ?>" alt="Quầy pha chế Trà Sữa DIEM 10">
 					<svg class="fy-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 						<path d="M0,50 C250,10 450,90 700,45 C900,10 1050,90 1200,40 L1200,120 L0,120 Z"></path>
 					</svg>
@@ -116,32 +108,38 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	<section class="fy-products" id="fy-products">
 		<div class="fy-container">
 			<h2 class="fy-reveal">Trà Sữa Đáng Thử Nhất</h2>
-			<div class="fy-grid">
-				<?php foreach ( $fy_products as $i => $p ) : ?>
-					<?php
-					$fy_product_link = ! empty( $p['slug'] ) ? home_url( '/san-pham/' . $p['slug'] . '/' ) : '';
-					?>
-					<a class="fy-card fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>" href="<?php echo esc_url( $fy_product_link ); ?>">
-						<div class="fy-circle">
-							<?php if ( ! empty( $p['image'] ) ) : ?>
-								<img src="<?php echo esc_url( $p['image'] ); ?>" alt="<?php echo esc_attr( $p['name'] ); ?>">
-							<?php else : ?>
-								<span aria-hidden="true"><?php echo esc_html( $p['emoji'] ); ?></span>
-							<?php endif; ?>
-							<?php if ( ! empty( $p['sale'] ) ) : ?>
-								<span class="fy-sale">SALE</span>
-							<?php endif; ?>
-						</div>
-						<h3><?php echo esc_html( $p['name'] ); ?></h3>
-						<div>
-							<span class="fy-price"><?php echo esc_html( $p['price'] ); ?></span>
-							<?php if ( ! empty( $p['old_price'] ) ) : ?>
-								<span class="fy-old"><?php echo esc_html( $p['old_price'] ); ?></span>
-							<?php endif; ?>
-						</div>
-					</a>
-				<?php endforeach; ?>
+
+			<div class="fy-tabs" role="tablist">
+				<?php $fy_first_tab = true; foreach ( $fy_tabs as $fy_tag_slug => $fy_tab_label ) : ?>
+					<button type="button" class="fy-tab-btn<?php echo $fy_first_tab ? ' is-active' : ''; ?>" data-fy-tab="<?php echo esc_attr( $fy_tag_slug ); ?>"><?php echo esc_html( $fy_tab_label ); ?></button>
+					<?php $fy_first_tab = false; endforeach; ?>
 			</div>
+
+			<?php $fy_first_tab = true; foreach ( $fy_tabs as $fy_tag_slug => $fy_tab_label ) : ?>
+				<div class="fy-grid" data-fy-panel="<?php echo esc_attr( $fy_tag_slug ); ?>" <?php echo $fy_first_tab ? '' : 'hidden'; ?>>
+					<?php
+					$fy_tab_items = $fy_tab_products[ $fy_tag_slug ] ?? array();
+					if ( $fy_tab_items ) :
+						foreach ( $fy_tab_items as $i => $fy_product ) :
+							$fy_image_id  = $fy_product->get_image_id();
+							$fy_image_url = $fy_image_id ? wp_get_attachment_image_url( $fy_image_id, 'medium' ) : wc_placeholder_img_src();
+							?>
+							<a class="fy-card fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>" href="<?php echo esc_url( $fy_product->get_permalink() ); ?>">
+								<div class="fy-circle">
+									<img src="<?php echo esc_url( $fy_image_url ); ?>" alt="<?php echo esc_attr( $fy_product->get_name() ); ?>">
+									<?php if ( $fy_product->is_on_sale() ) : ?>
+										<span class="fy-sale">SALE</span>
+									<?php endif; ?>
+								</div>
+								<h3><?php echo esc_html( $fy_product->get_name() ); ?></h3>
+							</a>
+						<?php endforeach;
+					else :
+						?>
+						<p style="grid-column:1/-1;text-align:center;color:#6b6b6b">Chưa có sản phẩm trong danh mục này.</p>
+					<?php endif; ?>
+				</div>
+				<?php $fy_first_tab = false; endforeach; ?>
 		</div>
 	</section>
 
@@ -170,6 +168,18 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 		<div class="fy-container fy-reveal">
 			<h2>Sẵn sàng thưởng thức ly trà sữa đầu tiên?</h2>
 			<a class="fy-btn" href="<?php echo esc_url( home_url( '/' ) ); ?>">Đặt Hàng Ngay</a>
+		</div>
+	</section>
+
+	<section class="fy-franchise" id="fy-franchise">
+		<div class="fy-container fy-franchise-grid fy-reveal">
+			<div class="fy-franchise-heading">
+				<h2>Đăng Ký Tư Vấn Nhượng Quyền Thương Hiệu</h2>
+			</div>
+
+			<div class="fy-franchise-form-wrap">
+				<?php faryita_render_franchise_form( 'home' ); ?>
+			</div>
 		</div>
 	</section>
 

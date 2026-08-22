@@ -61,15 +61,58 @@
 		});
 	}
 
+	function heroSlider() {
+		if (!window.jQuery || !window.jQuery.fn.owlCarousel) {
+			return;
+		}
+		var $slider = window.jQuery('.fy-hero-slider');
+		if (!$slider.length || $slider.children().length < 2) {
+			return;
+		}
+		$slider.owlCarousel({
+			items: 1,
+			loop: true,
+			nav: false,
+			dots: true,
+			autoplay: true,
+			autoplayTimeout: 45000,
+			autoplayHoverPause: true,
+			animateOut: 'fadeOut',
+			mouseDrag: false
+		});
+	}
+
+	function productTabs() {
+		var tabs = document.querySelectorAll('.fy-tab-btn');
+		if (!tabs.length) {
+			return;
+		}
+		tabs.forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var target = btn.getAttribute('data-fy-tab');
+				tabs.forEach(function (b) {
+					b.classList.toggle('is-active', b === btn);
+				});
+				document.querySelectorAll('[data-fy-panel]').forEach(function (panel) {
+					panel.hidden = panel.getAttribute('data-fy-panel') !== target;
+				});
+			});
+		});
+	}
+
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', function () {
 			reveal();
 			wishlistToggle();
 			relatedProductsCarousel();
+			heroSlider();
+			productTabs();
 		});
 	} else {
 		reveal();
 		wishlistToggle();
 		relatedProductsCarousel();
+		heroSlider();
+		productTabs();
 	}
 })();
