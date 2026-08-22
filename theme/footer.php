@@ -2,7 +2,7 @@
 /**
  * The template for displaying the footer
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 ?>
@@ -51,11 +51,11 @@
                 <div class="container">
                     <div class="flex-row">
 					<aside id="search-2" class="widget widget_search default_footer_search">
-                            <h2 class="widget-title"><?php esc_html_e('Search', 'art-blog'); ?></h2>
+                            <h2 class="widget-title"><?php esc_html_e('Search', 'milktea-90'); ?></h2>
                             <?php get_search_form(); ?>
                         </aside>
 						<aside id="categories-2" class="widget widget_categories">
-							<h2 class="widget-title"><?php esc_html_e('Tags', 'art-blog'); ?></h2>
+							<h2 class="widget-title"><?php esc_html_e('Tags', 'milktea-90'); ?></h2>
 							<div class="tagcloud">
 								<?php
 								$tags = get_tags();
@@ -69,13 +69,13 @@
 										'order'    => 'DESC',
 									));
 								} else {
-									echo '<p>' . esc_html__('No tags available. Add some tags to display here.', 'art-blog') . '</p>';
+									echo '<p>' . esc_html__('No tags available. Add some tags to display here.', 'milktea-90') . '</p>';
 								}
 								?>
 							</div>
 						</aside>
 				         <aside id="archives-2" class="widget widget_archive">
-				            <h2 class="widget-title"><?php esc_html_e('Archives', 'art-blog'); ?></h2>
+				            <h2 class="widget-title"><?php esc_html_e('Archives', 'milktea-90'); ?></h2>
 				            <?php get_calendar(); ?>
 				       </aside>
                     </div>

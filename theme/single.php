@@ -2,7 +2,7 @@
 /**
  * Single bài viết (Tin Tức) - style riêng Trà Sữa DIEM10.
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * Template Name: Faryita Liên Hệ
+ * Template Name: MilkTea-90 Liên Hệ
  * Trang liên hệ: form gửi thông tin khách hàng + thông tin cửa hàng.
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 

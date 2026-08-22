@@ -309,21 +309,21 @@ class Art_Blog_Breadcrumb_Trail {
     protected function set_labels() {
 
         $art_blog_defaults = array(
-            'browse'              => esc_html__( 'Browse:',                               'art-blog' ),
-            'aria_label'          => esc_attr_x( 'Breadcrumbs', 'breadcrumbs aria label', 'art-blog' ),
-            'home'                => esc_html__( 'Home',                                  'art-blog' ),
-            'error_404'           => esc_html__( '404 Not Found',                         'art-blog' ),
-            'archives'            => esc_html__( 'Archives',                              'art-blog' ),
+            'browse'              => esc_html__( 'Browse:',                               'milktea-90' ),
+            'aria_label'          => esc_attr_x( 'Breadcrumbs', 'breadcrumbs aria label', 'milktea-90' ),
+            'home'                => esc_html__( 'Home',                                  'milktea-90' ),
+            'error_404'           => esc_html__( '404 Not Found',                         'milktea-90' ),
+            'archives'            => esc_html__( 'Archives',                              'milktea-90' ),
             // Translators: %s is the search query.
-            'search'              => esc_html__( 'Search results for: %s',                'art-blog' ),
+            'search'              => esc_html__( 'Search results for: %s',                'milktea-90' ),
             // Translators: %s is the page number.
-            'paged'               => esc_html__( 'Page %s',                               'art-blog' ),
+            'paged'               => esc_html__( 'Page %s',                               'milktea-90' ),
             // Translators: %s is the page number.
-            'paged_comments'      => esc_html__( 'Comment Page %s',                       'art-blog' ),
+            'paged_comments'      => esc_html__( 'Comment Page %s',                       'milktea-90' ),
             // Translators: Minute archive title. %s is the minute time format.
-            'archive_minute'      => esc_html__( 'Minute %s',                             'art-blog' ),
+            'archive_minute'      => esc_html__( 'Minute %s',                             'milktea-90' ),
             // Translators: Weekly archive title. %s is the week date format.
-            'archive_week'        => esc_html__( 'Week %s',                               'art-blog' ),
+            'archive_week'        => esc_html__( 'Week %s',                               'milktea-90' ),
 
             // "%s" is replaced with the translated date/time format.
             'archive_minute_hour' => '%s',
@@ -783,7 +783,7 @@ class Art_Blog_Breadcrumb_Trail {
 
         // Add the minute + hour item.
         if ( true === $this->args['show_title'] )
-            $this->items[] = sprintf( $this->labels['archive_minute_hour'], get_the_time( esc_html_x( 'g:i a', 'minute and hour archives time format', 'art-blog' ) ) );
+            $this->items[] = sprintf( $this->labels['archive_minute_hour'], get_the_time( esc_html_x( 'g:i a', 'minute and hour archives time format', 'milktea-90' ) ) );
     }
 
     /**
@@ -800,7 +800,7 @@ class Art_Blog_Breadcrumb_Trail {
 
         // Add the minute item.
         if ( true === $this->args['show_title'] )
-            $this->items[] = sprintf( $this->labels['archive_minute'], get_the_time( esc_html_x( 'i', 'minute archives time format', 'art-blog' ) ) );
+            $this->items[] = sprintf( $this->labels['archive_minute'], get_the_time( esc_html_x( 'i', 'minute archives time format', 'milktea-90' ) ) );
     }
 
     /**
@@ -817,7 +817,7 @@ class Art_Blog_Breadcrumb_Trail {
 
         // Add the hour item.
         if ( true === $this->args['show_title'] )
-            $this->items[] = sprintf( $this->labels['archive_hour'], get_the_time( esc_html_x( 'g a', 'hour archives time format', 'art-blog' ) ) );
+            $this->items[] = sprintf( $this->labels['archive_hour'], get_the_time( esc_html_x( 'g a', 'hour archives time format', 'milktea-90' ) ) );
     }
 
     /**
@@ -833,9 +833,9 @@ class Art_Blog_Breadcrumb_Trail {
         $this->add_rewrite_front_items();
 
         // Get year, month, and day.
-        $art_blog_year  = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'art-blog' ) ) );
-        $art_blog_month = sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'art-blog' ) ) );
-        $art_blog_day   = sprintf( $this->labels['archive_day'],   get_the_time( esc_html_x( 'j', 'daily archives date format',   'art-blog' ) ) );
+        $art_blog_year  = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'milktea-90' ) ) );
+        $art_blog_month = sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'milktea-90' ) ) );
+        $art_blog_day   = sprintf( $this->labels['archive_day'],   get_the_time( esc_html_x( 'j', 'daily archives date format',   'milktea-90' ) ) );
 
         // Add the year and month items.
         $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $art_blog_year );
@@ -862,8 +862,8 @@ class Art_Blog_Breadcrumb_Trail {
         $this->add_rewrite_front_items();
 
         // Get the year and week.
-        $art_blog_year = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format', 'art-blog' ) ) );
-        $art_blog_week = sprintf( $this->labels['archive_week'],  get_the_time( esc_html_x( 'W', 'weekly archives date format', 'art-blog' ) ) );
+        $art_blog_year = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format', 'milktea-90' ) ) );
+        $art_blog_week = sprintf( $this->labels['archive_week'],  get_the_time( esc_html_x( 'W', 'weekly archives date format', 'milktea-90' ) ) );
 
         // Add the year item.
         $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $art_blog_year );
@@ -889,8 +889,8 @@ class Art_Blog_Breadcrumb_Trail {
         $this->add_rewrite_front_items();
 
         // Get the year and month.
-        $art_blog_year  = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'art-blog' ) ) );
-        $art_blog_month = sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'art-blog' ) ) );
+        $art_blog_year  = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'milktea-90' ) ) );
+        $art_blog_month = sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'milktea-90' ) ) );
 
         // Add the year item.
         $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y' ) ) ), $art_blog_year );
@@ -916,7 +916,7 @@ class Art_Blog_Breadcrumb_Trail {
         $this->add_rewrite_front_items();
 
         // Get the year.
-        $art_blog_year  = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'art-blog' ) ) );
+        $art_blog_year  = sprintf( $this->labels['archive_year'],  get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'milktea-90' ) ) );
 
         // Add the year item.
         if ( is_paged() )
@@ -1256,15 +1256,15 @@ class Art_Blog_Breadcrumb_Trail {
 
                 // If using the %year% tag, add a link to the yearly archive.
                 if ( '%year%' == $art_blog_tag )
-                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y', $art_blog_post_id ) ) ), sprintf( $this->labels['archive_year'], get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'art-blog' ) ) ) );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_year_link( get_the_time( 'Y', $art_blog_post_id ) ) ), sprintf( $this->labels['archive_year'], get_the_time( esc_html_x( 'Y', 'yearly archives date format',  'milktea-90' ) ) ) );
 
                 // If using the %monthnum% tag, add a link to the monthly archive.
                 elseif ( '%monthnum%' == $art_blog_tag )
-                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y', $art_blog_post_id ), get_the_time( 'm', $art_blog_post_id ) ) ), sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'art-blog' ) ) ) );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_month_link( get_the_time( 'Y', $art_blog_post_id ), get_the_time( 'm', $art_blog_post_id ) ) ), sprintf( $this->labels['archive_month'], get_the_time( esc_html_x( 'F', 'monthly archives date format', 'milktea-90' ) ) ) );
 
                 // If using the %day% tag, add a link to the daily archive.
                 elseif ( '%day%' == $art_blog_tag )
-                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( get_the_time( 'Y', $art_blog_post_id ), get_the_time( 'm', $art_blog_post_id ), get_the_time( 'd', $art_blog_post_id ) ) ), sprintf( $this->labels['archive_day'], get_the_time( esc_html_x( 'j', 'daily archives date format', 'art-blog' ) ) ) );
+                    $this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_day_link( get_the_time( 'Y', $art_blog_post_id ), get_the_time( 'm', $art_blog_post_id ), get_the_time( 'd', $art_blog_post_id ) ) ), sprintf( $this->labels['archive_day'], get_the_time( esc_html_x( 'j', 'daily archives date format', 'milktea-90' ) ) ) );
 
                 // If using the %author% tag, add a link to the post author archive.
                 elseif ( '%author%' == $art_blog_tag )

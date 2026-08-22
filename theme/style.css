@@ -1,22 +1,22 @@
 /*!
-Theme Name: Faryita
-Theme URI: https://www.revolutionwp.com/products/art-blog
-Author: revolutionwp
-Author URI: https://www.revolutionwp.com/
-Description: The Art Blog WordPress Theme is a visually refined and feature-rich template designed for creatives, writers, and hobbyists looking to share their ideas and inspirations. Whether you're running a personal, design, or photography blog, this theme provides a clean, stylish platform to express yourself. Fully responsive and retina-ready, it ensures your content looks sharp on any device. With flexible layout options and drag-and-drop customization, even beginners can create a polished blog without coding skills. The theme's elegant use of white space, thoughtful typography, and visual balance make it ideal for showcasing art, photos, or long-form writing. Built-in social sharing tools, SEO optimization, and customizable widgets help grow your audience and increase visibility. Whether you're exploring travel, wellness, self-improvement, or creative storytelling, the Art Blog Theme offers a modern, minimal aesthetic that adapts to your unique voice.
+Theme Name: MilkTea-90
+Theme URI: https://trasuadiem10.com
+Author: MilkTea-90
+Author URI: https://trasuadiem10.com
+Description: MilkTea-90 is the custom WordPress theme powering Trà Sữa DIEM10 - a milk tea shop site with product showcase, store locator, and franchise registration built on top of WooCommerce. Originally based on the Art Blog theme, it has since been fully redesigned and customized end-to-end for this business.
 Version: 1.0.666
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 7.2
 License: GNU General Prefer License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: art-blog
+Text Domain: milktea-90
 Tags: one-column, two-columns, left-sidebar, custom-background, custom-logo, custom-menu, featured-images, footer-widgets, custom-colors, custom-header, editor-style, rtl-language-support, sticky-post, theme-options, threaded-comments, blog, e-commerce, education, post-formats
 
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned.
 
-Art Blog is based on Underscores https://underscores.me/, (C) 2012-2020 Automattic, Inc.
+MilkTea-90 is based on Underscores https://underscores.me/, (C) 2012-2020 Automattic, Inc.
 Underscores is distributed under the terms of the GNU GPL v2 or later.
 
 Normalizing styles have been helped along thanks to the fine work of
@@ -4032,7 +4032,7 @@ h1.entry-title {
     color: #000;
     margin: 0 6px;
 }
-/* Faryita: logo ở giữa header + menu chia 2 bên (giống layout wujiateavn.com).
+/* MilkTea-90: logo ở giữa header + menu chia 2 bên (giống layout wujiateavn.com).
    File này (style.css) load ở MỌI trang — kể cả các trang không có faryita-custom.css
    (Giỏ hàng, Thanh toán, Tài khoản, bài viết blog...) — nên toàn bộ CSS cho header mới
    phải đặt ở đây, không phải faryita-custom.css, để không bị vỡ layout ở những trang đó.

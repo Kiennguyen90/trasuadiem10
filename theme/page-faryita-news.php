@@ -1,9 +1,9 @@
 <?php
 /**
- * Template Name: Faryita Tin Tức
- * Trang danh sách bài viết (Tin Tức) - theo style riêng của Faryita Shop.
+ * Template Name: MilkTea-90 Tin Tức
+ * Trang danh sách bài viết (Tin Tức) - theo style riêng của MilkTea-90.
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 

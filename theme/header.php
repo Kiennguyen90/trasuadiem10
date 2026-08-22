@@ -2,7 +2,7 @@
 /**
  * The header for our theme
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 ?>
 <!doctype html>
@@ -18,7 +18,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
-    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'art-blog' ); ?></a>
+    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'milktea-90' ); ?></a>
 
     <?php
     $art_blog_preloader_wrap = absint(get_theme_mod('art_blog_enable_preloader', 0));
@@ -79,12 +79,12 @@
                         <?php if (class_exists('WooCommerce')): ?>
                             <div class="product-search">
                                 <form method="get" class="woocommerce-product-search" action="<?php echo esc_url(home_url('/')); ?>">
-                                    <label for="product-search-field" class="screen-reader-text"><?php esc_html_e('Search Here', 'art-blog'); ?></label>
-                                    <input type="search" id="product-search-field" class="search-field" placeholder="<?php esc_attr_e('Search Here', 'art-blog'); ?>" value="<?php echo esc_attr(get_search_query()); ?>" name="s" />
+                                    <label for="product-search-field" class="screen-reader-text"><?php esc_html_e('Search Here', 'milktea-90'); ?></label>
+                                    <input type="search" id="product-search-field" class="search-field" placeholder="<?php esc_attr_e('Search Here', 'milktea-90'); ?>" value="<?php echo esc_attr(get_search_query()); ?>" name="s" />
                                     <input type="hidden" name="post_type" value="product" />
                                     <button type="submit">
                                         <span class="search-icon" aria-hidden="true"><i class="fas fa-search"></i></span>
-                                        <span class="screen-reader-text"><?php esc_html_e('Search', 'art-blog'); ?></span>
+                                        <span class="screen-reader-text"><?php esc_html_e('Search', 'milktea-90'); ?></span>
                                     </button>
                                 </form>
                             </div>
@@ -96,7 +96,7 @@
                 <?php // Menu đầy đủ + nút hamburger — chỉ hiển thị trên mobile (thay cho menu chia 2 bên). ?>
                 <nav id="site-navigation" class="main-navigation fy-mobile-nav">
                     <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                        <span class="screen-reader-text"><?php esc_html_e('Primary Menu', 'art-blog'); ?></span>
+                        <span class="screen-reader-text"><?php esc_html_e('Primary Menu', 'milktea-90'); ?></span>
                         <i class="fas fa-bars"></i>
                     </button>
                     <?php

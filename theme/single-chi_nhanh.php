@@ -3,7 +3,7 @@
  * Single: Chi Nhánh
  * Trang chi tiết 1 chi nhánh Trà Sữa DIEM 10, trình bày dạng bài viết (ảnh lớn + nội dung + bản đồ).
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Art Blog Theme Customizer
+ * MilkTea-90 Theme Customizer
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 function art_blog_customize_register( $wp_customize ) {
@@ -33,7 +33,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_panel('art_blog_panel', array(
 		'priority' => 25,
 		'capability' => 'edit_theme_options',
-		'title' => __('Art Blog Theme Options', 'art-blog'),
+		'title' => __('MilkTea-90 Theme Options', 'milktea-90'),
 	));
 
 	/*
@@ -53,8 +53,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_site_title_text',
 		array(
-			'label'       => __('Enable Title', 'art-blog'),
-			'description' => __('Enable or Disable Title from the site', 'art-blog'),
+			'label'       => __('Enable Title', 'milktea-90'),
+			'description' => __('Enable or Disable Title from the site', 'milktea-90'),
 			'section'     => 'title_tagline',
 			'type'        => 'checkbox',
 		)
@@ -73,8 +73,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_site_tagline_text',
 		array(
-			'label'       => __('Enable Tagline', 'art-blog'),
-			'description' => __('Enable or Disable Tagline from the site', 'art-blog'),
+			'label'       => __('Enable Tagline', 'milktea-90'),
+			'description' => __('Enable or Disable Tagline from the site', 'milktea-90'),
 			'section'     => 'title_tagline',
 			'type'        => 'checkbox',
 		)
@@ -93,7 +93,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_logo_width',
 		array(
-			'label'       => __('Logo Width in PX', 'art-blog'),
+			'label'       => __('Logo Width in PX', 'milktea-90'),
 			'section'     => 'title_tagline',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -110,7 +110,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 5,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('WooCommerce Custom Settings', 'art-blog'),
+		'title'          => __('WooCommerce Custom Settings', 'milktea-90'),
 		'panel'       => 'woocommerce',
 	));
 
@@ -127,7 +127,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_per_columns',
 		array(
-			'label'       => __('Product Per Single Row', 'art-blog'),
+			'label'       => __('Product Per Single Row', 'milktea-90'),
 			'section'     => 'woocommerce_custom_settings',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -151,7 +151,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_product_per_page',
 		array(
-			'label'       => __('Product Per One Page', 'art-blog'),
+			'label'       => __('Product Per One Page', 'milktea-90'),
 			'section'     => 'woocommerce_custom_settings',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -176,8 +176,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_related_product',
 		array(
-			'label'       => __('Enable Related Product', 'art-blog'),
-			'description' => __('Checked to show Related Product', 'art-blog'),
+			'label'       => __('Enable Related Product', 'milktea-90'),
+			'description' => __('Checked to show Related Product', 'milktea-90'),
 			'section'     => 'woocommerce_custom_settings',
 			'type'        => 'checkbox',
 		)
@@ -196,7 +196,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'custom_related_products_number',
 		array(
-			'label'       => __('Related Product Count', 'art-blog'),
+			'label'       => __('Related Product Count', 'milktea-90'),
 			'section'     => 'woocommerce_custom_settings',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -220,7 +220,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'custom_related_products_number_per_row',
 		array(
-			'label'       => __('Related Product Per Row', 'art-blog'),
+			'label'       => __('Related Product Per Row', 'milktea-90'),
 			'section'     => 'woocommerce_custom_settings',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -238,12 +238,12 @@ function art_blog_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control('art_blog_archive_product_layout',array(
         'type' => 'select',
-        'label' => esc_html__('Archive Product Layout','art-blog'),
+        'label' => esc_html__('Archive Product Layout','milktea-90'),
         'section' => 'woocommerce_custom_settings',
         'choices' => array(
-            'layout-1' => esc_html__('Sidebar On Right','art-blog'),
-            'layout-2' => esc_html__('Sidebar On Left','art-blog'),
-			'layout-3' => esc_html__('Full Width Layout','art-blog')
+            'layout-1' => esc_html__('Sidebar On Right','milktea-90'),
+            'layout-2' => esc_html__('Sidebar On Left','milktea-90'),
+			'layout-3' => esc_html__('Full Width Layout','milktea-90')
         ),
 	) );
 
@@ -254,12 +254,12 @@ function art_blog_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control('art_blog_single_product_layout',array(
         'type' => 'select',
-        'label' => esc_html__('Single Product Layout','art-blog'),
+        'label' => esc_html__('Single Product Layout','milktea-90'),
         'section' => 'woocommerce_custom_settings',
         'choices' => array(
-            'layout-1' => esc_html__('Sidebar On Right','art-blog'),
-            'layout-2' => esc_html__('Sidebar On Left','art-blog'),
-			'layout-3' => esc_html__('Full Width Layout','art-blog')
+            'layout-1' => esc_html__('Sidebar On Right','milktea-90'),
+            'layout-2' => esc_html__('Sidebar On Left','milktea-90'),
+			'layout-3' => esc_html__('Full Width Layout','milktea-90')
         ),
 	) );
 
@@ -270,13 +270,13 @@ function art_blog_customize_register( $wp_customize ) {
         'sanitize_callback' => 'art_blog_sanitize_choices'
     ));
     $wp_customize->add_control('art_blog_woocommerce_product_sale',array(
-        'label'       => esc_html__( 'Woocommerce Product Sale Positions','art-blog' ),
+        'label'       => esc_html__( 'Woocommerce Product Sale Positions','milktea-90' ),
         'type' => 'select',
         'section' => 'woocommerce_custom_settings',
         'choices' => array(
-            'Right' => __('Right','art-blog'),
-            'Left' => __('Left','art-blog'),
-            'Center' => __('Center','art-blog')
+            'Right' => __('Right','milktea-90'),
+            'Left' => __('Left','milktea-90'),
+            'Center' => __('Center','milktea-90')
         ),
     ) );
 
@@ -285,7 +285,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 5,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('Additional Options', 'art-blog'),
+		'title'          => __('Additional Options', 'milktea-90'),
 		'panel'       => 'art_blog_panel',
 	));
 
@@ -303,8 +303,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_preloader',
 		array(
-			'label'       => __('Enable Preloader', 'art-blog'),
-			'description' => __('Checked to show preloader', 'art-blog'),
+			'label'       => __('Enable Preloader', 'milktea-90'),
+			'description' => __('Checked to show preloader', 'milktea-90'),
 			'section'     => 'art_blog_additional_section',
 			'type'        => 'checkbox',
 		)
@@ -324,8 +324,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_breadcrumbs',
 		array(
-			'label'       => __('Enable Breadcrumbs', 'art-blog'),
-			'description' => __('Checked to show Breadcrumbs', 'art-blog'),
+			'label'       => __('Enable Breadcrumbs', 'milktea-90'),
+			'description' => __('Checked to show Breadcrumbs', 'milktea-90'),
 			'section'     => 'art_blog_additional_section',
 			'type'        => 'checkbox',
 		)
@@ -338,12 +338,12 @@ function art_blog_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control('art_blog_archive_layout',array(
         'type' => 'select',
-        'label' => esc_html__('Posts Layout','art-blog'),
+        'label' => esc_html__('Posts Layout','milktea-90'),
         'section' => 'art_blog_additional_section',
         'choices' => array(
-            'layout-1' => esc_html__('Sidebar On Right','art-blog'),
-            'layout-2' => esc_html__('Sidebar On Left','art-blog'),
-			'layout-3' => esc_html__('Full Width Layout','art-blog')
+            'layout-1' => esc_html__('Sidebar On Right','milktea-90'),
+            'layout-2' => esc_html__('Sidebar On Left','milktea-90'),
+			'layout-3' => esc_html__('Full Width Layout','milktea-90')
         ),
 	) );
 
@@ -354,12 +354,12 @@ function art_blog_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control('art_blog_post_layout',array(
         'type' => 'select',
-        'label' => esc_html__('Single Post Layout','art-blog'),
+        'label' => esc_html__('Single Post Layout','milktea-90'),
         'section' => 'art_blog_additional_section',
         'choices' => array(
-            'layout-1' => esc_html__('Sidebar On Right','art-blog'),
-            'layout-2' => esc_html__('Sidebar On Left','art-blog'),
-			'layout-3' => esc_html__('Full Width Layout','art-blog')
+            'layout-1' => esc_html__('Sidebar On Right','milktea-90'),
+            'layout-2' => esc_html__('Sidebar On Left','milktea-90'),
+			'layout-3' => esc_html__('Full Width Layout','milktea-90')
         ),
 	) );
 
@@ -370,12 +370,12 @@ function art_blog_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control('art_blog_page_layout',array(
         'type' => 'select',
-        'label' => esc_html__('Single Page Layout','art-blog'),
+        'label' => esc_html__('Single Page Layout','milktea-90'),
         'section' => 'art_blog_additional_section',
         'choices' => array(
-            'layout-1' => esc_html__('Sidebar On Right','art-blog'),
-            'layout-2' => esc_html__('Sidebar On Left','art-blog'),
-			'layout-3' => esc_html__('Full Width Layout','art-blog')
+            'layout-1' => esc_html__('Sidebar On Right','milktea-90'),
+            'layout-2' => esc_html__('Sidebar On Left','milktea-90'),
+			'layout-3' => esc_html__('Full Width Layout','milktea-90')
         ),
 	) );
 
@@ -384,7 +384,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 5,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('Blog Page Options', 'art-blog'),
+		'title'          => __('Blog Page Options', 'milktea-90'),
 		'panel'       => 'art_blog_panel',
 	));
 
@@ -395,8 +395,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_blog_post_title',array(
-		'label'       => __('Enable Blog Post Title', 'art-blog'),
-		'description' => __('Checked To Show Blog Post Title', 'art-blog'),
+		'label'       => __('Enable Blog Post Title', 'milktea-90'),
+		'description' => __('Checked To Show Blog Post Title', 'milktea-90'),
 		'section'     => 'art_blog_blog_post_section',
 		'type'        => 'checkbox',
 	));
@@ -408,8 +408,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_blog_post_meta',array(
-		'label'       => __('Enable Blog Post Meta', 'art-blog'),
-		'description' => __('Checked To Show Blog Post Meta Feilds', 'art-blog'),
+		'label'       => __('Enable Blog Post Meta', 'milktea-90'),
+		'description' => __('Checked To Show Blog Post Meta Feilds', 'milktea-90'),
 		'section'     => 'art_blog_blog_post_section',
 		'type'        => 'checkbox',
 	));
@@ -421,8 +421,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_blog_post_tags',array(
-		'label'       => __('Enable Blog Post Tags', 'art-blog'),
-		'description' => __('Checked To Show Blog Post Tags', 'art-blog'),
+		'label'       => __('Enable Blog Post Tags', 'milktea-90'),
+		'description' => __('Checked To Show Blog Post Tags', 'milktea-90'),
 		'section'     => 'art_blog_blog_post_section',
 		'type'        => 'checkbox',
 	));
@@ -434,8 +434,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_blog_post_image',array(
-		'label'       => __('Enable Blog Post Image', 'art-blog'),
-		'description' => __('Checked To Show Blog Post Image', 'art-blog'),
+		'label'       => __('Enable Blog Post Image', 'milktea-90'),
+		'description' => __('Checked To Show Blog Post Image', 'milktea-90'),
 		'section'     => 'art_blog_blog_post_section',
 		'type'        => 'checkbox',
 	));
@@ -447,8 +447,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_blog_post_content',array(
-		'label'       => __('Enable Blog Post Content', 'art-blog'),
-		'description' => __('Checked To Show Blog Post Content', 'art-blog'),
+		'label'       => __('Enable Blog Post Content', 'milktea-90'),
+		'description' => __('Checked To Show Blog Post Content', 'milktea-90'),
 		'section'     => 'art_blog_blog_post_section',
 		'type'        => 'checkbox',
 	));
@@ -460,8 +460,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_blog_post_button',array(
-		'label'       => __('Enable Blog Post Read More Button', 'art-blog'),
-		'description' => __('Checked To Show Blog Post Read More Button', 'art-blog'),
+		'label'       => __('Enable Blog Post Read More Button', 'milktea-90'),
+		'description' => __('Checked To Show Blog Post Read More Button', 'milktea-90'),
 		'section'     => 'art_blog_blog_post_section',
 		'type'        => 'checkbox',
 	));
@@ -473,12 +473,12 @@ function art_blog_customize_register( $wp_customize ) {
 	));
 	$wp_customize->add_control('art_blog_blog_Post_content_layout',array(
         'type' => 'select',
-        'label' => esc_html__('Blog Post Content Layout','art-blog'),
+        'label' => esc_html__('Blog Post Content Layout','milktea-90'),
         'section' => 'art_blog_blog_post_section',
         'choices' => array(
-            'Left' => esc_html__('Left','art-blog'),
-            'Center' => esc_html__('Center','art-blog'),
-            'Right' => esc_html__('Right','art-blog')
+            'Left' => esc_html__('Left','milktea-90'),
+            'Center' => esc_html__('Center','milktea-90'),
+            'Right' => esc_html__('Right','milktea-90')
         ),
 	) );
 
@@ -496,7 +496,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_excerpt_limit',
 		array(
-			'label'       => __('Excerpt Limit', 'art-blog'),
+			'label'       => __('Excerpt Limit', 'milktea-90'),
 			'section'     => 'art_blog_blog_post_section',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -521,7 +521,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_read_more_text',
 		array(
-			'label'       => __('Edit Button Text ', 'art-blog'),
+			'label'       => __('Edit Button Text ', 'milktea-90'),
 			'section'     => 'art_blog_blog_post_section',
 			'type'        => 'text',
 		)
@@ -532,7 +532,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 5,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('Single Post Options', 'art-blog'),
+		'title'          => __('Single Post Options', 'milktea-90'),
 		'panel'       => 'art_blog_panel',
 	));
 
@@ -543,8 +543,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_single_blog_post_title',array(
-		'label'       => __('Enable Single Post Title', 'art-blog'),
-		'description' => __('Checked To Show Single Blog Post Title', 'art-blog'),
+		'label'       => __('Enable Single Post Title', 'milktea-90'),
+		'description' => __('Checked To Show Single Blog Post Title', 'milktea-90'),
 		'section'     => 'art_blog_single_post_section',
 		'type'        => 'checkbox',
 	));
@@ -556,8 +556,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_single_blog_post_meta',array(
-		'label'       => __('Enable Single Post Meta', 'art-blog'),
-		'description' => __('Checked To Show Single Blog Post Meta Feilds', 'art-blog'),
+		'label'       => __('Enable Single Post Meta', 'milktea-90'),
+		'description' => __('Checked To Show Single Blog Post Meta Feilds', 'milktea-90'),
 		'section'     => 'art_blog_single_post_section',
 		'type'        => 'checkbox',
 	));
@@ -569,8 +569,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_single_blog_post_tags',array(
-		'label'       => __('Enable Single Post Tags', 'art-blog'),
-		'description' => __('Checked To Show Single Blog Post Tags', 'art-blog'),
+		'label'       => __('Enable Single Post Tags', 'milktea-90'),
+		'description' => __('Checked To Show Single Blog Post Tags', 'milktea-90'),
 		'section'     => 'art_blog_single_post_section',
 		'type'        => 'checkbox',
 	));
@@ -582,8 +582,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_single_post_image',array(
-		'label'       => __('Enable Single Post Image', 'art-blog'),
-		'description' => __('Checked To Show Single Post Image', 'art-blog'),
+		'label'       => __('Enable Single Post Image', 'milktea-90'),
+		'description' => __('Checked To Show Single Post Image', 'milktea-90'),
 		'section'     => 'art_blog_single_post_section',
 		'type'        => 'checkbox',
 	));
@@ -595,8 +595,8 @@ function art_blog_customize_register( $wp_customize ) {
 		'sanitize_callback' => 'art_blog_sanitize_checkbox',
 	));
 	$wp_customize->add_control('art_blog_enable_single_blog_post_content',array(
-		'label'       => __('Enable Single Post Content', 'art-blog'),
-		'description' => __('Checked To Show Single Blog Post Content', 'art-blog'),
+		'label'       => __('Enable Single Post Content', 'milktea-90'),
+		'description' => __('Checked To Show Single Blog Post Content', 'milktea-90'),
 		'section'     => 'art_blog_single_post_section',
 		'type'        => 'checkbox',
 	));
@@ -615,8 +615,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_related_post',
 		array(
-			'label'       => __('Enable Related Post', 'art-blog'),
-			'description' => __('Checked to show Related Post', 'art-blog'),
+			'label'       => __('Enable Related Post', 'milktea-90'),
+			'description' => __('Checked to show Related Post', 'milktea-90'),
 			'section'     => 'art_blog_single_post_section',
 			'type'        => 'checkbox',
 		)
@@ -636,7 +636,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_related_post_text',
 		array(
-			'label'       => __('Edit Related Post Text ', 'art-blog'),
+			'label'       => __('Edit Related Post Text ', 'milktea-90'),
 			'section'     => 'art_blog_single_post_section',
 			'type'        => 'text',
 		)
@@ -656,7 +656,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_related_post_count',
 		array(
-			'label'       => __('Related Post Count', 'art-blog'),
+			'label'       => __('Related Post Count', 'milktea-90'),
 			'section'     => 'art_blog_single_post_section',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -676,7 +676,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 1,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('Global Color Options', 'art-blog'),
+		'title'          => __('Global Color Options', 'milktea-90'),
 		'panel'       => 'art_blog_panel',
 	));
 
@@ -692,7 +692,7 @@ function art_blog_customize_register( $wp_customize ) {
 		$wp_customize, 
 		'art_blog_primary_color',
 		array(
-			'label'      => esc_html__( 'Primary Color', 'art-blog' ),
+			'label'      => esc_html__( 'Primary Color', 'milktea-90' ),
 			'section'    => 'art_blog_global_color_section',
 			'settings'   => 'art_blog_primary_color',
 		) ) 
@@ -706,7 +706,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 5,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('Main Slider Options', 'art-blog'),
+		'title'          => __('Main Slider Options', 'milktea-90'),
 		'panel'       => 'art_blog_panel',
 	));
 
@@ -724,8 +724,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_slider',
 		array(
-			'label'       => __('Enable Main Slider', 'art-blog'),
-			'description' => __('Checked to show the main slider', 'art-blog'),
+			'label'       => __('Enable Main Slider', 'milktea-90'),
+			'description' => __('Checked to show the main slider', 'milktea-90'),
 			'section'     => 'art_blog_slider_section',
 			'type'        => 'checkbox',
 		)
@@ -748,8 +748,8 @@ function art_blog_customize_register( $wp_customize ) {
 			new WP_Customize_Image_Control( $wp_customize, 
 				'art_blog_slider_image'.$i, 
 				array(
-			        'label' => __('Edit Slider Image ', 'art-blog') .$i,
-			        'description' => __('Edit the slider image.', 'art-blog'),
+			        'label' => __('Edit Slider Image ', 'milktea-90') .$i,
+			        'description' => __('Edit the slider image.', 'milktea-90'),
 			        'section' => 'art_blog_slider_section',
 				)
 			)
@@ -769,8 +769,8 @@ function art_blog_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			'art_blog_slider_heading'.$i,
 			array(
-				'label'       => __('Edit Heading Text ', 'art-blog') .$i,
-				'description' => __('Edit the slider heading text.', 'art-blog'),
+				'label'       => __('Edit Heading Text ', 'milktea-90') .$i,
+				'description' => __('Edit the slider heading text.', 'milktea-90'),
 				'section'     => 'art_blog_slider_section',
 				'type'        => 'text',
 			)
@@ -790,8 +790,8 @@ function art_blog_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			'art_blog_slider_text'.$i,
 			array(
-				'label'       => __('Edit Content Text ', 'art-blog') .$i,
-				'description' => __('Edit the slider content text.', 'art-blog'),
+				'label'       => __('Edit Content Text ', 'milktea-90') .$i,
+				'description' => __('Edit the slider content text.', 'milktea-90'),
 				'section'     => 'art_blog_slider_section',
 				'type'        => 'text',
 			)
@@ -810,8 +810,8 @@ function art_blog_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			'art_blog_slider_button1_text'.$i,
 			array(
-				'label'       => __('Edit Button #1 Text ', 'art-blog') .$i,
-				'description' => __('Edit the slider button text.', 'art-blog'),
+				'label'       => __('Edit Button #1 Text ', 'milktea-90') .$i,
+				'description' => __('Edit the slider button text.', 'milktea-90'),
 				'section'     => 'art_blog_slider_section',
 				'type'        => 'text',
 			)
@@ -831,8 +831,8 @@ function art_blog_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			'art_blog_slider_button1_link'.$i,
 			array(
-				'label'       => __('Edit Button #1 URL ', 'art-blog') .$i,
-				'description' => __('Edit the slider button url.', 'art-blog'),
+				'label'       => __('Edit Button #1 URL ', 'milktea-90') .$i,
+				'description' => __('Edit the slider button url.', 'milktea-90'),
 				'section'     => 'art_blog_slider_section',
 				'type'        => 'url',
 			)
@@ -848,7 +848,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 5,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('Our Bestseller Section', 'art-blog'),
+		'title'          => __('Our Bestseller Section', 'milktea-90'),
 		'panel'       => 'art_blog_panel',
 	));
 
@@ -866,8 +866,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_product_section',
 		array(
-			'label'       => __('Enable Our Bestseller Section', 'art-blog'),
-			'description' => __('Checked to show Our Bestseller section', 'art-blog'),
+			'label'       => __('Enable Our Bestseller Section', 'milktea-90'),
+			'description' => __('Checked to show Our Bestseller section', 'milktea-90'),
 			'section'     => 'art_blog_project_section',
 			'type'        => 'checkbox',
 		)
@@ -883,7 +883,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control( 
 		'art_blog_section_short_title',
 		array(
-		    'label'   		=> __('Add Short Title','art-blog'),
+		    'label'   		=> __('Add Short Title','milktea-90'),
 		    'section'		=> 'art_blog_project_section',
 			'type' 			=> 'text',
 		)
@@ -899,7 +899,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control( 
 		'art_blog_section_title',
 		array(
-		    'label'   		=> __('Add Title','art-blog'),
+		    'label'   		=> __('Add Title','milktea-90'),
 		    'section'		=> 'art_blog_project_section',
 			'type' 			=> 'text',
 		)
@@ -915,7 +915,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control( 
 		'art_blog_section_product_content',
 		array(
-		    'label'   		=> __('Add Content','art-blog'),
+		    'label'   		=> __('Add Content','milktea-90'),
 		    'section'		=> 'art_blog_project_section',
 			'type' 			=> 'text',
 		)
@@ -934,7 +934,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_view_more_button_text',
 		array(
-			'label'       => __('Edit Button Text ', 'art-blog'),
+			'label'       => __('Edit Button Text ', 'milktea-90'),
 			'section'     => 'art_blog_project_section',
 			'type'        => 'text',
 		)
@@ -953,7 +953,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_view_more_button_link',
 		array(
-			'label'       => __('Edit Button Link ', 'art-blog'),
+			'label'       => __('Edit Button Link ', 'milktea-90'),
 			'section'     => 'art_blog_project_section',
 			'type'        => 'url',
 		)
@@ -981,7 +981,7 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control('art_blog_product_category',array(
 		'type'    => 'select',
 		'choices' => $cat_posts,
-		'label' => __('Select Product Category','art-blog'),
+		'label' => __('Select Product Category','milktea-90'),
 		'section' => 'art_blog_project_section',
 	));
 
@@ -993,7 +993,7 @@ function art_blog_customize_register( $wp_customize ) {
 		'priority'       => 5,
 		'capability'     => 'edit_theme_options',
 		'theme_supports' => '',
-		'title'          => __('Footer Options', 'art-blog'),
+		'title'          => __('Footer Options', 'milktea-90'),
 		'panel'       => 'art_blog_panel',
 	));
 
@@ -1010,8 +1010,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_footer',
 		array(
-			'label'       => __('Enable Footer', 'art-blog'),
-			'description' => __('Checked to show Footer', 'art-blog'),
+			'label'       => __('Enable Footer', 'milktea-90'),
+			'description' => __('Checked to show Footer', 'milktea-90'),
 			'section'     => 'art_blog_footer_section',
 			'type'        => 'checkbox',
 		)
@@ -1025,7 +1025,7 @@ function art_blog_customize_register( $wp_customize ) {
         'sanitize_callback' => 'esc_url_raw',
     ));
     $wp_customize->add_control( new WP_Customize_Image_Control($wp_customize,'art_blog_footer_bg_image',array(
-        'label' => __('Footer Background Image','art-blog'),
+        'label' => __('Footer Background Image','milktea-90'),
         'section' => 'art_blog_footer_section',
         'priority' => 1,
     )));
@@ -1044,8 +1044,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_footer_social_menu',
 		array(
-			'label'       => __('Enable Footer Social Menu', 'art-blog'),
-			'description' => __('Checked to show the footer social menu. Go to Dashboard >> Appearance >> Menus >> Create New Menu >> Add Custom Link >> Add Social Menu >> Checked Social Menu >> Save Menu.', 'art-blog'),
+			'label'       => __('Enable Footer Social Menu', 'milktea-90'),
+			'description' => __('Checked to show the footer social menu. Go to Dashboard >> Appearance >> Menus >> Create New Menu >> Add Custom Link >> Add Social Menu >> Checked Social Menu >> Save Menu.', 'milktea-90'),
 			'section'     => 'art_blog_footer_section',
 			'type'        => 'checkbox',
 		)
@@ -1065,8 +1065,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_enable_go_to_top_option',
 		array(
-			'label'       => __('Enable Go To Top', 'art-blog'),
-			'description' => __('Checked to enable Go To Top option.', 'art-blog'),
+			'label'       => __('Enable Go To Top', 'milktea-90'),
+			'description' => __('Checked to enable Go To Top option.', 'milktea-90'),
 			'section'     => 'art_blog_footer_section',
 			'type'        => 'checkbox',
 		)
@@ -1081,11 +1081,11 @@ function art_blog_customize_register( $wp_customize ) {
     $wp_customize->add_control('art_blog_go_to_top_position',array(
         'type' => 'select',
         'section' => 'art_blog_footer_section',
-        'label' => esc_html__('Go To Top Positions','art-blog'),
+        'label' => esc_html__('Go To Top Positions','milktea-90'),
         'choices' => array(
-            'Right' => __('Right','art-blog'),
-            'Left' => __('Left','art-blog'),
-            'Center' => __('Center','art-blog')
+            'Right' => __('Right','milktea-90'),
+            'Left' => __('Left','milktea-90'),
+            'Center' => __('Center','milktea-90')
         ),
     ) );
 
@@ -1103,8 +1103,8 @@ function art_blog_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'art_blog_copyright_option',
 		array(
-			'label'       => __('Edit Copyright Text', 'art-blog'),
-			'description' => __('Edit the Footer Copyright Section.', 'art-blog'),
+			'label'       => __('Edit Copyright Text', 'milktea-90'),
+			'description' => __('Edit the Footer Copyright Section.', 'milktea-90'),
 			'section'     => 'art_blog_footer_section',
 			'type'        => 'text',
 		)
@@ -1199,20 +1199,8 @@ final class Art_Blog_Customize {
 	 * @return void
 	*/
 	public function sections( $art_blog_manager ) {
-		// Load custom sections.
-		load_template( trailingslashit( get_template_directory() ) . '/revolution/inc/section-pro.php' );
-
-		// Register custom section types.
-		$art_blog_manager->register_section_type( 'Art_Blog_Customize_Section_Pro' );
-
-		// Register sections.
-		$art_blog_manager->add_section( new Art_Blog_Customize_Section_Pro( $art_blog_manager,'art_blog_go_pro', array(
-			'priority'   => 1,
-			'title'    => esc_html__( 'Art Blog Pro', 'art-blog' ),
-			'pro_text' => esc_html__( 'Buy Pro', 'art-blog' ),
-			'pro_url'    => esc_url( ART_BLOG_BUY_NOW ),
-		) )	);
-
+		// "Buy Pro" upsell panel removed - MilkTea-90 is a fully custom theme,
+		// not sold as a product, so there is no Pro upgrade to advertise here.
 	}
 
 	/**

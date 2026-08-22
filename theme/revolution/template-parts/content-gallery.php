@@ -2,7 +2,7 @@
 /**
  * Template part for displaying posts
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 ?>
@@ -84,7 +84,7 @@
 			<?php
 				$post_tags = get_the_tags();
 				if ( $post_tags ) {
-					echo '<div class="post-tags"><strong>' . esc_html__('Post Tags: ', 'art-blog') . '</strong>';
+					echo '<div class="post-tags"><strong>' . esc_html__('Post Tags: ', 'milktea-90') . '</strong>';
 					the_tags('', ', ', '');
 					echo '</div>';
 				}
@@ -96,7 +96,7 @@
 				<?php
 					$post_tags = get_the_tags();
 					if ( $post_tags ) {
-						echo '<div class="post-tags"><strong>' . esc_html__('Post Tags: ', 'art-blog') . '</strong>';
+						echo '<div class="post-tags"><strong>' . esc_html__('Post Tags: ', 'milktea-90') . '</strong>';
 						the_tags('', ', ', '');
 						echo '</div>';
 					}
@@ -158,10 +158,10 @@
 					<?php // Check if 'Continue Reading' button should be displayed
 					$art_blog_enable_read_more = absint(get_theme_mod('art_blog_enable_blog_post_button', 1));
 					if ($art_blog_enable_read_more == 1) {
-						if ( get_theme_mod( 'art_blog_read_more_text', __('Continue Reading....', 'art-blog') ) ) :
+						if ( get_theme_mod( 'art_blog_read_more_text', __('Continue Reading....', 'milktea-90') ) ) :
 							?>
 							<a href="<?php the_permalink(); ?>" class="btn read-btn text-uppercase">
-								<?php echo esc_html( get_theme_mod( 'art_blog_read_more_text', __('Continue Reading....', 'art-blog') ) ); ?>
+								<?php echo esc_html( get_theme_mod( 'art_blog_read_more_text', __('Continue Reading....', 'milktea-90') ) ); ?>
 							</a>
 							<?php
 						endif;
@@ -170,7 +170,7 @@
 			<?php
 			wp_link_pages(
 				array(
-					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'art-blog' ),
+					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'milktea-90' ),
 					'after'  => '</div>',
 				)
 			);

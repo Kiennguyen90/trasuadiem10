@@ -1,6 +1,6 @@
-=== Faryita ===
+=== MilkTea-90 ===
 
-Contributors: revolutionwp
+Contributors: milktea-90
 Tags: one-column, two-columns, left-sidebar, custom-background, custom-logo, custom-menu, featured-images, footer-widgets, custom-colors, custom-header, editor-style, rtl-language-support, sticky-post, theme-options, threaded-comments, blog, e-commerce, education, post-formats
 Requires at least: 5.5
 Requires PHP: 7.2
@@ -11,15 +11,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-The Art Blog WordPress Theme is a visually refined and feature-rich template designed for creatives, writers, and hobbyists looking to share their ideas and inspirations. Whether you're running a personal, design, or photography blog, this theme provides a clean, stylish platform to express yourself. Fully responsive and retina-ready, it ensures your content looks sharp on any device. With flexible layout options and drag-and-drop customization, even beginners can create a polished blog without coding skills. The theme's elegant use of white space, thoughtful typography, and visual balance make it ideal for showcasing art, photos, or long-form writing. Built-in social sharing tools, SEO optimization, and customizable widgets help grow your audience and increase visibility. Whether you're exploring travel, wellness, self-improvement, or creative storytelling, the Art Blog Theme offers a modern, minimal aesthetic that adapts to your unique voice.
+MilkTea-90 is the custom WordPress theme powering Trà Sữa DIEM10 - a milk tea shop site with product showcase, store locator, and franchise registration built on top of WooCommerce. Originally based on the Art Blog theme, it has since been fully redesigned and customized end-to-end for this business.
 
 == License ===
 
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Art Blog WordPress Theme, Copyright 2025 Revolution WP
-Art Blog is distributed under the terms of the GNU General Public License v2
+MilkTea-90 WordPress Theme, Copyright 2026 Trà Sữa DIEM10
+MilkTea-90 is distributed under the terms of the GNU General Public License v2
 
 == Credits ==
 

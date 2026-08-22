@@ -2,7 +2,7 @@
 /**
  * Template part for displaying page content in page.php
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 ?>
@@ -20,7 +20,7 @@
 
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'art-blog' ),
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'milktea-90' ),
 				'after'  => '</div>',
 			)
 		);
@@ -34,7 +34,7 @@
 				sprintf(
 					wp_kses(
 						/* translators: %s: Name of current post. Only visible to screen readers */
-						__( 'Edit <span class="screen-reader-text">%s</span>', 'art-blog' ),
+						__( 'Edit <span class="screen-reader-text">%s</span>', 'milktea-90' ),
 						array(
 							'span' => array(
 								'class' => array(),

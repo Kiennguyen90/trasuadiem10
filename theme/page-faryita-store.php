@@ -1,10 +1,10 @@
 <?php
 /**
- * Template Name: Faryita Cửa Hàng
+ * Template Name: MilkTea-90 Cửa Hàng
  * Trang danh sách chi nhánh Trà Sữa DIEM 10: layout 2 cột (tìm kiếm/lọc/danh sách bên trái, bản đồ bên phải)
  * lấy cảm hứng từ https://wujiateavn.com/cua-hang/
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 

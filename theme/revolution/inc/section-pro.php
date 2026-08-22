@@ -16,7 +16,7 @@ class Art_Blog_Customize_Section_Pro extends WP_Customize_Section {
 	 * @access public
 	 * @var    string
 	 */
-	public $type = 'art-blog';
+	public $type = 'milktea-90';
 
 	/**
 	 * Custom button text to output.

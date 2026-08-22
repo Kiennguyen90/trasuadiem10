@@ -2,7 +2,7 @@
 /**
  * The template for displaying 404 pages (not found)
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 get_header();
@@ -13,10 +13,10 @@ get_header();
 		<main id="primary" class="site-main">
 			<section class="error-404 not-found">
 				<header class="page-header">
-					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'art-blog' ); ?></h1>
+					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'milktea-90' ); ?></h1>
 				</header>
 				<div class="page-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'art-blog' ); ?></p>
+					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'milktea-90' ); ?></p>
 					<?php get_search_form(); ?>
 				</div>
 			</section>

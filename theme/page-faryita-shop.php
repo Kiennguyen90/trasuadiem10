@@ -3,7 +3,7 @@
  * Template Name: Trà Sữa DIEM10
  * Trang Cửa Hàng - danh sách sản phẩm & trang chi tiết sản phẩm.
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 

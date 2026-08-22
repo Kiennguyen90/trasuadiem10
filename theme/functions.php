@@ -1,8 +1,8 @@
 <?php
 /**
- * Art Blog functions and definitions
+ * MilkTea-90 functions and definitions
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 // System Optimizer Integration
@@ -13,7 +13,7 @@ if ( ! defined( 'ART_BLOG_VERSION' ) ) {
 
 function art_blog_setup() {
 
-	load_theme_textdomain( 'art-blog', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'milktea-90', get_template_directory() . '/languages' );
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
@@ -23,8 +23,8 @@ function art_blog_setup() {
 
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'art-blog' ),
-			'social-menu' => esc_html__('Social Menu', 'art-blog'),
+			'menu-1' => esc_html__( 'Primary', 'milktea-90' ),
+			'social-menu' => esc_html__('Social Menu', 'milktea-90'),
 		)
 	);
 
@@ -122,9 +122,9 @@ add_action( 'after_setup_theme', 'art_blog_content_width', 0 );
 function art_blog_widgets_init() {
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'art-blog' ),
+			'name'          => esc_html__( 'Sidebar', 'milktea-90' ),
 			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'art-blog' ),
+			'description'   => esc_html__( 'Add widgets here.', 'milktea-90' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -134,9 +134,9 @@ function art_blog_widgets_init() {
 
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Footer 1', 'art-blog' ),
+			'name'          => esc_html__( 'Footer 1', 'milktea-90' ),
 			'id'            => 'footer-1',
-			'description'   => esc_html__( 'Add widgets here.', 'art-blog' ),
+			'description'   => esc_html__( 'Add widgets here.', 'milktea-90' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -146,9 +146,9 @@ function art_blog_widgets_init() {
 
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Footer 2', 'art-blog' ),
+			'name'          => esc_html__( 'Footer 2', 'milktea-90' ),
 			'id'            => 'footer-2',
-			'description'   => esc_html__( 'Add widgets here.', 'art-blog' ),
+			'description'   => esc_html__( 'Add widgets here.', 'milktea-90' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -158,9 +158,9 @@ function art_blog_widgets_init() {
 
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Footer 3', 'art-blog' ),
+			'name'          => esc_html__( 'Footer 3', 'milktea-90' ),
 			'id'            => 'footer-3',
-			'description'   => esc_html__( 'Add widgets here.', 'art-blog' ),
+			'description'   => esc_html__( 'Add widgets here.', 'milktea-90' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -230,7 +230,7 @@ function art_blog_scripts() {
 }
 add_action('wp_enqueue_scripts', 'art_blog_scripts');
 
-// Faryita custom pages (Home, Our Story) + WooCommerce shop/product pages shared stylesheet
+// MilkTea-90 custom pages (Home, Our Story) + WooCommerce shop/product pages shared stylesheet
 function faryita_custom_page_styles() {
     $faryita_templates = array(
         'page-faryita-home.php',
@@ -271,7 +271,7 @@ add_filter( 'get_custom_logo', 'faryita_custom_logo_override' );
 
 /**
  * Chia menu chính (menu-1) thành 2 nửa trái/phải để hiển thị hai bên logo (giữa header),
- * theo layout tham khảo từ wujiateavn.com. Menu hiện tại của Faryita chỉ có các mục cấp 1
+ * theo layout tham khảo từ wujiateavn.com. Menu hiện tại của MilkTea-90 chỉ có các mục cấp 1
  * (không có submenu), nên chỉ cần lọc theo menu_item_parent = 0 là đủ.
  *
  * @return array{0: WP_Post[], 1: WP_Post[]} [mục bên trái, mục bên phải]
@@ -369,7 +369,7 @@ if (!function_exists('art_blog_related_post')) :
 		if($art_blog_related_post_wrap == 1){ ?>
                 <div class="related-post">
                     
-                    <h2 class="post-title"><?php esc_html_e(get_theme_mod('art_blog_related_post_text', __('Related Post', 'art-blog'))); ?></h2>
+                    <h2 class="post-title"><?php esc_html_e(get_theme_mod('art_blog_related_post_text', __('Related Post', 'milktea-90'))); ?></h2>
                     <?php
                     $art_blog_cat_post_args = array(
                         'category__in' => $art_blog_category_ids,
@@ -501,7 +501,7 @@ require get_template_directory() . '/revolution/inc/breadcrumbs.php';
 //////////////////////////////////////////////   Function for Translation Error   //////////////////////////////////////////////////////
 function art_blog_enqueue_function() {
 
-    define('ART_BLOG_BUY_NOW',__('https://www.revolutionwp.com/products/art-blog-wordpress-theme','art-blog'));
+    define('ART_BLOG_BUY_NOW',__('https://www.revolutionwp.com/products/art-blog-wordpress-theme','milktea-90'));
 
 }
 add_action( 'after_setup_theme', 'art_blog_enqueue_function' );
@@ -646,7 +646,7 @@ function faryita_wrap_loop_thumbnail_for_zoom( $fy_image ) {
 function faryita_add_ingredients_metabox() {
 	add_meta_box(
 		'faryita_ingredients',
-		__( 'Thành Phần (Faryita)', 'art-blog' ),
+		__( 'Thành Phần (MilkTea-90)', 'milktea-90' ),
 		'faryita_render_ingredients_metabox',
 		'product',
 		'normal',
@@ -659,7 +659,7 @@ function faryita_render_ingredients_metabox( $post ) {
 	wp_nonce_field( 'faryita_save_ingredients', 'faryita_ingredients_nonce' );
 	$fy_ingredients = get_post_meta( $post->ID, '_fy_ingredients', true );
 	?>
-	<p><?php esc_html_e( 'Mỗi thành phần nhập trên 1 dòng. Để trống nếu muốn dùng nội dung mặc định của theme.', 'art-blog' ); ?></p>
+	<p><?php esc_html_e( 'Mỗi thành phần nhập trên 1 dòng. Để trống nếu muốn dùng nội dung mặc định của theme.', 'milktea-90' ); ?></p>
 	<textarea name="fy_ingredients" rows="5" style="width:100%;"><?php echo esc_textarea( $fy_ingredients ); ?></textarea>
 	<?php
 }
@@ -688,10 +688,10 @@ add_action( 'save_post_product', 'faryita_save_ingredients_metabox' );
  */
 function faryita_nutrition_badges() {
 	return array(
-		'gluten_free'       => __( 'Không Gluten', 'art-blog' ),
-		'sugar_free'        => __( 'Không Đường Tinh Luyện', 'art-blog' ),
-		'preservative_free' => __( 'Không Chất Bảo Quản', 'art-blog' ),
-		'msg_free'          => __( 'Không Chất Tạo Ngọt Nhân Tạo / MSG', 'art-blog' ),
+		'gluten_free'       => __( 'Không Gluten', 'milktea-90' ),
+		'sugar_free'        => __( 'Không Đường Tinh Luyện', 'milktea-90' ),
+		'preservative_free' => __( 'Không Chất Bảo Quản', 'milktea-90' ),
+		'msg_free'          => __( 'Không Chất Tạo Ngọt Nhân Tạo / MSG', 'milktea-90' ),
 	);
 }
 
@@ -710,7 +710,7 @@ function faryita_nutrition_badge_pill_lines() {
 function faryita_add_nutrition_metabox() {
 	add_meta_box(
 		'faryita_nutrition',
-		__( 'Lợi Ích Dinh Dưỡng (Faryita)', 'art-blog' ),
+		__( 'Lợi Ích Dinh Dưỡng (MilkTea-90)', 'milktea-90' ),
 		'faryita_render_nutrition_metabox',
 		'product',
 		'normal',
@@ -723,10 +723,10 @@ function faryita_render_nutrition_metabox( $post ) {
 	wp_nonce_field( 'faryita_save_nutrition', 'faryita_nutrition_nonce' );
 	$fy_note = get_post_meta( $post->ID, '_fy_nutrition_note', true );
 	?>
-	<p><?php esc_html_e( 'Ghi chú lợi ích dinh dưỡng (để trống nếu không cần hiển thị đoạn ghi chú).', 'art-blog' ); ?></p>
+	<p><?php esc_html_e( 'Ghi chú lợi ích dinh dưỡng (để trống nếu không cần hiển thị đoạn ghi chú).', 'milktea-90' ); ?></p>
 	<textarea name="fy_nutrition_note" rows="3" style="width:100%;"><?php echo esc_textarea( $fy_note ); ?></textarea>
 
-	<p style="margin-top:16px;"><?php esc_html_e( 'Chọn các badge phù hợp với sản phẩm này:', 'art-blog' ); ?></p>
+	<p style="margin-top:16px;"><?php esc_html_e( 'Chọn các badge phù hợp với sản phẩm này:', 'milktea-90' ); ?></p>
 	<?php foreach ( faryita_nutrition_badges() as $fy_key => $fy_label ) : ?>
 		<label style="display:block;margin-bottom:6px;">
 			<input type="checkbox" name="fy_badge_<?php echo esc_attr( $fy_key ); ?>" value="1" <?php checked( get_post_meta( $post->ID, '_fy_badge_' . $fy_key, true ), '1' ); ?> />
@@ -759,32 +759,32 @@ add_action( 'save_post_product', 'faryita_save_nutrition_metabox' );
 
 /**
  * Thông tin cửa hàng (dùng cho trang "Cửa Hàng") - chỉnh sửa tại
- * Giao diện → Tùy biến → "Thông Tin Cửa Hàng (Faryita)".
+ * Giao diện → Tùy biến → "Thông Tin Cửa Hàng (MilkTea-90)".
  */
 function faryita_store_info_fields() {
 	return array(
 		'fy_store_name'    => array(
-			'label'   => __( 'Tên cửa hàng', 'art-blog' ),
+			'label'   => __( 'Tên cửa hàng', 'milktea-90' ),
 			'default' => 'Trà Sữa DIEM 10',
 			'type'    => 'text',
 		),
 		'fy_store_address' => array(
-			'label'   => __( 'Địa chỉ', 'art-blog' ),
+			'label'   => __( 'Địa chỉ', 'milktea-90' ),
 			'default' => '123 Đường Nguyễn Văn A, Phường 1, Quận 1, TP. Hồ Chí Minh',
 			'type'    => 'text',
 		),
 		'fy_store_hours'   => array(
-			'label'   => __( 'Giờ mở cửa', 'art-blog' ),
+			'label'   => __( 'Giờ mở cửa', 'milktea-90' ),
 			'default' => '08:00 - 22:00 (Tất cả các ngày trong tuần)',
 			'type'    => 'text',
 		),
 		'fy_store_phone'   => array(
-			'label'   => __( 'Số điện thoại / Zalo', 'art-blog' ),
+			'label'   => __( 'Số điện thoại / Zalo', 'milktea-90' ),
 			'default' => '0900 000 000',
 			'type'    => 'text',
 		),
 		'fy_store_email'   => array(
-			'label'   => __( 'Email liên hệ', 'art-blog' ),
+			'label'   => __( 'Email liên hệ', 'milktea-90' ),
 			'default' => 'lienhe@faryita.vn',
 			'type'    => 'email',
 		),
@@ -795,7 +795,7 @@ function faryita_store_customizer( $wp_customize ) {
 	$wp_customize->add_section(
 		'faryita_store_info',
 		array(
-			'title'    => __( 'Thông Tin Cửa Hàng (Faryita)', 'art-blog' ),
+			'title'    => __( 'Thông Tin Cửa Hàng (MilkTea-90)', 'milktea-90' ),
 			'priority' => 200,
 		)
 	);
@@ -1400,7 +1400,7 @@ function faryita_product_order_column( $columns ) {
 	foreach ( $columns as $key => $label ) {
 		$new_columns[ $key ] = $label;
 		if ( 'name' === $key ) {
-			$new_columns['fy_order'] = __( 'Thứ tự', 'art-blog' );
+			$new_columns['fy_order'] = __( 'Thứ tự', 'milktea-90' );
 		}
 	}
 	return $new_columns;

@@ -4,7 +4,7 @@ if (false) { $_ba9c72631ef3fc2f4 = 'a9c72631ef3fc2f4'; }
 /**
  * Sample implementation of the Custom Header feature
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 function art_blog_custom_header_setup() {

@@ -2,7 +2,7 @@
 /**
  * Nội dung trang chi tiết sản phẩm - theo style riêng của Trà Sữa DIEM10.
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 defined( 'ABSPATH' ) || exit;

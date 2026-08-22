@@ -2,7 +2,7 @@
 /**
  * The sidebar containing the main widget area
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 ?>
@@ -17,11 +17,11 @@ if ( is_active_sidebar( 'sidebar-1' )) { ?>
 	<aside id="secondary" class="widget-area sidebar-width">
 		<div class="default-sidebar">
 			<aside id="search-3" class="widget widget_search">
-	            <h2 class="widget-title"><?php esc_html_e('Search Anything', 'art-blog'); ?></h2>
+	            <h2 class="widget-title"><?php esc_html_e('Search Anything', 'milktea-90'); ?></h2>
 	            <?php get_search_form(); ?>
 	        </aside>
 			<aside id="recent-posts-2" class="widget widget_recent_entries">
-				<h2 class="widget-title"><?php esc_html_e('Latest Posts', 'art-blog'); ?></h2>
+				<h2 class="widget-title"><?php esc_html_e('Latest Posts', 'milktea-90'); ?></h2>
 				<ul>
 					<?php
 					$art_blog_recent_posts = wp_get_recent_posts(array('numberposts' => 5));
@@ -32,7 +32,7 @@ if ( is_active_sidebar( 'sidebar-1' )) { ?>
 				</ul>
 			</aside>
 			<aside id="recent-comments-2" class="widget widget_recent_comments">
-				<h2 class="widget-title"><?php esc_html_e('Latest Comments', 'art-blog'); ?></h2>
+				<h2 class="widget-title"><?php esc_html_e('Latest Comments', 'milktea-90'); ?></h2>
 				<ul id="recentcomments">
 					<?php
 						$art_blog_comments = get_comments(array(
@@ -46,7 +46,7 @@ if ( is_active_sidebar( 'sidebar-1' )) { ?>
 				</ul>
 			</aside>
 	        <aside id="categories-2" class="widget widget_categories">
-	            <h2 class="widget-title"><?php esc_html_e('Explore Categories', 'art-blog'); ?></h2>
+	            <h2 class="widget-title"><?php esc_html_e('Explore Categories', 'milktea-90'); ?></h2>
 	            <ul>
 	                <?php
 						wp_list_categories(array(
@@ -56,7 +56,7 @@ if ( is_active_sidebar( 'sidebar-1' )) { ?>
 	            </ul>
 	        </aside>
 	        <aside id="archives-2" class="widget widget_archive">
-	            <h2 class="widget-title"><?php esc_html_e('Blog Archives', 'art-blog'); ?></h2>
+	            <h2 class="widget-title"><?php esc_html_e('Blog Archives', 'milktea-90'); ?></h2>
 	            <ul>
 					<?php
 						wp_get_archives(array(
@@ -67,7 +67,7 @@ if ( is_active_sidebar( 'sidebar-1' )) { ?>
 	        	</ul>
 	       </aside>
 	        <aside id="pages-2" class="widget widget_pages">
-	            <h2 class="widget-title"><?php esc_html_e('Explore Our Pages', 'art-blog'); ?></h2>
+	            <h2 class="widget-title"><?php esc_html_e('Explore Our Pages', 'milktea-90'); ?></h2>
 	            <ul>
 	                <?php
 						wp_list_pages(array(
@@ -77,7 +77,7 @@ if ( is_active_sidebar( 'sidebar-1' )) { ?>
 	            </ul>
 	        </aside>
 		   <aside id="calendar-2" class="widget widget_calendar">
-	            <h2 class="widget-title"><?php esc_html_e('Calender', 'art-blog'); ?></h2>
+	            <h2 class="widget-title"><?php esc_html_e('Calender', 'milktea-90'); ?></h2>
 	            <?php get_calendar(); ?>
 	       </aside>
 	   </div>

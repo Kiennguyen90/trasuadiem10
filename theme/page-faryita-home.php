@@ -1,9 +1,9 @@
 <?php
 /**
- * Template Name: Faryita Home
+ * Template Name: MilkTea-90 Home
  * Trang chủ Trà Sữa DIEM 10: hero, giới thiệu, sản phẩm, menu.
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 

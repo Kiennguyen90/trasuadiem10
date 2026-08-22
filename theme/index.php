@@ -2,7 +2,7 @@
 /**
  * The main template file
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 get_header();

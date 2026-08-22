@@ -2,7 +2,7 @@
 /**
  * Functions which enhance the theme by hooking into WordPress
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 function art_blog_body_classes( $classes ) {

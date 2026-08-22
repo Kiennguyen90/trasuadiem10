@@ -2,7 +2,7 @@
 /**
  * Jetpack Compatibility File
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 
 function art_blog_jetpack_setup() {

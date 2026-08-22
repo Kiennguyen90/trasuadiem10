@@ -1,9 +1,9 @@
 <?php
 /**
- * Template Name: Faryita Our Story
+ * Template Name: MilkTea-90 Our Story
  * Trang Câu Chuyện Của Chúng Tôi.
  *
- * @package Art Blog
+ * @package MilkTea-90
  */
 get_header();
 
