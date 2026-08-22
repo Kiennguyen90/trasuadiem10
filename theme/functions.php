@@ -240,7 +240,7 @@ function faryita_custom_page_styles() {
         'page-faryita-contact.php',
     );
     $is_faryita_shop = class_exists( 'WooCommerce' ) && ( is_shop() || is_product_taxonomy() || is_product() );
-    if ( is_page_template( $faryita_templates ) || $is_faryita_shop || is_singular( 'chi_nhanh' ) ) {
+    if ( is_page_template( $faryita_templates ) || $is_faryita_shop || is_singular( 'chi_nhanh' ) || is_singular( 'post' ) ) {
         $css_path = get_template_directory() . '/assets/css/faryita-custom.css';
         $js_path  = get_template_directory() . '/assets/js/faryita-custom.js';
         wp_enqueue_style(
