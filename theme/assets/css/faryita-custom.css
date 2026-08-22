@@ -6,6 +6,12 @@
 /* Footer cùng màu với header (--primary-color, xanh lá) thay vì đen mặc định (--secondary-color). */
 .site-footer .footer-top{background:var(--primary-color)}
 
+/* Tiêu đề "Thông Tin Liên Hệ" / "Cửa Hàng" ở footer: giữ chữ, bỏ khung nhãn (pill nền xanh +
+   icon thẻ tag) mà style.css:2495 áp dụng chung cho mọi h2/h3 trong footer-top và sidebar —
+   chỉ bỏ riêng ở footer, không đụng tới sidebar bài viết (aside#secondary). */
+.footer-top .widget-title{background:none;padding:0;border-radius:0;box-shadow:none;text-transform:none;font-size:20px;font-weight:700;margin-bottom:14px}
+.footer-top .widget-title::before{content:none;margin-right:0}
+
 /* MilkTea-90 custom pages: home, our-story, shop — shared styles */
 .fy-home{--fy-yellow:#f6c945;--fy-cream:#fefaee;--fy-green:#0f7a44;--fy-orange:#59ad00;--fy-dark:#173226;font-family:inherit}
 .fy-home section{position:relative}

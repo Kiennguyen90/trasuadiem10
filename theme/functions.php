@@ -1564,6 +1564,7 @@ function faryita_footer_contact_shortcode() {
 	$email = get_theme_mod( 'fy_store_email', 'lienhe@faryita.vn' );
 	ob_start();
 	?>
+	<h2 class="widget-title">Thông Tin Liên Hệ</h2>
 	<p>
 		<i class="fas fa-phone-alt" aria-hidden="true"></i>
 		<a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
@@ -1581,6 +1582,7 @@ add_shortcode( 'fy_footer_contact', 'faryita_footer_contact_shortcode' );
 function faryita_footer_store_shortcode() {
 	ob_start();
 	?>
+	<h2 class="widget-title">Cửa Hàng</h2>
 	<p>Trà Sữa DIEM10 hiện có mặt tại nhiều tỉnh thành trên cả nước.</p>
 	<p><a href="<?php echo esc_url( home_url( '/cua-hang/' ) ); ?>">Xem tất cả chi nhánh →</a></p>
 	<?php
