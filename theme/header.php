@@ -76,19 +76,6 @@
                         <ul class="fy-split-menu">
                             <?php faryita_render_split_menu_items( $art_blog_menu_right ); ?>
                         </ul>
-                        <?php if (class_exists('WooCommerce')): ?>
-                            <div class="product-search">
-                                <form method="get" class="woocommerce-product-search" action="<?php echo esc_url(home_url('/')); ?>">
-                                    <label for="product-search-field" class="screen-reader-text"><?php esc_html_e('Search Here', 'milktea-90'); ?></label>
-                                    <input type="search" id="product-search-field" class="search-field" placeholder="<?php esc_attr_e('Search Here', 'milktea-90'); ?>" value="<?php echo esc_attr(get_search_query()); ?>" name="s" />
-                                    <input type="hidden" name="post_type" value="product" />
-                                    <button type="submit">
-                                        <span class="search-icon" aria-hidden="true"><i class="fas fa-search"></i></span>
-                                        <span class="screen-reader-text"><?php esc_html_e('Search', 'milktea-90'); ?></span>
-                                    </button>
-                                </form>
-                            </div>
-                        <?php endif; ?>
                         <a href="#fy-franchise" class="fy-header-cta" data-fy-open-franchise>Tư Vấn Nhượng Quyền</a>
                     </div>
                 </div>

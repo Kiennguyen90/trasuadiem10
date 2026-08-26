@@ -31,23 +31,11 @@ get_header( 'shop' );
 	// (giống cách archive-product.php dựng banner trang /san-pham/).
 	$fy_hero_product = wc_get_product( get_queried_object_id() );
 	if ( $fy_hero_product ) :
-		$fy_hero_cat_terms = get_the_terms( get_queried_object_id(), 'product_cat' );
-		$fy_hero_cat_name  = ( $fy_hero_cat_terms && ! is_wp_error( $fy_hero_cat_terms ) ) ? $fy_hero_cat_terms[0]->name : '';
-		$fy_hero_shop_url  = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
 		?>
 		<section class="fy-home fy-page-hero fy-page-hero-shop">
 			<div class="fy-container">
 				<p class="fy-eyebrow">Trà Sữa DIEM10</p>
 				<h1><?php echo esc_html( $fy_hero_product->get_name() ); ?></h1>
-				<p class="fy-breadcrumb">
-					<a href="<?php echo esc_url( $fy_hero_shop_url ); ?>">Sản Phẩm</a>
-					<?php if ( $fy_hero_cat_name ) : ?>
-						<span aria-hidden="true">/</span>
-						<?php echo esc_html( $fy_hero_cat_name ); ?>
-					<?php endif; ?>
-					<span aria-hidden="true">/</span>
-					<?php echo esc_html( $fy_hero_product->get_name() ); ?>
-				</p>
 			</div>
 			<svg class="fy-wave fy-page-hero-shop-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 				<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>

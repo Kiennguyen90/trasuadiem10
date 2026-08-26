@@ -126,13 +126,6 @@ $fy_shop_url = home_url( '/cua-hang/' );
 		<div class="fy-container fy-reveal">
 			<p class="fy-eyebrow">Trà Sữa DIEM10</p>
 			<h1><?php echo esc_html( $fy_current_product['name'] ); ?></h1>
-			<p class="fy-breadcrumb">
-				<a href="<?php echo esc_url( $fy_shop_url ); ?>">Cửa Hàng</a>
-				<span aria-hidden="true">/</span>
-				<?php echo esc_html( $fy_current_product['cat'] ); ?>
-				<span aria-hidden="true">/</span>
-				<?php echo esc_html( $fy_current_product['name'] ); ?>
-			</p>
 		</div>
 	</section>
 

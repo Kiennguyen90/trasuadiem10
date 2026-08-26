@@ -9,3 +9,4 @@ faryita-juice-shop-health-drinks-shopify-store/
 # Sensitive - real credentials / personal ID documents, never commit
 thongtinlogin.txt
 footer.pdf
+deploy-run-*.php

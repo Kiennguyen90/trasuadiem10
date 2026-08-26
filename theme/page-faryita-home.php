@@ -7,8 +7,9 @@
  */
 get_header();
 
-$fy_banner_url  = get_template_directory_uri() . '/assets/images/brand/shop-banner.jpg';
-$fy_counter_url = get_template_directory_uri() . '/assets/images/brand/shop-counter.jpg';
+$fy_banner_url       = get_template_directory_uri() . '/assets/images/brand/shop-banner.jpg';
+$fy_counter_url      = get_template_directory_uri() . '/assets/images/brand/shop-counter.jpg';
+$fy_store_photo_url  = get_template_directory_uri() . '/assets/images/brand/store-counter.jpg';
 
 // Tab phân loại sản phẩm trang chủ — lấy sản phẩm WooCommerce thật theo tag, client tự
 // gắn/đổi tag ngay trong wp-admin (Sản phẩm > Thẻ) mà không cần sửa code.
@@ -164,17 +165,69 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 		</div>
 	</section>
 
-	<section class="fy-cta">
-		<div class="fy-container fy-reveal">
-			<h2>Sẵn sàng thưởng thức ly trà sữa đầu tiên?</h2>
-			<a class="fy-btn" href="<?php echo esc_url( home_url( '/' ) ); ?>">Đặt Hàng Ngay</a>
+	<section class="fy-story-text" id="fy-store-intro">
+		<div class="fy-container fy-row">
+			<div class="fy-col fy-reveal">
+				<h2>Ghé Thăm Cửa Hàng Gần Bạn</h2>
+				<p class="fy-desc">Trà Sữa DIEM10 hiện có mặt tại nhiều tỉnh thành trên cả nước, sẵn sàng phục vụ bạn mỗi ngày với không gian ấm cúng và ly trà sữa đậm vị.</p>
+				<a class="fy-btn" href="<?php echo esc_url( home_url( '/cua-hang/' ) ); ?>">Xem Cửa Hàng →</a>
+			</div>
+			<div class="fy-col fy-visual-photo fy-reveal fy-reveal-d2">
+				<div class="fy-wave-image">
+					<img src="<?php echo esc_url( $fy_store_photo_url ); ?>" alt="Quầy pha chế Trà Sữa DIEM10">
+					<svg class="fy-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+						<path d="M0,50 C250,10 450,90 700,45 C900,10 1050,90 1200,40 L1200,120 L0,120 Z"></path>
+					</svg>
+				</div>
+			</div>
 		</div>
 	</section>
+
+	<?php
+	$fy_latest_posts = new WP_Query( array(
+		'post_type'      => 'post',
+		'post_status'    => 'publish',
+		'posts_per_page' => 3,
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+		'no_found_rows'  => true,
+	) );
+	if ( $fy_latest_posts->have_posts() ) :
+		?>
+		<section class="fy-news" id="fy-latest-posts">
+			<div class="fy-container">
+				<h2 class="fy-reveal">Bài Viết Mới</h2>
+				<div class="fy-news-grid">
+					<?php while ( $fy_latest_posts->have_posts() ) : $fy_latest_posts->the_post(); ?>
+						<article class="fy-news-card fy-reveal">
+							<?php if ( has_post_thumbnail() ) : ?>
+								<a class="fy-news-thumb" href="<?php the_permalink(); ?>">
+									<?php the_post_thumbnail( 'medium_large' ); ?>
+								</a>
+							<?php endif; ?>
+							<div class="fy-news-body">
+								<span class="fy-news-date"><?php echo esc_html( get_the_date() ); ?></span>
+								<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+								<p><?php echo esc_html( wp_trim_words( get_the_excerpt(), 20 ) ); ?></p>
+								<a class="fy-news-more" href="<?php the_permalink(); ?>">Đọc Thêm →</a>
+							</div>
+						</article>
+					<?php endwhile; ?>
+				</div>
+				<p style="text-align:center;margin-top:36px">
+					<a class="fy-btn" href="<?php echo esc_url( home_url( '/tin-tuc/' ) ); ?>">Xem Tất Cả Tin Tức →</a>
+				</p>
+			</div>
+		</section>
+		<?php
+		wp_reset_postdata();
+	endif;
+	?>
 
 	<section class="fy-franchise" id="fy-franchise">
 		<div class="fy-container fy-franchise-grid fy-reveal">
 			<div class="fy-franchise-heading">
-				<h2>Đăng Ký Tư Vấn Nhượng Quyền Thương Hiệu</h2>
+				<h2>Đăng Ký Tư Vấn Nhượng Quyền<br>Thương Hiệu</h2>
 			</div>
 
 			<div class="fy-franchise-form-wrap">

@@ -271,10 +271,11 @@ add_filter( 'get_custom_logo', 'faryita_custom_logo_override' );
 
 /**
  * Chia menu chính (menu-1) thành 2 nửa trái/phải để hiển thị hai bên logo (giữa header),
- * theo layout tham khảo từ wujiateavn.com. Menu hiện tại của MilkTea-90 chỉ có các mục cấp 1
- * (không có submenu), nên chỉ cần lọc theo menu_item_parent = 0 là đủ.
+ * theo layout tham khảo từ wujiateavn.com. Mỗi mục cấp 1 mang theo danh sách con (nếu có,
+ * cấu hình tại Giao diện → Menu) để hiển thị dropdown khi hover, giống wujiateavn.com.
  *
- * @return array{0: WP_Post[], 1: WP_Post[]} [mục bên trái, mục bên phải]
+ * @return array{0: array, 1: array} [mục bên trái, mục bên phải] — mỗi mục là
+ *                                     array{item: WP_Post, children: WP_Post[]}
  */
 function faryita_get_split_menu_items() {
 	$locations = get_nav_menu_locations();
@@ -310,17 +311,43 @@ function faryita_get_split_menu_items() {
 		}
 	);
 
-	$split = (int) ceil( count( $top_level ) / 2 );
-	return array( array_slice( $top_level, 0, $split ), array_slice( $top_level, $split ) );
+	$grouped = array_map(
+		function ( $item ) use ( $menu_items ) {
+			$children = array_values(
+				array_filter(
+					$menu_items,
+					function ( $child ) use ( $item ) {
+						return (int) $child->menu_item_parent === (int) $item->ID;
+					}
+				)
+			);
+			usort(
+				$children,
+				function ( $a, $b ) {
+					return $a->menu_order <=> $b->menu_order;
+				}
+			);
+			return array( 'item' => $item, 'children' => $children );
+		},
+		$top_level
+	);
+
+	$split = (int) ceil( count( $grouped ) / 2 );
+	return array( array_slice( $grouped, 0, $split ), array_slice( $grouped, $split ) );
 }
 
 /**
  * In ra danh sách <li> cho một nửa menu (dùng cùng faryita_get_split_menu_items()).
+ * Mục nào có con sẽ được gắn class "menu-item-has-children" + dropdown <ul class="sub-menu">
+ * hiện khi hover, giống wujiateavn.com.
  *
- * @param WP_Post[] $items
+ * @param array $groups [{item: WP_Post, children: WP_Post[]}, ...]
  */
-function faryita_render_split_menu_items( $items ) {
-	foreach ( $items as $item ) {
+function faryita_render_split_menu_items( $groups ) {
+	foreach ( $groups as $group ) {
+		$item     = $group['item'];
+		$children = $group['children'];
+
 		$classes    = ! empty( $item->classes ) ? array_filter( (array) $item->classes ) : array();
 		$is_current = in_array( 'current-menu-item', $classes, true ) || in_array( 'current_page_item', $classes, true );
 
@@ -335,13 +362,33 @@ function faryita_render_split_menu_items( $items ) {
 			}
 		}
 
+		$li_classes = array_filter( array(
+			$is_current ? 'current-menu-item' : '',
+			$children ? 'menu-item-has-children' : '',
+		) );
+
 		printf(
-			'<li class="%1$s"><a href="%2$s"%3$s>%4$s</a></li>',
-			esc_attr( $is_current ? 'current-menu-item' : '' ),
+			'<li class="%1$s"><a href="%2$s"%3$s>%4$s</a>',
+			esc_attr( implode( ' ', $li_classes ) ),
 			esc_url( $item->url ),
 			$item->target ? ' target="' . esc_attr( $item->target ) . '"' : '',
 			esc_html( $item->title )
 		);
+
+		if ( $children ) {
+			echo '<ul class="sub-menu">';
+			foreach ( $children as $child ) {
+				printf(
+					'<li><a href="%1$s"%2$s>%3$s</a></li>',
+					esc_url( $child->url ),
+					$child->target ? ' target="' . esc_attr( $child->target ) . '"' : '',
+					esc_html( $child->title )
+				);
+			}
+			echo '</ul>';
+		}
+
+		echo '</li>';
 	}
 }
 
@@ -527,10 +574,8 @@ add_action( 'customize_register', 'art_blog_remove_customize_register', 11 );
 // vì đã có hero "fy-page-hero-shop" riêng đảm nhiệm việc này (archive-product.php).
 remove_action( 'woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10 );
 
-// Bỏ breadcrumb mặc định của WooCommerce trên trang sản phẩm (chi tiết/Shop/danh mục)
-// vì mỗi trang đã tự vẽ breadcrumb riêng NẰM TRONG banner cam (content-single-product.php
-// dùng .fy-breadcrumb riêng; archive-product.php dùng faryita_render_shop_breadcrumb() bên
-// dưới) — tránh hiển thị 2 breadcrumb (1 cái nằm dưới banner, trông rời rạc/sai vị trí).
+// Bỏ breadcrumb mặc định của WooCommerce trên trang sản phẩm (chi tiết/Shop/danh mục) —
+// theme không hiển thị breadcrumb ở các trang này nữa.
 add_action(
 	'wp',
 	function () {
@@ -539,42 +584,6 @@ add_action(
 		}
 	}
 );
-
-/**
- * In breadcrumb (Trang chủ / Sản Phẩm / ...) theo đúng style .fy-breadcrumb dùng chung,
- * để đặt NẰM TRONG banner cam của trang Shop/danh mục sản phẩm (archive-product.php),
- * thay vì banner mặc định của WooCommerce nằm rời phía dưới banner như trước.
- */
-function faryita_render_shop_breadcrumb() {
-	if ( ! class_exists( 'WC_Breadcrumb' ) ) {
-		return;
-	}
-	// Không có hàm dựng sẵn wc_get_breadcrumb() — WooCommerce tự dựng breadcrumb bằng
-	// class WC_Breadcrumb bên trong woocommerce_breadcrumb(), nên lặp lại đúng cách đó
-	// (thêm crumb "Trang chủ" rồi gọi generate() để nó tự nhận diện Shop/danh mục hiện tại).
-	$fy_wc_breadcrumb = new WC_Breadcrumb();
-	// Viết cứng "Trang chủ" thay vì dùng _x('Home','breadcrumb','woocommerce') — chuỗi dịch
-	// đó phụ thuộc gói ngôn ngữ .mo của WooCommerce có được cài trên server hay không, từng
-	// bị hiện "Home" tiếng Anh trên host live dù đã hoạt động đúng ở local.
-	$fy_wc_breadcrumb->add_crumb( 'Trang chủ', apply_filters( 'woocommerce_breadcrumb_home_url', home_url() ) );
-	$crumbs = $fy_wc_breadcrumb->generate();
-	if ( ! $crumbs ) {
-		return;
-	}
-	$last = count( $crumbs ) - 1;
-	echo '<p class="fy-breadcrumb">';
-	foreach ( $crumbs as $i => $crumb ) {
-		if ( $i > 0 ) {
-			echo '<span aria-hidden="true">/</span>';
-		}
-		if ( $i < $last && ! empty( $crumb[1] ) ) {
-			printf( '<a href="%1$s">%2$s</a>', esc_url( $crumb[1] ), esc_html( $crumb[0] ) );
-		} else {
-			echo esc_html( $crumb[0] );
-		}
-	}
-	echo '</p>';
-}
 
 /**
  * Bỏ hẳn dòng "Hiển thị X–Y của Z kết quả" và ô "Sắp xếp mặc định" khỏi trang Shop/danh
@@ -1169,27 +1178,24 @@ function faryita_render_franchise_form( $id_suffix = '' ) {
 				<input class="fy-franchise-control" type="text" name="fy_name" placeholder="Họ và tên" required>
 			</label>
 			<label class="fy-franchise-field">
-				<span class="fy-franchise-label">Giới Tính</span>
-				<select class="fy-franchise-control" name="fy_gender">
-					<option value="Nam">Nam</option>
-					<option value="Nữ">Nữ</option>
-					<option value="Khác">Khác</option>
-				</select>
+				<span class="fy-franchise-label">Số Điện Thoại</span>
+				<input class="fy-franchise-control" type="text" name="fy_phone" placeholder="Số điện thoại" required>
 			</label>
 		</div>
 		<div class="fy-franchise-row">
 			<label class="fy-franchise-field">
-				<span class="fy-franchise-label">Số Điện Thoại</span>
-				<input class="fy-franchise-control" type="text" name="fy_phone" placeholder="Số điện thoại" required>
-			</label>
-			<label class="fy-franchise-field">
 				<span class="fy-franchise-label">Email</span>
 				<input class="fy-franchise-control" type="email" name="fy_email" placeholder="Email" required>
 			</label>
+			<label class="fy-franchise-field">
+				<span class="fy-franchise-label">Khu Vực Muốn Đăng Ký</span>
+				<input class="fy-franchise-control" type="text" name="fy_region" placeholder="Tỉnh thành">
+			</label>
 		</div>
-		<label class="fy-franchise-field fy-franchise-field-full">
-			<span class="fy-franchise-label">Khu Vực Muốn Đăng Ký</span>
-			<input class="fy-franchise-control" type="text" name="fy_region" placeholder="Tỉnh thành">
+
+		<label class="fy-franchise-consent">
+			<input type="checkbox" name="fy_consent" required>
+			<span>Tôi đồng ý với chính sách bảo mật</span>
 		</label>
 
 		<button type="submit" class="fy-franchise-submit">Đăng ký <span aria-hidden="true">→</span></button>
@@ -1589,3 +1595,26 @@ function faryita_footer_store_shortcode() {
 	return ob_get_clean();
 }
 add_shortcode( 'fy_footer_store', 'faryita_footer_store_shortcode' );
+
+/**
+ * Loại bỏ chức năng bình luận trên bài viết (Tin Tức) — đóng comment ở mọi nơi, không chỉ
+ * ẩn ở template single.php, để không ai gửi được bình luận qua wp-comments-post.php.
+ */
+function faryita_disable_post_comments_support() {
+	remove_post_type_support( 'post', 'comments' );
+	remove_post_type_support( 'post', 'trackbacks' );
+}
+add_action( 'init', 'faryita_disable_post_comments_support', 100 );
+add_filter( 'comments_open', '__return_false', 20 );
+add_filter( 'pings_open', '__return_false', 20 );
+add_filter( 'comments_array', '__return_empty_array', 10 );
+
+function faryita_remove_comments_admin_menu() {
+	remove_menu_page( 'edit-comments.php' );
+}
+add_action( 'admin_menu', 'faryita_remove_comments_admin_menu' );
+
+function faryita_remove_comments_admin_bar_node( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'comments' );
+}
+add_action( 'admin_bar_menu', 'faryita_remove_comments_admin_bar_node', 999 );

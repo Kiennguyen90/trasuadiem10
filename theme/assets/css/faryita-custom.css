@@ -8,9 +8,22 @@
 
 /* Tiêu đề "Thông Tin Liên Hệ" / "Cửa Hàng" ở footer: giữ chữ, bỏ khung nhãn (pill nền xanh +
    icon thẻ tag) mà style.css:2495 áp dụng chung cho mọi h2/h3 trong footer-top và sidebar —
-   chỉ bỏ riêng ở footer, không đụng tới sidebar bài viết (aside#secondary). */
-.footer-top .widget-title{background:none;padding:0;border-radius:0;box-shadow:none;text-transform:none;font-size:20px;font-weight:700;margin-bottom:14px}
-.footer-top .widget-title::before{content:none;margin-right:0}
+   chỉ bỏ riêng ở footer, không đụng tới sidebar bài viết (aside#secondary).
+   Typography theo yêu cầu: heading 24px/600/1.2, nội dung (p/li/a) 16px/400/1.6. */
+.footer-top .widget-title{background:none;padding:0;border-radius:0;box-shadow:none;text-transform:none;font-size:24px;font-weight:600;line-height:1.2;margin:0 0 16px}
+section.footer-top .widget-title::before{content:none !important;margin-right:0}
+.footer-top p,
+.footer-top li,
+.footer-top .footer-col > a{font-size:16px;font-weight:400;line-height:1.6}
+
+/* Logo cột 1 footer: nằm phía trên khối text (Trà Sữa DIEM 10 — ... / công ty — địa chỉ). */
+.footer-col-brand{display:flex;flex-direction:column}
+.footer-logo{margin-bottom:16px}
+.footer-logo img{max-width:96px;height:auto;display:block}
+
+/* Absolute footer: thanh dưới cùng màu vàng cam, chữ tối để tương phản. */
+.fy-absolute-footer{background:var(--fy-yellow,#f6c945);padding:14px 0;text-align:center}
+.fy-absolute-footer p{margin:0;font-size:13px;font-weight:700;color:#173226}
 
 /* MilkTea-90 custom pages: home, our-story, shop — shared styles */
 .fy-home{--fy-yellow:#f6c945;--fy-cream:#fefaee;--fy-green:#0f7a44;--fy-orange:#59ad00;--fy-dark:#173226;font-family:inherit}
@@ -25,8 +38,8 @@
 .fy-hero h1{font-size:56px;line-height:1.1;color:var(--fy-dark);margin:10px 0 18px}
 .fy-hero p{max-width:560px;margin:0 auto 26px;color:rgba(23,50,34,.78)}
 .fy-hero-fruits{margin-top:30px;font-size:64px;line-height:1;display:flex;justify-content:center;gap:6px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.08))}
-.fy-hero-banner{margin-top:0;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);height:60vh;min-height:320px;max-height:620px}
-.fy-hero-banner img{width:100%;height:100%;object-fit:cover;display:block}
+.fy-hero-banner{margin-top:0;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);height:auto;aspect-ratio:2833/1417;background:var(--fy-cream)}
+.fy-hero-banner img{width:100%;height:100%;object-fit:contain;display:block}
 .fy-hero-banner .owl-stage-outer,
 .fy-hero-banner .owl-stage,
 .fy-hero-banner .owl-item,
@@ -72,8 +85,6 @@
 .fy-page-hero-shop .fy-eyebrow{color:#fff}
 .fy-page-hero-shop h1{color:var(--fy-dark)}
 .fy-page-hero-shop p{color:rgba(23,50,34,.78)}
-.fy-page-hero-shop .fy-breadcrumb{color:rgba(23,50,34,.75)}
-.fy-page-hero-shop .fy-breadcrumb a{color:var(--fy-dark)}
 .fy-page-hero-desc{max-width:600px;margin:10px auto 0;color:rgba(23,50,34,.78);font-size:14px}
 
 .fy-btn{display:inline-block;background:var(--fy-yellow);color:var(--fy-dark);font-weight:700;padding:14px 32px;border-radius:999px;text-decoration:none;transition:transform .15s ease;border:none;cursor:pointer;font-size:15px}
@@ -132,9 +143,6 @@
 .fy-card .fy-addcart:hover{background:var(--fy-dark);color:#fff}
 
 /* Trang chi tiết sản phẩm */
-.fy-breadcrumb{margin-top:10px;font-size:14px;color:#6b6b6b}
-.fy-breadcrumb a{color:var(--fy-dark);text-decoration:underline}
-.fy-breadcrumb span{margin:0 8px;opacity:.6}
 .fy-detail{background:#fff;padding:60px 0 80px}
 .fy-detail-grid{display:flex;gap:60px;align-items:flex-start;flex-wrap:wrap}
 .fy-detail-image{flex:1 1 320px;display:flex;justify-content:center}
@@ -207,35 +215,34 @@
 .fy-cta{background:var(--fy-dark);color:#fff;text-align:center;padding:70px 24px}
 .fy-cta h2{font-size:30px;margin:0 0 20px}
 
-/* Section đăng ký nhượng quyền (trang chủ, trước footer) — nền kem đặc, tông trắng-xanh
-   làm chủ đạo để đồng bộ với bảng màu chính của web. */
+/* Section đăng ký nhượng quyền (trang chủ, trước footer) — full-width như các section khác
+   của trang, nền trắng để tách biệt rõ với section kem (Bài Viết Mới) ngay phía trên thay vì
+   bị chìm cùng màu kem toàn cục. */
 .fy-franchise{
-	background:var(--fy-cream);
-	padding:40px 32px;
-	border-radius:22px;
-	margin:0 auto;
-	max-width:1040px;
-	overflow:hidden;
+	background:#fff;
+	padding:70px 24px;
 }
 /* Layout xếp chồng: heading nằm ngang phía trên, form bên dưới, tất cả canh giữa. */
 .fy-franchise .fy-franchise-grid{display:flex;flex-direction:column;align-items:center;gap:22px;max-width:640px;margin:0 auto;text-align:center}
 .fy-franchise-heading{width:100%}
 .fy-franchise-heading h2{font-size:26px;line-height:1.35;color:var(--fy-dark);text-transform:uppercase;margin:0;font-weight:800}
 .fy-franchise-form-wrap{width:100%}
-.fy-franchise-form{display:flex;flex-direction:column;gap:12px;text-align:left}
-.fy-franchise-row{display:flex;gap:14px;flex-wrap:wrap}
-.fy-franchise-field{flex:1 1 180px;display:flex;flex-direction:column;gap:5px}
+.fy-franchise-form{display:flex;flex-direction:column;gap:22px;text-align:left}
+.fy-franchise-row{display:flex;gap:20px;flex-wrap:wrap}
+.fy-franchise-field{flex:1 1 180px;display:flex;flex-direction:column;gap:6px}
 .fy-franchise-field-full{width:100%;flex:0 0 auto}
 .fy-franchise-label{color:var(--fy-dark);font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
-.fy-franchise-control{width:100%;padding:9px 16px;border:2px solid var(--fy-cream);border-radius:999px;font-size:13px;font-family:inherit;color:var(--fy-dark);background:#fff;box-sizing:border-box;appearance:none}
+.fy-franchise-control{width:100%;padding:12px 16px;border:1px solid #E2E8F0;border-radius:10px;font-size:14px;font-family:inherit;color:var(--fy-dark);background:#fff;box-sizing:border-box;appearance:none}
 .fy-franchise-control:focus{outline:none;border-color:var(--fy-green)}
 select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23173226' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:14px;cursor:pointer}
-.fy-franchise-textarea{border-radius:18px;resize:vertical;min-height:100px}
+.fy-franchise-textarea{border-radius:10px;resize:vertical;min-height:100px}
+.fy-franchise-consent{align-self:center;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fy-dark);text-align:center}
+.fy-franchise-consent input{width:16px;height:16px;flex-shrink:0;accent-color:var(--fy-green)}
 .fy-franchise-submit{align-self:center;margin-top:2px;display:inline-flex;align-items:center;gap:8px;background:var(--fy-green);color:#fff;font-weight:800;padding:9px 22px;border-radius:999px;border:none;cursor:pointer;font-size:13px;transition:background .2s ease,transform .15s ease}
 .fy-franchise-submit:hover{background:var(--fy-dark);transform:translateY(-2px)}
 .fy-franchise .fy-contact-alert{margin-bottom:14px;font-size:13px;text-align:center}
 @media(max-width:700px){
-	.fy-franchise{padding:30px 20px;border-radius:18px}
+	.fy-franchise{padding:40px 20px}
 	.fy-franchise-heading h2{font-size:20px}
 	.fy-franchise-row{flex-direction:column}
 }

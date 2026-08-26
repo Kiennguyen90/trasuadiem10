@@ -31,13 +31,6 @@ while ( have_posts() ) :
 			<div class="fy-container fy-reveal">
 				<p class="fy-eyebrow">Trà Sữa DIEM10</p>
 				<h1><?php the_title(); ?></h1>
-				<p class="fy-breadcrumb">
-					<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang Chủ</a>
-					<span aria-hidden="true">/</span>
-					<a href="<?php echo esc_url( home_url( '/tin-tuc/' ) ); ?>">Tin Tức</a>
-					<span aria-hidden="true">/</span>
-					<?php the_title(); ?>
-				</p>
 			</div>
 			<svg class="fy-wave fy-page-hero-shop-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 				<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>
@@ -69,14 +62,6 @@ while ( have_posts() ) :
 					</div>
 
 					<a class="fy-back-link" href="<?php echo esc_url( home_url( '/tin-tuc/' ) ); ?>">← Về Tin Tức</a>
-
-					<?php
-					if ( comments_open() || get_comments_number() ) :
-						echo '<div class="fy-post-comments">';
-						comments_template();
-						echo '</div>';
-					endif;
-					?>
 				</article>
 
 				<aside class="fy-post-sidebar">

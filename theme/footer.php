@@ -22,7 +22,8 @@
                     <?php
                         if (is_active_sidebar('footer-1')) {
                     ?>
-                            <div class="footer-col">
+                            <div class="footer-col footer-col-brand">
+                                <div class="footer-logo"><?php the_custom_logo(); ?></div>
                                 <?php dynamic_sidebar('footer-1'); ?>
                             </div>
                     <?php
@@ -84,6 +85,11 @@
     <?php } ?>
 
 	</footer>
+	<div class="fy-absolute-footer">
+		<div class="container">
+			<p>© <?php echo esc_html( gmdate( 'Y' ) ); ?> Copyright trasuadiem10.com</p>
+		</div>
+	</div>
 	<?php } ?>
 </div>
 
