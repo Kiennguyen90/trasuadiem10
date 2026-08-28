@@ -21,6 +21,15 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .footer-logo{margin-bottom:16px}
 .footer-logo img{max-width:96px;height:auto;display:block}
 
+/* Pháp nhân công ty ở cột 1 (tên công ty + MST) — chữ nhỏ, mờ nhẹ, tách khỏi dòng slogan. */
+.footer-top .fy-footer-legal{font-size:13px;opacity:.85;margin-top:8px;line-height:1.6}
+
+/* Padding footer theo yêu cầu client 08/2026: 40px trên + 40px dưới (thay cho 40/20 mặc định).
+   Bỏ luôn margin-bottom 35px mà style.css áp cho .widget trong footer để khoảng trắng dưới
+   không bị dồn thành ~75px. */
+.footer-top{padding:40px 0}
+.footer-top .footer-col .widget{margin-bottom:0}
+
 /* Absolute footer: thanh dưới cùng màu vàng cam, chữ tối để tương phản. */
 .fy-absolute-footer{background:var(--fy-yellow,#f6c945);padding:14px 0;text-align:center}
 .fy-absolute-footer p{margin:0;font-size:13px;font-weight:700;color:#173226}
@@ -199,7 +208,7 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-promo{display:flex;flex-wrap:wrap}
 .fy-promo .fy-promo-left{flex:1 1 380px;background:var(--fy-orange);color:#fff;padding:80px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .fy-promo-left .fy-jar{font-size:110px;margin-bottom:18px}
-.fy-promo-left h3{font-size:32px;line-height:1.3;margin:0;text-transform:uppercase}
+.fy-promo-left h3{font-size:23px;line-height:1.45;margin:0;font-weight:800}
 .fy-promo .fy-promo-right{flex:1 1 480px;background:var(--fy-green);color:#fff;padding:70px 40px}
 .fy-promo-right h2{font-size:32px;margin:0 0 30px}
 .fy-menu-item{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.15)}

@@ -235,6 +235,7 @@ function faryita_custom_page_styles() {
     $faryita_templates = array(
         'page-faryita-home.php',
         'page-faryita-story.php',
+        'page-faryita-about.php',
         'page-faryita-news.php',
         'page-faryita-store.php',
         'page-faryita-contact.php',
@@ -779,7 +780,7 @@ function faryita_store_info_fields() {
 		),
 		'fy_store_address' => array(
 			'label'   => __( 'Địa chỉ', 'milktea-90' ),
-			'default' => '123 Đường Nguyễn Văn A, Phường 1, Quận 1, TP. Hồ Chí Minh',
+			'default' => '366 Nguyễn Trãi, P. An Đông, TP. Hồ Chí Minh',
 			'type'    => 'text',
 		),
 		'fy_store_hours'   => array(
@@ -882,6 +883,11 @@ function faryita_render_social_floating_bar() {
 		<?php
 		foreach ( $items as $item ) :
 			$fy_info = faryita_social_icon_for_url( $item->url );
+			// Bỏ nút kênh YouTube khỏi thanh nổi (yêu cầu client 08/2026) — vẫn giữ item trong
+			// menu để dễ bật lại sau, chỉ không render.
+			if ( 'youtube' === $fy_info['label'] ) {
+				continue;
+			}
 			$fy_target = ( 0 === strpos( $item->url, 'tel:' ) || 0 === strpos( $item->url, 'mailto:' ) ) ? '' : ' target="_blank" rel="noopener"';
 			?>
 			<a href="<?php echo esc_url( $item->url ); ?>"<?php echo $fy_target; // phpcs:ignore ?> aria-label="<?php echo esc_attr( $item->title ); ?>" title="<?php echo esc_attr( $item->title ); ?>">
@@ -1561,13 +1567,33 @@ add_action( 'template_redirect', 'faryita_maintenance_mode_redirect' );
 /************************************************************************************/
 
 /**
- * Shortcode cho 2 cột footer bổ sung (Thông tin liên hệ / Cửa Hàng) — dùng trong widget
- * "Custom HTML" ở Appearance > Widgets > Footer 2 / Footer 3. Đọc cùng theme_mod mà trang
- * Liên Hệ đang dùng nên khi client cập nhật SĐT/email qua Customizer, footer tự cập nhật theo.
+ * Shortcode cho các cột footer (Thương hiệu / Thông tin liên hệ / Cửa Hàng) — dùng trong
+ * widget "Custom HTML" ở Appearance > Widgets > Footer 1 / Footer 2 / Footer 3. Đọc cùng
+ * theme_mod mà trang Liên Hệ đang dùng nên khi client cập nhật SĐT/email/địa chỉ qua
+ * Customizer, footer tự cập nhật theo.
  */
+
+/**
+ * Cột 1 (Footer 1): giới thiệu ngắn + pháp nhân công ty trên 2 dòng (tên công ty / MST).
+ * Địa chỉ đã chuyển sang cột "Thông Tin Liên Hệ" theo yêu cầu client 08/2026.
+ */
+function faryita_footer_brand_shortcode() {
+	ob_start();
+	?>
+	<p>Trà Sữa DIEM 10 — Đậm vị trà, ngọt vị yêu thương.</p>
+	<p class="fy-footer-legal">
+		CÔNG TY TNHH QUẢN LÝ ẨM THỰC DIEM10<br>
+		MST: 0319552502
+	</p>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'fy_footer_brand', 'faryita_footer_brand_shortcode' );
+
 function faryita_footer_contact_shortcode() {
-	$phone = get_theme_mod( 'fy_store_phone', '0900 000 000' );
-	$email = get_theme_mod( 'fy_store_email', 'lienhe@faryita.vn' );
+	$phone   = get_theme_mod( 'fy_store_phone', '0900 000 000' );
+	$email   = get_theme_mod( 'fy_store_email', 'lienhe@faryita.vn' );
+	$address = get_theme_mod( 'fy_store_address', '366 Nguyễn Trãi, P. An Đông, TP. Hồ Chí Minh' );
 	ob_start();
 	?>
 	<h2 class="widget-title">Thông Tin Liên Hệ</h2>
@@ -1579,6 +1605,12 @@ function faryita_footer_contact_shortcode() {
 		<i class="fas fa-envelope" aria-hidden="true"></i>
 		<a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
 	</p>
+	<?php if ( $address ) : ?>
+	<p>
+		<i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+		<?php echo esc_html( $address ); ?>
+	</p>
+	<?php endif; ?>
 	<p><a href="<?php echo esc_url( home_url( '/lien-he/' ) ); ?>">Gửi liên hệ →</a></p>
 	<?php
 	return ob_get_clean();

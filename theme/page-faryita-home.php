@@ -147,7 +147,7 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	<section class="fy-promo">
 		<div class="fy-promo-left fy-reveal">
 			<div class="fy-jar" aria-hidden="true">🧋</div>
-			<h3>Đậm Vị Trà<br>Ngọt Vị Yêu Thương</h3>
+			<h3>Giữ vững tâm huyết về chất lượng, hỗ trợ hàng nghìn người khởi nghiệp cùng chia sẻ thành quả.</h3>
 		</div>
 		<div class="fy-promo-right">
 			<h2 class="fy-reveal">Topping Đa Dạng</h2>
