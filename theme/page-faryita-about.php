@@ -34,22 +34,21 @@ for ( $fy_n = 1; $fy_n <= 3; $fy_n++ ) {
 		</div>
 	</section>
 
-	<section class="fy-story-text">
-		<div class="fy-container fy-row">
-			<div class="fy-col fy-reveal">
+	<?php $fy_company_media = fy_pc_has_media( 'company', 'media' ); ?>
+	<section class="fy-story-text<?php echo $fy_company_media ? ' fy-story-text--media' : ''; ?>">
+		<div class="fy-container<?php echo $fy_company_media ? '' : ' fy-row'; ?>">
+			<div class="fy-col fy-reveal<?php echo $fy_company_media ? ' fy-story-lead' : ''; ?>">
 				<h2><?php echo esc_html( fy_pc( 'company', 'heading' ) ); ?></h2>
 				<p class="fy-desc"><?php echo esc_html( fy_pc( 'company', 'para1' ) ); ?></p>
 				<p class="fy-desc"><?php echo esc_html( fy_pc( 'company', 'para2' ) ); ?></p>
 			</div>
-			<div class="fy-col fy-visual fy-reveal fy-reveal-d2<?php echo fy_pc_has_media( 'company', 'media' ) ? ' fy-visual--media' : ''; ?>"<?php echo fy_pc_has_media( 'company', 'media' ) ? '' : ' aria-hidden="true"'; ?>>
-				<?php
-				if ( fy_pc_has_media( 'company', 'media' ) ) {
-					echo fy_pc_media( 'company', 'media', '', array( 'alt' => 'CÔNG TY TNHH QUẢN LÝ ẨM THỰC DIEM10', 'wrap_class' => 'fy-pc-media fy-visual-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
-				} else {
-					echo '🧋';
-				}
-				?>
-			</div>
+			<?php if ( $fy_company_media ) : ?>
+				<div class="fy-story-media fy-reveal fy-reveal-d2">
+					<?php echo fy_pc_media( 'company', 'media', '', array( 'alt' => 'Giới thiệu Tập đoàn DIEM10', 'wrap_class' => 'fy-pc-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				</div>
+			<?php else : ?>
+				<div class="fy-col fy-visual fy-reveal fy-reveal-d2" aria-hidden="true">🧋</div>
+			<?php endif; ?>
 		</div>
 	</section>
 

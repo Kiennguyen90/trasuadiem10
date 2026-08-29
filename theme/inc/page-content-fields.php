@@ -396,10 +396,14 @@ function fy_pc_media( $section, $field, $default_url = '', $args = array() ) {
 				esc_attr( $args['alt'] )
 			);
 		}
+		// File video trực tiếp (.mp4...). Nếu field có kèm ảnh → dùng làm hình bìa (poster).
+		$poster      = $img_id ? wp_get_attachment_image_url( $img_id, 'large' ) : '';
+		$poster_attr = $poster ? ' poster="' . esc_url( $poster ) . '"' : '';
 		return sprintf(
-			'<div class="%s fy-pc-media-video"><video src="%s" controls playsinline preload="metadata"></video></div>',
+			'<div class="%s fy-pc-media-video"><video src="%s"%s controls playsinline preload="metadata"></video></div>',
 			esc_attr( $args['wrap_class'] ),
-			esc_url( $video )
+			esc_url( $video ),
+			$poster_attr
 		);
 	}
 
@@ -544,7 +548,7 @@ function fy_pc_render_media_field( $post_id, $sk, $fk, $field ) {
 		esc_attr( $base ),
 		esc_attr( $video )
 	);
-	echo '<p class="fy-pc-hint">Có link video thì video được ưu tiên hiển thị thay cho ảnh.</p>';
+	echo '<p class="fy-pc-hint">Có link video → hiển thị video thay cho ảnh. Nếu chọn cả ảnh + video, ảnh sẽ là hình bìa (poster) hiện trước khi bấm play.</p>';
 
 	echo '</div>';
 }
