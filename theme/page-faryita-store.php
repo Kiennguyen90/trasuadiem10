@@ -30,9 +30,9 @@ sort( $fy_provinces );
 
 	<section class="fy-page-hero fy-page-hero-shop">
 		<div class="fy-container fy-reveal">
-			<p class="fy-eyebrow">Trà Sữa DIEM10</p>
-			<h1>Cửa Hàng</h1>
-			<p>Trà Sữa Điểm 10 hiện có mặt tại nhiều tỉnh thành trên cả nước, tìm chi nhánh gần bạn nhất nhé.</p>
+			<p class="fy-eyebrow"><?php echo esc_html( fy_pc( 'hero', 'eyebrow' ) ); ?></p>
+			<h1><?php echo esc_html( fy_pc( 'hero', 'title' ) ); ?></h1>
+			<p><?php echo esc_html( fy_pc( 'hero', 'desc' ) ); ?></p>
 		</div>
 		<svg class="fy-wave fy-page-hero-shop-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 			<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>
@@ -45,9 +45,9 @@ sort( $fy_provinces );
 				<div class="fy-locator-grid">
 
 					<div class="fy-locator-side">
-						<input type="text" id="fy-branch-search" class="fy-locator-search" placeholder="Nhập từ khoá tìm kiếm theo tên...">
+						<input type="text" id="fy-branch-search" class="fy-locator-search" placeholder="<?php echo esc_attr( fy_pc( 'locator', 'search_placeholder' ) ); ?>">
 						<select id="fy-branch-province" class="fy-locator-select">
-							<option value="">Toàn Quốc</option>
+							<option value=""><?php echo esc_html( fy_pc( 'locator', 'all_provinces' ) ); ?></option>
 							<?php foreach ( $fy_provinces as $fy_p ) : ?>
 								<option value="<?php echo esc_attr( $fy_p ); ?>"><?php echo esc_html( $fy_p ); ?></option>
 							<?php endforeach; ?>
@@ -126,7 +126,7 @@ sort( $fy_provinces );
 	<?php else : ?>
 		<section class="fy-store-locator">
 			<div class="fy-container">
-				<p style="text-align:center;color:#4a4a4a">Chưa có chi nhánh nào được thêm.</p>
+				<p style="text-align:center;color:#4a4a4a"><?php echo esc_html( fy_pc( 'locator', 'empty' ) ); ?></p>
 			</div>
 		</section>
 	<?php endif; ?>

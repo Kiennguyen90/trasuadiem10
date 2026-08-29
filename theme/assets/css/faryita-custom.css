@@ -253,7 +253,11 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 @media(max-width:700px){
 	.fy-franchise{padding:40px 20px}
 	.fy-franchise-heading h2{font-size:20px}
-	.fy-franchise-row{flex-direction:column}
+	/* Xếp dọc: bỏ flex-basis 180px (ở chiều column nó tính THÀNH chiều cao → mỗi field
+	   cao 180px, các ô rớt xa nhau) và siết khoảng cách cho gọn. */
+	.fy-franchise-row{flex-direction:column;gap:14px}
+	.fy-franchise-field{flex:0 0 auto}
+	.fy-franchise-form{gap:14px}
 }
 
 /* Our Story: giá trị cốt lõi */
@@ -285,6 +289,41 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 .fy-story-text h2{font-size:34px;color:var(--fy-dark);margin:0 0 16px;line-height:1.25}
 .fy-story-text p{color:#4a4a4a;margin-bottom:16px}
 
+/* ---- Bộ chỉnh sửa nội dung theo trang: render ảnh / video (fy_pc_media) ---- */
+/* Banner trang chủ: ảnh/video/iframe lấp đầy khung slide. Wrapper video có aspect-ratio
+   riêng để owl-carousel tính được chiều cao slide ngay khi khởi tạo (iframe không có
+   chiều cao nội tại). */
+.fy-hero-banner .fy-pc-media{width:100%}
+.fy-hero-banner .fy-pc-media-video{width:100%;aspect-ratio:2833/1417;background:#000}
+.fy-hero-banner .fy-pc-media-video iframe,
+.fy-hero-banner .fy-pc-media-video video{width:100%;height:100%;border:0;display:block;object-fit:cover}
+/* Ảnh/video trong khối sóng (.fy-wave-image) — Không Gian Ấm Cúng / Ghé Thăm Cửa Hàng. */
+.fy-wave-image .fy-pc-media-video{display:block;line-height:0}
+.fy-wave-image .fy-pc-media-video iframe,
+.fy-wave-image .fy-pc-media-video video{width:100%;aspect-ratio:4/3;border:0;display:block;object-fit:cover;background:#000}
+/* Ảnh/video thay biểu tượng 🧋/🍹 ở trang Giới Thiệu / Câu Chuyện — bỏ font-size lớn
+   (vốn để phóng to emoji) khi ô này chứa ảnh/video. */
+.fy-story-text .fy-visual--media{font-size:0;line-height:0}
+.fy-visual .fy-pc-media-img{max-width:100%;height:auto;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,.15);display:block;margin:0 auto}
+.fy-visual .fy-pc-media-video{width:100%}
+.fy-visual .fy-pc-media-video iframe,
+.fy-visual .fy-pc-media-video video{width:100%;aspect-ratio:4/3;border:0;border-radius:20px;display:block;box-shadow:0 20px 40px rgba(0,0,0,.15);object-fit:cover;background:#000}
+
+/* ---- Vùng nội dung tự do (the_content) trên các trang tùy chỉnh ---- */
+.fy-page-content{background:#fff;padding:20px 0 50px}
+.fy-page-content .fy-container{max-width:820px}
+.fy-page-content > .fy-container > *:first-child{margin-top:0}
+.fy-page-content p{color:#4a4a4a;line-height:1.7;margin:0 0 18px}
+.fy-page-content h2{font-size:28px;color:var(--fy-dark);margin:32px 0 14px}
+.fy-page-content h3{font-size:22px;color:var(--fy-dark);margin:28px 0 12px}
+.fy-page-content img{max-width:100%;height:auto;border-radius:12px}
+.fy-page-content figure{margin:0 0 22px}
+.fy-page-content figcaption,
+.fy-page-content .wp-element-caption{font-size:13px;color:#777;text-align:center;margin-top:8px}
+.fy-page-content iframe{max-width:100%}
+.fy-page-content .wp-block-embed__wrapper iframe,
+.fy-page-content video{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;display:block}
+
 @media(max-width:900px){
 	.fy-hero h1{font-size:38px}
 	.fy-grid{grid-template-columns:repeat(2,1fr)}
@@ -294,6 +333,22 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 	.fy-grid{grid-template-columns:1fr}
 	.fy-hero-fruits{font-size:44px}
 	.fy-page-hero h1{font-size:32px}
+	/* Tiêu đề section: co lại cho vừa màn hình điện thoại (mặc định 30–34px hơi lớn). */
+	.fy-intro h2,
+	.fy-story-text h2,
+	.fy-values h2,
+	.fy-timeline h2,
+	.fy-promo-right h2,
+	.fy-cta h2,
+	.fy-page-content h2{font-size:24px;line-height:1.3}
+	.fy-intro,
+	.fy-story-text{padding:44px 0}
+	.fy-promo .fy-promo-left{padding:48px 24px}
+	.fy-promo .fy-promo-right{padding:44px 22px}
+	.fy-values,
+	.fy-timeline{padding:48px 0}
+	.fy-cta{padding:48px 20px}
+	.fy-page-hero-shop{padding-bottom:90px}
 }
 
 /* Hiệu ứng xuất hiện khi cuộn trang */

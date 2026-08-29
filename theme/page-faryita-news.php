@@ -7,16 +7,17 @@
  */
 get_header();
 
-$fy_paged = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+$fy_paged   = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
+$fy_show_news = fy_news_enabled();
 
-$fy_news_query = new WP_Query(
+$fy_news_query = $fy_show_news ? new WP_Query(
 	array(
 		'post_type'      => 'post',
 		'post_status'    => 'publish',
 		'posts_per_page' => 9,
 		'paged'          => $fy_paged,
 	)
-);
+) : null;
 ?>
 
 <div class="fy-home">
@@ -34,7 +35,7 @@ $fy_news_query = new WP_Query(
 
 	<section class="fy-news">
 		<div class="fy-container">
-			<?php if ( $fy_news_query->have_posts() ) : ?>
+			<?php if ( $fy_show_news && $fy_news_query && $fy_news_query->have_posts() ) : ?>
 				<div class="fy-news-grid">
 					<?php while ( $fy_news_query->have_posts() ) : $fy_news_query->the_post(); ?>
 						<article class="fy-news-card">
@@ -68,9 +69,9 @@ $fy_news_query = new WP_Query(
 				<?php endif; ?>
 
 			<?php else : ?>
-				<p class="fy-news-empty">Chưa có bài viết nào.</p>
+				<p class="fy-news-empty">Tin tức đang được cập nhật. Vui lòng quay lại sau nhé!</p>
 			<?php endif; ?>
-			<?php wp_reset_postdata(); ?>
+			<?php if ( $fy_news_query ) { wp_reset_postdata(); } ?>
 		</div>
 	</section>
 

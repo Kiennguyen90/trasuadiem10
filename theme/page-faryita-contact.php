@@ -19,9 +19,9 @@ $fy_status = isset( $_GET['fy_contact'] ) ? sanitize_key( $_GET['fy_contact'] ) 
 
 	<section class="fy-page-hero fy-page-hero-shop">
 		<div class="fy-container fy-reveal">
-			<p class="fy-eyebrow">Trà Sữa DIEM10</p>
-			<h1>Liên Hệ</h1>
-			<p>Mọi ý kiến, góp ý hay câu hỏi của bạn đều rất quan trọng với <?php echo esc_html( $fy_store_name ); ?>.</p>
+			<p class="fy-eyebrow"><?php echo esc_html( fy_pc( 'hero', 'eyebrow' ) ); ?></p>
+			<h1><?php echo esc_html( fy_pc( 'hero', 'title' ) ); ?></h1>
+			<p><?php echo esc_html( fy_pc( 'hero', 'desc' ) ); ?></p>
 		</div>
 		<svg class="fy-wave fy-page-hero-shop-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 			<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>
@@ -33,8 +33,8 @@ $fy_status = isset( $_GET['fy_contact'] ) ? sanitize_key( $_GET['fy_contact'] ) 
 			<div class="fy-contact-grid">
 
 				<div class="fy-contact-form-wrap">
-					<h2>Hỗ Trợ &amp; Giải Đáp</h2>
-					<p class="fy-desc">Để lại thông tin, đội ngũ <?php echo esc_html( $fy_store_name ); ?> sẽ liên hệ lại với bạn sớm nhất.</p>
+					<h2><?php echo esc_html( fy_pc( 'form', 'heading' ) ); ?></h2>
+					<p class="fy-desc"><?php echo esc_html( fy_pc( 'form', 'desc' ) ); ?></p>
 
 					<?php if ( 'success' === $fy_status ) : ?>
 						<div class="fy-contact-alert fy-contact-alert-success">Cảm ơn bạn! Chúng tôi đã nhận được thông tin và sẽ liên hệ lại sớm nhất.</div>
@@ -72,7 +72,7 @@ $fy_status = isset( $_GET['fy_contact'] ) ? sanitize_key( $_GET['fy_contact'] ) 
 							<textarea class="fy-franchise-control fy-franchise-textarea" name="fy_message" rows="4" placeholder="Nhập nội dung chi tiết của bạn"></textarea>
 						</label>
 
-						<button type="submit" class="fy-franchise-submit">Gửi Tin Nhắn <span aria-hidden="true">→</span></button>
+						<button type="submit" class="fy-franchise-submit"><?php echo esc_html( fy_pc( 'form', 'submit_label' ) ); ?> <span aria-hidden="true">→</span></button>
 					</form>
 				</div>
 

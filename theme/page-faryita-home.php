@@ -3,20 +3,25 @@
  * Template Name: MilkTea-90 Home
  * Trang chủ Trà Sữa DIEM 10: hero, giới thiệu, sản phẩm, menu.
  *
+ * Nội dung (chữ + ảnh + video) chỉnh trực tiếp ở màn hình sửa Trang → khối
+ * "Nội dung Trang chủ" (xem theme/inc/page-content-fields.php). Trường để trống
+ * thì dùng giá trị mặc định bên dưới.
+ *
  * @package MilkTea-90
  */
 get_header();
 
-$fy_banner_url       = get_template_directory_uri() . '/assets/images/brand/shop-banner.jpg';
-$fy_counter_url      = get_template_directory_uri() . '/assets/images/brand/shop-counter.jpg';
-$fy_store_photo_url  = get_template_directory_uri() . '/assets/images/brand/store-counter.jpg';
+$fy_banner_url      = get_template_directory_uri() . '/assets/images/brand/shop-banner.jpg';
+$fy_counter_url     = get_template_directory_uri() . '/assets/images/brand/shop-counter.jpg';
+$fy_store_photo_url = get_template_directory_uri() . '/assets/images/brand/store-counter.jpg';
 
 // Tab phân loại sản phẩm trang chủ — lấy sản phẩm WooCommerce thật theo tag, client tự
-// gắn/đổi tag ngay trong wp-admin (Sản phẩm > Thẻ) mà không cần sửa code.
+// gắn/đổi tag ngay trong wp-admin (Sản phẩm > Thẻ) mà không cần sửa code. Nhãn tab đổi
+// được ở khối "Nội dung Trang chủ", slug (dùng để lọc theo tag) giữ cố định.
 $fy_tabs = array(
-	'yeu-thich' => 'Yêu Thích',
-	'ban-chay'  => 'Bán Chạy',
-	'hot-trend' => 'Hot Trend',
+	'yeu-thich' => fy_pc( 'products', 'tab1' ),
+	'ban-chay'  => fy_pc( 'products', 'tab2' ),
+	'hot-trend' => fy_pc( 'products', 'tab3' ),
 );
 $fy_tab_products = array();
 if ( class_exists( 'WooCommerce' ) ) {
@@ -31,14 +36,24 @@ if ( class_exists( 'WooCommerce' ) ) {
 	}
 }
 
-$fy_menu = array(
-	array( 'emoji' => '⚪', 'name' => 'Thạch Dừa',        'price' => '5.000₫', 'desc' => 'Giòn sần sật, thơm nhẹ vị dừa tự nhiên.' ),
-	array( 'emoji' => '🟤', 'name' => 'Trân Châu Hoàng Kim', 'price' => '5.000₫', 'desc' => 'Trân châu dẻo dai, ngọt dịu, sợi vàng óng đẹp mắt.' ),
-	array( 'emoji' => '🌰', 'name' => 'Hạt Nổ Củ Năng',   'price' => '5.000₫', 'desc' => 'Giòn tan trong miệng, topping được yêu thích nhất.' ),
-	array( 'emoji' => '🥛', 'name' => 'Thủy Tinh Sữa',    'price' => '5.000₫', 'desc' => 'Béo mềm, tan nhẹ, hoà quyện cùng vị trà thơm.' ),
+$fy_menu = array();
+for ( $fy_n = 1; $fy_n <= 4; $fy_n++ ) {
+	$fy_menu[] = array(
+		'emoji' => fy_pc( 'promo', "item{$fy_n}_emoji" ),
+		'name'  => fy_pc( 'promo', "item{$fy_n}_name" ),
+		'desc'  => fy_pc( 'promo', "item{$fy_n}_desc" ),
+	);
+}
+
+$fy_features = array(
+	fy_pc( 'strip', 'word1' ),
+	fy_pc( 'strip', 'word2' ),
+	fy_pc( 'strip', 'word3' ),
+	fy_pc( 'strip', 'word4' ),
 );
 
-$fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CHÂU DẺO DAI', 'PHỤC VỤ TẬN TÂM' );
+$fy_store_btn_url = fy_pc( 'store', 'button_url' );
+$fy_store_btn_url = $fy_store_btn_url ? $fy_store_btn_url : home_url( '/cua-hang/' );
 ?>
 
 
@@ -48,8 +63,8 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 		<div class="fy-blob fy-blob-1" aria-hidden="true"></div>
 		<div class="fy-blob fy-blob-2" aria-hidden="true"></div>
 		<div class="fy-hero-banner owl-carousel fy-hero-slider">
-			<div class="item"><img src="<?php echo esc_url( $fy_banner_url ); ?>" alt="Không gian quán Trà Sữa Điểm 10"></div>
-			<div class="item"><img src="<?php echo esc_url( $fy_counter_url ); ?>" alt="Quầy pha chế Trà Sữa Điểm 10"></div>
+			<div class="item"><?php echo fy_pc_media( 'banner', 'slide1', $fy_banner_url, array( 'alt' => 'Không gian quán Trà Sữa Điểm 10', 'wrap_class' => 'fy-pc-media fy-hero-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+			<div class="item"><?php echo fy_pc_media( 'banner', 'slide2', $fy_counter_url, array( 'alt' => 'Quầy pha chế Trà Sữa Điểm 10', 'wrap_class' => 'fy-pc-media fy-hero-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
 		</div>
 		<svg class="fy-wave fy-hero-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 			<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>
@@ -57,7 +72,7 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	</section>
 
 	<div class="fy-side-cta">
-		<a href="#fy-products">Xem Menu</a>
+		<a href="#fy-products"><?php echo esc_html( fy_pc( 'intro', 'button' ) ); ?></a>
 		<a href="<?php echo esc_url( home_url( '/lien-he' ) ); ?>">Liên Hệ</a>
 	</div>
 
@@ -65,18 +80,18 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 		<div class="fy-container fy-row">
 			<div class="fy-col fy-reveal">
 				<span class="fy-leaf" aria-hidden="true">🧋</span>
-				<h2>Không Gian Ấm Cúng<br>Hương Trà Nồng Nàn</h2>
-				<p class="fy-desc">Từ quầy pha chế đến từng góc nhỏ, DIEM 10 chăm chút để mỗi lần ghé quán đều là một trải nghiệm thư giãn, trọn vị.</p>
+				<h2><?php echo esc_html( fy_pc( 'intro', 'heading1' ) ); ?><br><?php echo esc_html( fy_pc( 'intro', 'heading2' ) ); ?></h2>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'intro', 'desc' ) ); ?></p>
 				<div class="fy-stats">
-					<div><div class="fy-num">Trà Ngon</div>Nguyên liệu chọn lọc</div>
-					<div><div class="fy-num">Giá Tốt</div>Hợp túi tiền mỗi ngày</div>
-					<div><div class="fy-num">Uống Là Mê</div>Vị trà khó quên</div>
+					<div><div class="fy-num"><?php echo esc_html( fy_pc( 'intro', 'stat1_num' ) ); ?></div><?php echo esc_html( fy_pc( 'intro', 'stat1_sub' ) ); ?></div>
+					<div><div class="fy-num"><?php echo esc_html( fy_pc( 'intro', 'stat2_num' ) ); ?></div><?php echo esc_html( fy_pc( 'intro', 'stat2_sub' ) ); ?></div>
+					<div><div class="fy-num"><?php echo esc_html( fy_pc( 'intro', 'stat3_num' ) ); ?></div><?php echo esc_html( fy_pc( 'intro', 'stat3_sub' ) ); ?></div>
 				</div>
-				<a class="fy-btn" href="#fy-products">Xem Menu</a>
+				<a class="fy-btn" href="#fy-products"><?php echo esc_html( fy_pc( 'intro', 'button' ) ); ?></a>
 			</div>
 			<div class="fy-col fy-visual-photo fy-reveal fy-reveal-d2">
 				<div class="fy-wave-image">
-					<img src="<?php echo esc_url( $fy_counter_url ); ?>" alt="Quầy pha chế Trà Sữa DIEM 10">
+					<?php echo fy_pc_media( 'intro', 'media', $fy_counter_url, array( 'alt' => 'Quầy pha chế Trà Sữa DIEM 10', 'wrap_class' => 'fy-pc-media fy-wave-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<svg class="fy-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 						<path d="M0,50 C250,10 450,90 700,45 C900,10 1050,90 1200,40 L1200,120 L0,120 Z"></path>
 					</svg>
@@ -108,7 +123,7 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 
 	<section class="fy-products" id="fy-products">
 		<div class="fy-container">
-			<h2 class="fy-reveal">Trà Sữa Đáng Thử Nhất</h2>
+			<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'products', 'heading' ) ); ?></h2>
 
 			<div class="fy-tabs" role="tablist">
 				<?php $fy_first_tab = true; foreach ( $fy_tabs as $fy_tag_slug => $fy_tab_label ) : ?>
@@ -147,10 +162,10 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	<section class="fy-promo">
 		<div class="fy-promo-left fy-reveal">
 			<div class="fy-jar" aria-hidden="true">🧋</div>
-			<h3>Giữ vững tâm huyết về chất lượng, hỗ trợ hàng nghìn người khởi nghiệp cùng chia sẻ thành quả.</h3>
+			<h3><?php echo esc_html( fy_pc( 'promo', 'slogan' ) ); ?></h3>
 		</div>
 		<div class="fy-promo-right">
-			<h2 class="fy-reveal">Topping Đa Dạng</h2>
+			<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'promo', 'heading' ) ); ?></h2>
 			<?php foreach ( $fy_menu as $i => $m ) : ?>
 				<div class="fy-menu-item fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>">
 					<div class="fy-menu-emoji" aria-hidden="true"><?php echo esc_html( $m['emoji'] ); ?></div>
@@ -168,13 +183,13 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	<section class="fy-story-text" id="fy-store-intro">
 		<div class="fy-container fy-row">
 			<div class="fy-col fy-reveal">
-				<h2>Ghé Thăm Cửa Hàng Gần Bạn</h2>
-				<p class="fy-desc">Trà Sữa DIEM10 hiện có mặt tại nhiều tỉnh thành trên cả nước, sẵn sàng phục vụ bạn mỗi ngày với không gian ấm cúng và ly trà sữa đậm vị.</p>
-				<a class="fy-btn" href="<?php echo esc_url( home_url( '/cua-hang/' ) ); ?>">Xem Cửa Hàng →</a>
+				<h2><?php echo esc_html( fy_pc( 'store', 'heading' ) ); ?></h2>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'store', 'desc' ) ); ?></p>
+				<a class="fy-btn" href="<?php echo esc_url( $fy_store_btn_url ); ?>"><?php echo esc_html( fy_pc( 'store', 'button' ) ); ?></a>
 			</div>
 			<div class="fy-col fy-visual-photo fy-reveal fy-reveal-d2">
 				<div class="fy-wave-image">
-					<img src="<?php echo esc_url( $fy_store_photo_url ); ?>" alt="Quầy pha chế Trà Sữa DIEM10">
+					<?php echo fy_pc_media( 'store', 'media', $fy_store_photo_url, array( 'alt' => 'Quầy pha chế Trà Sữa DIEM10', 'wrap_class' => 'fy-pc-media fy-wave-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<svg class="fy-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
 						<path d="M0,50 C250,10 450,90 700,45 C900,10 1050,90 1200,40 L1200,120 L0,120 Z"></path>
 					</svg>
@@ -184,19 +199,19 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	</section>
 
 	<?php
-	$fy_latest_posts = new WP_Query( array(
+	$fy_latest_posts = fy_news_enabled() ? new WP_Query( array(
 		'post_type'      => 'post',
 		'post_status'    => 'publish',
 		'posts_per_page' => 3,
 		'orderby'        => 'date',
 		'order'          => 'DESC',
 		'no_found_rows'  => true,
-	) );
-	if ( $fy_latest_posts->have_posts() ) :
+	) ) : null;
+	if ( $fy_latest_posts && $fy_latest_posts->have_posts() ) :
 		?>
 		<section class="fy-news" id="fy-latest-posts">
 			<div class="fy-container">
-				<h2 class="fy-reveal">Bài Viết Mới</h2>
+				<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'news', 'news_heading' ) ); ?></h2>
 				<div class="fy-news-grid">
 					<?php while ( $fy_latest_posts->have_posts() ) : $fy_latest_posts->the_post(); ?>
 						<article class="fy-news-card fy-reveal">
@@ -215,7 +230,7 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 					<?php endwhile; ?>
 				</div>
 				<p style="text-align:center;margin-top:36px">
-					<a class="fy-btn" href="<?php echo esc_url( home_url( '/tin-tuc/' ) ); ?>">Xem Tất Cả Tin Tức →</a>
+					<a class="fy-btn" href="<?php echo esc_url( home_url( '/tin-tuc/' ) ); ?>"><?php echo esc_html( fy_pc( 'news', 'news_button' ) ); ?></a>
 				</p>
 			</div>
 		</section>
@@ -227,7 +242,7 @@ $fy_features = array( 'TRÀ THƠM ĐẬM VỊ', 'TOPPING ĐA DẠNG', 'TRÂN CH�
 	<section class="fy-franchise" id="fy-franchise">
 		<div class="fy-container fy-franchise-grid fy-reveal">
 			<div class="fy-franchise-heading">
-				<h2>Đăng Ký Tư Vấn Nhượng Quyền<br>Thương Hiệu</h2>
+				<h2><?php echo fy_pc_nl2br( 'news', 'franchise_heading' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
 			</div>
 
 			<div class="fy-franchise-form-wrap">

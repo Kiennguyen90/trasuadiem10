@@ -3,50 +3,86 @@
  * Template Name: MilkTea-90 Our Story
  * Trang Câu Chuyện Của Chúng Tôi.
  *
+ * Nội dung (chữ + ảnh + video) chỉnh ở màn hình sửa Trang → khối "Nội dung trang
+ * Câu Chuyện". Block soạn thảo thêm trong editor hiện ở vùng nội dung tự do giữa
+ * khối mở đầu và "Giá Trị Cốt Lõi".
+ *
  * @package MilkTea-90
  */
 get_header();
 
-$fy_values = array(
-	array( 'icon' => '🌱', 'title' => 'Tươi Sạch',   'desc' => 'Trái cây được thu hoạch và ép trong ngày, không chất bảo quản.' ),
-	array( 'icon' => '♻️', 'title' => 'Bền Vững',    'desc' => 'Hợp tác với nông trại hữu cơ địa phương, hạn chế rác thải nhựa.' ),
-	array( 'icon' => '❤️', 'title' => 'Tận Tâm',     'desc' => 'Mỗi ly nước ép đều được pha chế bằng sự trân trọng dành cho khách hàng.' ),
-);
+$fy_cta_url = fy_pc( 'cta', 'button_url' );
+$fy_cta_url = $fy_cta_url ? $fy_cta_url : home_url( '/san-pham' );
 
-$fy_timeline = array(
-	array( 'year' => '2020', 'title' => 'Khởi Đầu Từ Một Quầy Nhỏ', 'desc' => 'Faryita bắt đầu từ một quầy nước ép nhỏ với mong muốn mang trái cây tươi đến gần hơn với mọi người.' ),
-	array( 'year' => '2022', 'title' => 'Mở Rộng Nông Trại Đối Tác', 'desc' => 'Hợp tác cùng các nông trại hữu cơ để đảm bảo nguồn nguyên liệu ổn định, chất lượng quanh năm.' ),
-	array( 'year' => '2024', 'title' => 'Đạt Chứng Nhận Hữu Cơ', 'desc' => 'Toàn bộ dòng sản phẩm chính thức đạt chứng nhận nguyên liệu hữu cơ 100%.' ),
-	array( 'year' => '2026', 'title' => 'Faryita Hôm Nay', 'desc' => 'Tiếp tục hành trình mang đến những ly nước ép tươi ngon, tốt cho sức khỏe mỗi ngày.' ),
-);
+$fy_values = array();
+for ( $fy_n = 1; $fy_n <= 3; $fy_n++ ) {
+	$fy_values[] = array(
+		'icon'  => fy_pc( 'values', "card{$fy_n}_icon" ),
+		'title' => fy_pc( 'values', "card{$fy_n}_title" ),
+		'desc'  => fy_pc( 'values', "card{$fy_n}_desc" ),
+	);
+}
+
+$fy_timeline = array();
+for ( $fy_n = 1; $fy_n <= 4; $fy_n++ ) {
+	$fy_timeline[] = array(
+		'year'  => fy_pc( 'timeline', "item{$fy_n}_year" ),
+		'title' => fy_pc( 'timeline', "item{$fy_n}_title" ),
+		'desc'  => fy_pc( 'timeline', "item{$fy_n}_desc" ),
+	);
+}
 ?>
 
 <div class="fy-home">
 
 	<section class="fy-page-hero">
 		<div class="fy-container fy-reveal">
-			<p class="fy-eyebrow">Về Faryita</p>
-			<h1>Câu Chuyện Của Chúng Tôi</h1>
-			<p>Từ tình yêu dành cho trái cây tươi đến thương hiệu nước ép hữu cơ được tin dùng mỗi ngày.</p>
+			<p class="fy-eyebrow"><?php echo esc_html( fy_pc( 'hero', 'eyebrow' ) ); ?></p>
+			<h1><?php echo esc_html( fy_pc( 'hero', 'title' ) ); ?></h1>
+			<p><?php echo esc_html( fy_pc( 'hero', 'desc' ) ); ?></p>
 		</div>
 	</section>
 
 	<section class="fy-story-text">
 		<div class="fy-container fy-row">
 			<div class="fy-col fy-reveal">
-				<h2>Bắt Đầu Từ Một Ý Tưởng Đơn Giản</h2>
-				<p class="fy-desc">Faryita ra đời từ mong muốn giản đơn: mang đến những ly nước ép trái cây tươi ngon, nguyên chất, không chất bảo quản cho mọi gia đình.</p>
-				<p class="fy-desc">Chúng tôi tin rằng một ly nước ép ngon phải bắt đầu từ nguyên liệu tốt. Vì vậy, Faryita chọn hợp tác trực tiếp với các nông trại hữu cơ, thu hoạch và ép lạnh trong ngày để giữ trọn vitamin và hương vị tự nhiên.</p>
-				<a class="fy-btn" href="#fy-values">Giá Trị Của Chúng Tôi</a>
+				<h2><?php echo esc_html( fy_pc( 'opening', 'heading' ) ); ?></h2>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'opening', 'para1' ) ); ?></p>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'opening', 'para2' ) ); ?></p>
+				<a class="fy-btn" href="#fy-values"><?php echo esc_html( fy_pc( 'opening', 'button' ) ); ?></a>
 			</div>
-			<div class="fy-col fy-visual fy-reveal fy-reveal-d2" aria-hidden="true">🍹</div>
+			<div class="fy-col fy-visual fy-reveal fy-reveal-d2<?php echo fy_pc_has_media( 'opening', 'media' ) ? ' fy-visual--media' : ''; ?>"<?php echo fy_pc_has_media( 'opening', 'media' ) ? '' : ' aria-hidden="true"'; ?>>
+				<?php
+				if ( fy_pc_has_media( 'opening', 'media' ) ) {
+					echo fy_pc_media( 'opening', 'media', '', array( 'alt' => 'Câu chuyện Trà Sữa DIEM10', 'wrap_class' => 'fy-pc-media fy-visual-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+				} else {
+					echo '🍹';
+				}
+				?>
+			</div>
 		</div>
 	</section>
 
+	<?php
+	while ( have_posts() ) :
+		the_post();
+		if ( '' !== trim( get_the_content() ) ) :
+			?>
+			<section class="fy-page-content">
+				<div class="fy-container fy-reveal">
+					<?php the_content(); ?>
+				</div>
+			</section>
+			<?php
+		endif;
+	endwhile;
+	rewind_posts();
+	?>
+
 	<section class="fy-values" id="fy-values">
 		<div class="fy-container">
-			<h2 class="fy-reveal">Giá Trị Cốt Lõi</h2>
-			<p class="fy-sub fy-reveal">Ba điều Faryita luôn giữ vững trong từng ly nước ép.</p>
+			<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'values', 'heading' ) ); ?></h2>
+			<p class="fy-sub fy-reveal"><?php echo esc_html( fy_pc( 'values', 'sub' ) ); ?></p>
 			<div class="fy-values-grid">
 				<?php foreach ( $fy_values as $i => $v ) : ?>
 					<div class="fy-value-card fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>">
@@ -61,7 +97,7 @@ $fy_timeline = array(
 
 	<section class="fy-timeline">
 		<div class="fy-container">
-			<h2 class="fy-reveal">Hành Trình Phát Triển</h2>
+			<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'timeline', 'heading' ) ); ?></h2>
 			<div class="fy-timeline-list">
 				<?php foreach ( $fy_timeline as $i => $t ) : ?>
 					<div class="fy-timeline-item fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>">
@@ -76,8 +112,8 @@ $fy_timeline = array(
 
 	<section class="fy-cta">
 		<div class="fy-container fy-reveal">
-			<h2>Cùng Faryita thưởng thức vị ngọt từ thiên nhiên</h2>
-			<a class="fy-btn" href="<?php echo esc_url( home_url( '/san-pham' ) ); ?>">Xem Sản Phẩm</a>
+			<h2><?php echo esc_html( fy_pc( 'cta', 'heading' ) ); ?></h2>
+			<a class="fy-btn" href="<?php echo esc_url( $fy_cta_url ); ?>"><?php echo esc_html( fy_pc( 'cta', 'button' ) ); ?></a>
 		</div>
 	</section>
 

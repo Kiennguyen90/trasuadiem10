@@ -545,6 +545,41 @@ if ( defined( 'JETPACK__VERSION' ) ) {
  */
 require get_template_directory() . '/revolution/inc/breadcrumbs.php';
 
+/**
+ * Bộ chỉnh sửa nội dung theo trang (metabox chữ + ảnh + video cho Trang chủ, Giới Thiệu...).
+ */
+require get_template_directory() . '/inc/page-content-fields.php';
+
+/**
+ * Bật/tắt phần Tin Tức toàn site (trang Tin Tức + mục "Bài Viết Mới" ở trang chủ).
+ * Client tạm thời chưa có bài viết nên để FALSE — khi có bài, đổi 'fy_news_enabled'
+ * trong Cài đặt > Tổng quan (ô "Hiển thị mục Tin Tức") hoặc sửa dòng dưới thành true.
+ */
+function fy_news_enabled() {
+	$opt = get_option( 'fy_news_enabled', '0' );
+	return (bool) apply_filters( 'fy_news_enabled', '1' === (string) $opt );
+}
+
+function fy_news_enabled_setting_init() {
+	register_setting( 'general', 'fy_news_enabled', array(
+		'type'              => 'string',
+		'sanitize_callback' => static function ( $v ) { return '1' === (string) $v ? '1' : '0'; },
+		'default'           => '0',
+	) );
+	add_settings_field(
+		'fy_news_enabled',
+		'Hiển thị mục Tin Tức',
+		static function () {
+			printf(
+				'<label><input type="checkbox" name="fy_news_enabled" value="1" %s> Hiện trang Tin Tức và mục "Bài Viết Mới" ở trang chủ (bỏ chọn khi chưa có bài viết)</label>',
+				checked( get_option( 'fy_news_enabled', '0' ), '1', false )
+			);
+		},
+		'general'
+	);
+}
+add_action( 'admin_init', 'fy_news_enabled_setting_init' );
+
 
 //////////////////////////////////////////////   Function for Translation Error   //////////////////////////////////////////////////////
 function art_blog_enqueue_function() {

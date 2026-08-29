@@ -3,44 +3,77 @@
  * Template Name: MilkTea-90 Giới Thiệu
  * Trang Giới Thiệu doanh nghiệp — CÔNG TY TNHH QUẢN LÝ ẨM THỰC DIEM10.
  *
+ * Nội dung (chữ + ảnh + video) chỉnh ở màn hình sửa Trang → khối "Nội dung trang
+ * Giới Thiệu". Ngoài ra mọi block soạn thảo (ảnh, đoạn văn...) thêm trong trình
+ * soạn thảo sẽ hiện ở vùng "nội dung tự do" giữa phần giới thiệu công ty và CTA.
+ *
  * @package MilkTea-90
  */
 get_header();
 
-$fy_slogan = 'Giữ vững tâm huyết về chất lượng, hỗ trợ hàng nghìn người khởi nghiệp cùng chia sẻ thành quả.';
+$fy_cta_url = fy_pc( 'cta', 'button_url' );
+$fy_cta_url = $fy_cta_url ? $fy_cta_url : home_url( '/lien-he/' );
 
-$fy_highlights = array(
-	array( 'icon' => '🏭', 'title' => 'Tự Chủ Sản Xuất', 'desc' => 'Nhà máy hiện đại, tự nghiên cứu phát triển nguyên liệu, tự sản xuất và tự tiêu thụ.' ),
-	array( 'icon' => '🔗', 'title' => 'Chuỗi Cung Ứng Tích Hợp', 'desc' => 'Nghiên cứu phát triển, sản xuất, logistics và vận hành nhượng quyền trong một hệ thống.' ),
-	array( 'icon' => '🏪', 'title' => 'Hơn 500 Cửa Hàng Đối Tác', 'desc' => 'Phục vụ hơn 500 cửa hàng đối tác trên toàn quốc sau hơn một thập kỷ phát triển.' ),
-);
+$fy_highlights = array();
+for ( $fy_n = 1; $fy_n <= 3; $fy_n++ ) {
+	$fy_highlights[] = array(
+		'icon'  => fy_pc( 'values', "card{$fy_n}_icon" ),
+		'title' => fy_pc( 'values', "card{$fy_n}_title" ),
+		'desc'  => fy_pc( 'values', "card{$fy_n}_desc" ),
+	);
+}
 ?>
 
 <div class="fy-home">
 
 	<section class="fy-page-hero">
 		<div class="fy-container fy-reveal">
-			<p class="fy-eyebrow">Về Chúng Tôi</p>
-			<h1>Giới Thiệu</h1>
-			<p><?php echo esc_html( $fy_slogan ); ?></p>
+			<p class="fy-eyebrow"><?php echo esc_html( fy_pc( 'hero', 'eyebrow' ) ); ?></p>
+			<h1><?php echo esc_html( fy_pc( 'hero', 'title' ) ); ?></h1>
+			<p><?php echo esc_html( fy_pc( 'hero', 'slogan' ) ); ?></p>
 		</div>
 	</section>
 
 	<section class="fy-story-text">
 		<div class="fy-container fy-row">
 			<div class="fy-col fy-reveal">
-				<h2>CÔNG TY TNHH QUẢN LÝ ẨM THỰC DIEM10</h2>
-				<p class="fy-desc">DIEM10 có nguồn gốc từ Đài Loan, trụ sở chính đặt tại Thành phố Hồ Chí Minh, Việt Nam. Từ năm 2012, chúng tôi bắt đầu xây dựng chuỗi cung ứng trà sữa, trải qua hơn một thập kỷ phát triển, hiện đã hình thành hệ thống tích hợp bao gồm nghiên cứu phát triển, sản xuất, logistics, vận hành nhượng quyền, phục vụ hơn 500 cửa hàng đối tác trên toàn quốc.</p>
-				<p class="fy-desc">Chúng tôi tự xây dựng nhà máy sản xuất hiện đại, thực hiện nghiên cứu phát triển nguyên liệu độc lập, tự sản xuất và tự tiêu thụ. Cắt bỏ các khâu trung gian, kiểm soát chặt chẽ chất lượng từ nguồn, tối ưu chi phí, tạo nền tảng vững chắc cho các cửa hàng đối tác.</p>
+				<h2><?php echo esc_html( fy_pc( 'company', 'heading' ) ); ?></h2>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'company', 'para1' ) ); ?></p>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'company', 'para2' ) ); ?></p>
 			</div>
-			<div class="fy-col fy-visual fy-reveal fy-reveal-d2" aria-hidden="true">🧋</div>
+			<div class="fy-col fy-visual fy-reveal fy-reveal-d2<?php echo fy_pc_has_media( 'company', 'media' ) ? ' fy-visual--media' : ''; ?>"<?php echo fy_pc_has_media( 'company', 'media' ) ? '' : ' aria-hidden="true"'; ?>>
+				<?php
+				if ( fy_pc_has_media( 'company', 'media' ) ) {
+					echo fy_pc_media( 'company', 'media', '', array( 'alt' => 'CÔNG TY TNHH QUẢN LÝ ẨM THỰC DIEM10', 'wrap_class' => 'fy-pc-media fy-visual-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+				} else {
+					echo '🧋';
+				}
+				?>
+			</div>
 		</div>
 	</section>
 
+	<?php
+	while ( have_posts() ) :
+		the_post();
+		$fy_editor = trim( get_the_content() );
+		if ( '' !== $fy_editor ) :
+			?>
+			<section class="fy-page-content">
+				<div class="fy-container fy-reveal">
+					<?php the_content(); ?>
+				</div>
+			</section>
+			<?php
+		endif;
+	endwhile;
+	rewind_posts();
+	?>
+
 	<section class="fy-values">
 		<div class="fy-container">
-			<h2 class="fy-reveal">Nền Tảng Của DIEM10</h2>
-			<p class="fy-sub fy-reveal">Từ nhà máy đến ly trà sữa trên tay khách hàng, mọi khâu đều do DIEM10 tự vận hành.</p>
+			<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'values', 'heading' ) ); ?></h2>
+			<p class="fy-sub fy-reveal"><?php echo esc_html( fy_pc( 'values', 'sub' ) ); ?></p>
 			<div class="fy-values-grid">
 				<?php foreach ( $fy_highlights as $i => $h ) : ?>
 					<div class="fy-value-card fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>">
@@ -55,8 +88,8 @@ $fy_highlights = array(
 
 	<section class="fy-cta">
 		<div class="fy-container fy-reveal">
-			<h2>Đồng hành cùng DIEM10 trên hành trình khởi nghiệp trà sữa</h2>
-			<a class="fy-btn" href="<?php echo esc_url( home_url( '/lien-he/' ) ); ?>">Liên Hệ Tư Vấn</a>
+			<h2><?php echo esc_html( fy_pc( 'cta', 'heading' ) ); ?></h2>
+			<a class="fy-btn" href="<?php echo esc_url( $fy_cta_url ); ?>"><?php echo esc_html( fy_pc( 'cta', 'button' ) ); ?></a>
 		</div>
 	</section>
 
