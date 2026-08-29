@@ -53,9 +53,36 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-hero-banner .owl-stage,
 .fy-hero-banner .owl-item,
 .fy-hero-banner .item{height:100%}
-.fy-hero-banner .owl-dots{position:absolute;left:0;right:0;bottom:16px;text-align:center;z-index:2}
-.fy-hero-banner .owl-dots .owl-dot span{display:inline-block;width:10px;height:10px;margin:0 4px;border-radius:50%;background:rgba(255,255,255,.6)}
-.fy-hero-banner .owl-dots .owl-dot.active span{background:#fff}
+/* Điều hướng slider: mũi tên qua/lại 2 bên (thay cho chấm tròn ở dưới). */
+.fy-hero-banner .owl-nav{position:absolute;inset:0;pointer-events:none;z-index:3;margin:0}
+.fy-hero-banner .owl-nav button.owl-prev,
+.fy-hero-banner .owl-nav button.owl-next{
+	position:absolute;top:50%;transform:translateY(-50%);
+	width:46px;height:46px;padding:0;margin:0;border:none;border-radius:50%;
+	background:rgba(255,255,255,.9);color:var(--fy-dark);
+	display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1;
+	cursor:pointer;pointer-events:auto;box-shadow:0 4px 14px rgba(0,0,0,.2);
+	transition:background .2s ease,transform .2s ease
+}
+.fy-hero-banner .owl-nav button.owl-prev{left:24px}
+.fy-hero-banner .owl-nav button.owl-next{right:24px}
+/* Desktop: đẩy 2 mũi tên vào trong để mũi tên phải không chạm nút dọc "Xem Menu / Liên Hệ". */
+@media(min-width:701px){
+	.fy-hero-banner .owl-nav button.owl-prev{left:56px}
+	.fy-hero-banner .owl-nav button.owl-next{right:56px}
+}
+.fy-hero-banner .owl-nav button.owl-prev:hover,
+.fy-hero-banner .owl-nav button.owl-next:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
+.fy-hero-banner .owl-nav button.owl-prev:focus-visible,
+.fy-hero-banner .owl-nav button.owl-next:focus-visible{outline:2px solid var(--fy-green);outline-offset:2px}
+.fy-hero-banner .owl-nav button.disabled{opacity:.35;cursor:default}
+.fy-hero-banner .owl-dots{display:none}
+@media(max-width:700px){
+	.fy-hero-banner .owl-nav button.owl-prev,
+	.fy-hero-banner .owl-nav button.owl-next{width:38px;height:38px;font-size:15px}
+	.fy-hero-banner .owl-nav button.owl-prev{left:12px}
+	.fy-hero-banner .owl-nav button.owl-next{right:12px}
+}
 .fy-wave-image{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.15)}
 .fy-wave-image img{border-radius:0;box-shadow:none}
 .fy-wave-image .fy-wave{position:absolute;left:0;bottom:-2px;width:100%;height:70px;display:block}

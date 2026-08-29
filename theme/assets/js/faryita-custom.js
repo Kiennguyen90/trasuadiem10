@@ -72,8 +72,12 @@
 		$slider.owlCarousel({
 			items: 1,
 			loop: true,
-			nav: false,
-			dots: true,
+			nav: true,
+			navText: [
+				'<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="screen-reader-text">Ảnh trước</span>',
+				'<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="screen-reader-text">Ảnh sau</span>'
+			],
+			dots: false,
 			autoplay: true,
 			autoplayTimeout: 45000,
 			autoplayHoverPause: true,
