@@ -86,6 +86,57 @@
 		});
 	}
 
+	function testimonialsCarousel() {
+		if (!window.jQuery || !window.jQuery.fn.owlCarousel) {
+			return;
+		}
+		var $carousel = window.jQuery('.fy-testimonials-carousel');
+		if (!$carousel.length) {
+			return;
+		}
+		$carousel.owlCarousel({
+			loop: $carousel.children().length > 2,
+			margin: 24,
+			nav: true,
+			navText: [
+				'<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="screen-reader-text">Cảm nhận trước</span>',
+				'<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="screen-reader-text">Cảm nhận sau</span>'
+			],
+			dots: false,
+			responsive: {
+				0: { items: 1 },
+				700: { items: 2 }
+			}
+		});
+	}
+
+	function mobileHeaderSpacer() {
+		var page = document.getElementById('page');
+		if (!page) {
+			return;
+		}
+		function sync() {
+			document.documentElement.style.setProperty('--fy-header-h', page.offsetHeight + 'px');
+		}
+		sync();
+		window.addEventListener('resize', sync);
+		window.addEventListener('orientationchange', sync);
+		if ('ResizeObserver' in window) {
+			new ResizeObserver(sync).observe(page);
+		}
+		// Nguồn chính để bắt menu mobile mở/đóng (đổi chiều cao #page): gọi trực
+		// tiếp trong click handler của nút toggle, không chỉ dựa vào ResizeObserver
+		// — sync() ngay lập tức rồi sync() lại sau khi transition max-height của
+		// #primary-menu (.35s, xem style.css) chạy xong để lấy đúng chiều cao cuối.
+		var toggleBtn = document.querySelector('#site-navigation .menu-toggle');
+		if (toggleBtn) {
+			toggleBtn.addEventListener('click', function () {
+				sync();
+				setTimeout(sync, 380);
+			});
+		}
+	}
+
 	function productTabs() {
 		var tabs = document.querySelectorAll('.fy-tab-btn');
 		if (!tabs.length) {
@@ -110,6 +161,8 @@
 			wishlistToggle();
 			relatedProductsCarousel();
 			heroSlider();
+			testimonialsCarousel();
+			mobileHeaderSpacer();
 			productTabs();
 		});
 	} else {
@@ -117,6 +170,8 @@
 		wishlistToggle();
 		relatedProductsCarousel();
 		heroSlider();
+		testimonialsCarousel();
+		mobileHeaderSpacer();
 		productTabs();
 	}
 })();

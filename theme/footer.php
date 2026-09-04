@@ -97,7 +97,7 @@
 	$art_blog_footer_go_to_top = absint(get_theme_mod('art_blog_enable_go_to_top_option', 1));
 	if($art_blog_footer_go_to_top == 1){ 
 		?>
-		<a href="javascript:void(0);" class="footer-go-to-top go-to-top"><i class="fas fa-chevron-up"></i></a>
+		<a href="javascript:void(0);" class="footer-go-to-top go-to-top" aria-label="Về đầu trang"><span aria-hidden="true">🧋</span></a>
 <?php } ?>
 
 <?php wp_footer(); ?>

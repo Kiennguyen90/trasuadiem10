@@ -22,6 +22,15 @@ for ( $fy_n = 1; $fy_n <= 3; $fy_n++ ) {
 		'desc'  => fy_pc( 'values', "card{$fy_n}_desc" ),
 	);
 }
+
+$fy_timeline = array();
+for ( $fy_n = 1; $fy_n <= 4; $fy_n++ ) {
+	$fy_timeline[] = array(
+		'year'  => fy_pc( 'timeline', "item{$fy_n}_year" ),
+		'title' => fy_pc( 'timeline', "item{$fy_n}_title" ),
+		'desc'  => fy_pc( 'timeline', "item{$fy_n}_desc" ),
+	);
+}
 ?>
 
 <div class="fy-home">
@@ -79,6 +88,39 @@ for ( $fy_n = 1; $fy_n <= 3; $fy_n++ ) {
 						<div class="fy-icon" aria-hidden="true"><?php echo esc_html( $h['icon'] ); ?></div>
 						<h3><?php echo esc_html( $h['title'] ); ?></h3>
 						<p><?php echo esc_html( $h['desc'] ); ?></p>
+					</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+
+	<?php $fy_philosophy_media = fy_pc_has_media( 'philosophy', 'media' ); ?>
+	<section class="fy-story-text<?php echo $fy_philosophy_media ? ' fy-story-text--media' : ''; ?>">
+		<div class="fy-container<?php echo $fy_philosophy_media ? '' : ' fy-row'; ?>">
+			<div class="fy-col fy-reveal<?php echo $fy_philosophy_media ? ' fy-story-lead' : ''; ?>">
+				<h2><?php echo esc_html( fy_pc( 'philosophy', 'heading' ) ); ?></h2>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'philosophy', 'para1' ) ); ?></p>
+				<p class="fy-desc"><?php echo esc_html( fy_pc( 'philosophy', 'para2' ) ); ?></p>
+			</div>
+			<?php if ( $fy_philosophy_media ) : ?>
+				<div class="fy-story-media fy-reveal fy-reveal-d2">
+					<?php echo fy_pc_media( 'philosophy', 'media', '', array( 'alt' => 'Triết lý kinh doanh Trà Sữa DIEM10', 'wrap_class' => 'fy-pc-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				</div>
+			<?php else : ?>
+				<div class="fy-col fy-visual fy-reveal fy-reveal-d2" aria-hidden="true">🤝</div>
+			<?php endif; ?>
+		</div>
+	</section>
+
+	<section class="fy-timeline">
+		<div class="fy-container">
+			<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'timeline', 'heading' ) ); ?></h2>
+			<div class="fy-timeline-list">
+				<?php foreach ( $fy_timeline as $i => $t ) : ?>
+					<div class="fy-timeline-item fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>">
+						<div class="fy-year"><?php echo esc_html( $t['year'] ); ?></div>
+						<h4><?php echo esc_html( $t['title'] ); ?></h4>
+						<p><?php echo esc_html( $t['desc'] ); ?></p>
 					</div>
 				<?php endforeach; ?>
 			</div>

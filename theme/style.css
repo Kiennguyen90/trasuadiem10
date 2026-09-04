@@ -3840,9 +3840,9 @@ span.posted-on, .post-tags {
 	button.menu-toggle {
 	    padding: 10px 18px;
 	    font-size: 21px;
-	    background-color: var(--primary-color);
-	    border-color: var(--primary-color);
-	    color: #fff;
+	    background-color: #fff;
+	    border: none;
+	    color: var(--primary-color);
 	}
 	.main-navigation ul#primary-menu>li>a, .main-navigation div#primary-menu>ul>li>a{
 		padding: 10px;
@@ -4057,6 +4057,26 @@ body.admin-bar #page.site { top: 32px; }
 	body.admin-bar #page.site { top: 46px; }
 }
 
+/* position:sticky bị lỗi (rơi khỏi vị trí, để lộ nội dung phía dưới đè lên) trên
+   Safari iOS khi kết hợp với overflow-x:hidden trên <html> (rule ở gần đầu file
+   style.css) — bug nổi tiếng của WebKit, không phải do các rule mobile-nav phía
+   trên. Ở mobile đổi hẳn sang position:fixed (không phụ thuộc scroll container
+   nên luôn ở đúng top của màn hình). #page bị lấy ra khỏi luồng trang hoàn toàn
+   nên cần padding-top trên <body> để nội dung không bị header đè lên — giá trị
+   --fy-header-h do JS (faryita-custom.js, mobileHeaderSpacer) đo và cập nhật
+   qua ResizeObserver, tự động theo kịp mỗi khi mở/đóng menu (nav đổi chiều cao). */
+@media screen and (max-width: 900px) {
+	#page.site {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
+	body {
+		padding-top: var(--fy-header-h, 0px);
+	}
+}
+
 .fy-header-flex { align-items: center; }
 
 /* .fy-split-menu (danh sách <li> chia trái/phải) ẩn theo mặc định (mobile) — chỉ hiện lại
@@ -4075,13 +4095,15 @@ body.admin-bar #page.site { top: 32px; }
 	white-space: nowrap;
 	transition: text-decoration-color .2s ease;
 }
-.fy-split-menu li a:hover,
-.fy-split-menu li.current-menu-item a {
+.fy-split-menu li a:hover {
 	color: var(--primary-color);
 	text-decoration: underline;
 	text-decoration-color: var(--primary-color);
 	text-decoration-thickness: 2px;
 	text-underline-offset: 4px;
+}
+.fy-split-menu li.current-menu-item a {
+	color: var(--primary-color);
 }
 
 /* Menu con (dropdown khi hover) — layout tham khảo wujiateavn.com: hộp nền trắng nổi bên
@@ -4180,14 +4202,82 @@ body.admin-bar #page.site { top: 32px; }
 		width: 100%;
 		text-align: center;
 	}
+	/* Menu mobile kiểu "đẩy nội dung" (full width, không đè/overlay như trước):
+	   .fy-mobile-nav nằm trong luồng trang (không position:absolute nữa) nên khi
+	   #primary-menu mở ra, nó thật sự chiếm chỗ và đẩy nội dung phía dưới (banner,
+	   sản phẩm...) xuống theo — transition max-height tạo hiệu ứng trượt/đẩy nhẹ,
+	   thay vì menu che đè lên nội dung như bản overlay cũ. */
 	.fy-mobile-nav {
-		position: absolute;
-		top: 50%;
-		right: 15px;
-		transform: translateY(-50%);
+		display: block;
+		width: 100%;
 		z-index: 60;
-		width: auto; /* .main-navigation{width:100%} (base rule) mới khiến nav phủ hết
-		                chiều rộng container, làm nút hamburger đè lên logo — ghi đè lại. */
+	}
+	/* Nút hamburger neo theo .header-menu-box .container (đã có position:relative
+	   sẵn, xem rule #page.site phía trên) bằng 1 mốc top CỐ ĐỊNH (px, không phải
+	   top:50%) — nhờ vậy nó luôn NGANG HÀNG với logo, không bị trôi xuống theo
+	   chiều cao menu khi menu mở/đóng (trước đây neo theo .fy-mobile-nav, mà nav
+	   lại nằm dưới hàng logo nên nút bị lệch xuống thấp — đây là bug vừa sửa). */
+	.fy-mobile-nav .menu-toggle {
+		position: absolute;
+		top: 23px;
+		right: 15px;
+		z-index: 61;
+	}
+	.fy-mobile-nav ul#primary-menu {
+		position: static !important;
+		display: block !important;
+		width: 100% !important;
+		margin: 0 !important;
+		max-height: 0 !important;
+		overflow: hidden !important;
+		box-shadow: none !important;
+		background: #fff;
+		text-align: left;
+		transition: max-height .35s ease;
+	}
+	.fy-mobile-nav ul#primary-menu > li > a {
+		color: var(--primary-color) !important;
+	}
+	.fy-mobile-nav.toggled ul#primary-menu {
+		max-height: 70vh !important;
+		overflow-y: auto !important;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, .1) !important;
+	}
+	/* Menu con (VD: Sản Phẩm) không tự bung hết theo menu chính — chạm vào mục cha
+	   mới xổ ra, tránh danh sách bị dài lê thê khi mở menu (nguyên nhân "vùng menu
+	   bị cao" trước đây: rule .main-navigation.toggled ul{display:block} ở trên
+	   làm bung TẤT CẢ menu con cùng lúc).
+	   Reset float/width: CSS gốc của theme định vị menu con kiểu dropdown desktop
+	   (float:left, width cố định 220px, position:absolute) — ở mobile phải ép về
+	   block/full-width để menu con xếp CHỒNG xuống dưới thay vì tràn ngang. */
+	.fy-mobile-nav ul#primary-menu > li.menu-item-has-children > a {
+		display: block !important;
+		float: none !important;
+		width: auto !important;
+	}
+	.fy-mobile-nav ul#primary-menu .sub-menu {
+		display: none !important;
+	}
+	.fy-mobile-nav ul#primary-menu li.focus > .sub-menu {
+		display: block !important;
+		position: static !important;
+		float: none !important;
+		width: 100% !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		box-shadow: none !important;
+		clear: both;
+	}
+	.fy-mobile-nav ul#primary-menu li.focus > .sub-menu li {
+		display: block !important;
+		float: none !important;
+		width: 100% !important;
+		padding-left: 20px;
+	}
+	.fy-mobile-nav ul#primary-menu li.focus > .sub-menu li a {
+		display: block !important;
+		float: none !important;
+		width: auto !important;
 	}
 }
 

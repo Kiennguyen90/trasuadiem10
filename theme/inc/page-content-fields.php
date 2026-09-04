@@ -79,7 +79,7 @@ function fy_pc_schemas() {
 				'products' => array(
 					'label'  => 'Mục "Trà Sữa Đáng Thử Nhất"',
 					'fields' => array(
-						'heading' => array( 'type' => 'text', 'label' => 'Tiêu đề', 'default' => 'Trà Sữa Đáng Thử Nhất' ),
+						'heading' => array( 'type' => 'text', 'label' => 'Tiêu đề', 'default' => 'Đồ Uống Đáng Thử Nhất' ),
 						'tab1'    => array( 'type' => 'text', 'label' => 'Nhãn tab 1', 'default' => 'Yêu Thích' ),
 						'tab2'    => array( 'type' => 'text', 'label' => 'Nhãn tab 2', 'default' => 'Bán Chạy' ),
 						'tab3'    => array( 'type' => 'text', 'label' => 'Nhãn tab 3', 'default' => 'Hot Trend' ),
@@ -98,11 +98,11 @@ function fy_pc_schemas() {
 						'item2_name'   => array( 'type' => 'text', 'label' => 'Mục 2 — tên', 'default' => 'Trân Châu Hoàng Kim' ),
 						'item2_desc'   => array( 'type' => 'text', 'label' => 'Mục 2 — mô tả', 'default' => 'Trân châu dẻo dai, ngọt dịu, sợi vàng óng đẹp mắt.' ),
 						'item3_emoji'  => array( 'type' => 'text', 'label' => 'Mục 3 — biểu tượng', 'default' => '🌰' ),
-						'item3_name'   => array( 'type' => 'text', 'label' => 'Mục 3 — tên', 'default' => 'Hạt Nổ Củ Năng' ),
-						'item3_desc'   => array( 'type' => 'text', 'label' => 'Mục 3 — mô tả', 'default' => 'Giòn tan trong miệng, topping được yêu thích nhất.' ),
+						'item3_name'   => array( 'type' => 'text', 'label' => 'Mục 3 — tên', 'default' => 'Hạt Nổ Củ Năng Hồng' ),
+						'item3_desc'   => array( 'type' => 'text', 'label' => 'Mục 3 — mô tả', 'default' => 'Củ năng bọc áo hồng, cắn nổ giòn tan, ngọt mát.' ),
 						'item4_emoji'  => array( 'type' => 'text', 'label' => 'Mục 4 — biểu tượng', 'default' => '🥛' ),
-						'item4_name'   => array( 'type' => 'text', 'label' => 'Mục 4 — tên', 'default' => 'Thủy Tinh Sữa' ),
-						'item4_desc'   => array( 'type' => 'text', 'label' => 'Mục 4 — mô tả', 'default' => 'Béo mềm, tan nhẹ, hoà quyện cùng vị trà thơm.' ),
+						'item4_name'   => array( 'type' => 'text', 'label' => 'Mục 4 — tên', 'default' => 'Thủy Tinh Sữa Chua' ),
+						'item4_desc'   => array( 'type' => 'text', 'label' => 'Mục 4 — mô tả', 'default' => 'Viên thủy tinh nhân sữa chua, chua ngọt béo nhẹ.' ),
 					),
 				),
 
@@ -123,6 +123,24 @@ function fy_pc_schemas() {
 						'news_heading'      => array( 'type' => 'text', 'label' => 'Tiêu đề mục tin tức', 'default' => 'Bài Viết Mới' ),
 						'news_button'       => array( 'type' => 'text', 'label' => 'Nhãn nút tin tức', 'default' => 'Xem Tất Cả Tin Tức →' ),
 						'franchise_heading' => array( 'type' => 'textarea', 'label' => 'Tiêu đề khối nhượng quyền', 'default' => "Đăng Ký Tư Vấn Nhượng Quyền\nThương Hiệu" ),
+					),
+				),
+
+				'testimonials' => array(
+					'label'  => 'Mục "Khách Hàng Nói Gì Về Chúng Tôi"',
+					'fields' => array(
+						'heading'     => array( 'type' => 'text', 'label' => 'Tiêu đề', 'default' => 'Khách Hàng Nói Gì Về Chúng Tôi' ),
+						'desc'        => array( 'type' => 'textarea', 'label' => 'Mô tả ngắn', 'default' => 'Cảm nhận thật từ những vị khách đã ghé thưởng thức tại Trà Sữa DIEM 10.' ),
+						'item1_name'  => array( 'type' => 'text', 'label' => 'Khách 1 — tên', 'default' => 'Thùy Trang' ),
+						'item1_role'  => array( 'type' => 'text', 'label' => 'Khách 1 — khu vực', 'default' => 'Khách hàng thân thiết — Q.5' ),
+						'item1_quote' => array( 'type' => 'textarea', 'label' => 'Khách 1 — cảm nhận', 'default' => 'Trà đậm vị, trân châu dẻo vừa miệng, lại còn nhiều topping để đổi vị mỗi lần ghé. Mình ghé DIEM 10 gần như mỗi tuần!' ),
+						'item2_name'  => array( 'type' => 'text', 'label' => 'Khách 2 — tên', 'default' => 'Quốc Huy' ),
+						'item2_role'  => array( 'type' => 'text', 'label' => 'Khách 2 — khu vực', 'default' => 'Khách hàng — Bình Thạnh' ),
+						'item2_quote' => array( 'type' => 'textarea', 'label' => 'Khách 2 — cảm nhận', 'default' => 'Nhân viên phục vụ nhanh, không gian quán sạch sẽ thoáng mát. Giá cả hợp lý mà chất lượng thì khỏi phải chê.' ),
+						'item3_name'  => array( 'type' => 'text', 'label' => 'Khách 3 — tên', 'default' => 'Ngọc Hân' ),
+						'item3_role'  => array( 'type' => 'text', 'label' => 'Khách 3 — khu vực', 'default' => 'Khách hàng — Tân Bình' ),
+						'item3_quote' => array( 'type' => 'textarea', 'label' => 'Khách 3 — cảm nhận', 'default' => 'Mình đặc biệt thích vị trà sữa truyền thống ở đây, không quá ngọt và rất thơm. Sẽ tiếp tục ủng hộ DIEM 10 dài lâu.' ),
+						'media'       => array( 'type' => 'media', 'label' => 'Ảnh khách hàng (cột bên phải)', 'default_url' => '' ),
 					),
 				),
 			),
@@ -166,6 +184,35 @@ function fy_pc_schemas() {
 						'card3_icon'  => array( 'type' => 'text', 'label' => 'Ô 3 — biểu tượng', 'default' => '🏪' ),
 						'card3_title' => array( 'type' => 'text', 'label' => 'Ô 3 — tiêu đề', 'default' => 'Hơn 500 Cửa Hàng Đối Tác' ),
 						'card3_desc'  => array( 'type' => 'textarea', 'label' => 'Ô 3 — mô tả', 'default' => 'Phục vụ hơn 500 cửa hàng đối tác trên toàn quốc sau hơn một thập kỷ phát triển.' ),
+					),
+				),
+
+				'philosophy' => array(
+					'label'  => 'Khối "Triết Lý Kinh Doanh"',
+					'fields' => array(
+						'heading' => array( 'type' => 'text', 'label' => 'Tiêu đề', 'default' => 'Triết Lý Kinh Doanh' ),
+						'para1'   => array( 'type' => 'textarea', 'label' => 'Đoạn 1', 'default' => 'Trà Sữa DIEM10 phát triển theo mô hình nhượng quyền, chú trọng tối ưu chi phí vận hành nhưng vẫn đảm bảo chất lượng và hương vị đặc trưng. Quy trình pha chế chuyên nghiệp, đồng nhất giúp tạo nên sự khác biệt và được khách hàng đón nhận trên khắp cả nước.' ),
+						'para2'   => array( 'type' => 'textarea', 'label' => 'Đoạn 2', 'default' => 'DIEM10 không ngừng mở rộng hệ thống nhượng quyền, đồng hành cùng hàng nghìn đối tác trên hành trình khởi nghiệp, hướng đến mục tiêu đưa hương vị trà sữa chuẩn vị vươn xa hơn nữa.' ),
+						'media'   => array( 'type' => 'media', 'label' => 'Ảnh / Video', 'default_url' => '' ),
+					),
+				),
+
+				'timeline' => array(
+					'label'  => 'Khối "Lịch Sử Hình Thành"',
+					'fields' => array(
+						'heading'     => array( 'type' => 'text', 'label' => 'Tiêu đề', 'default' => 'Lịch Sử Hình Thành' ),
+						'item1_year'  => array( 'type' => 'text', 'label' => 'Mốc 1 — năm', 'default' => '2012' ),
+						'item1_title' => array( 'type' => 'text', 'label' => 'Mốc 1 — tiêu đề', 'default' => 'Khởi Đầu Chuỗi Cung Ứng' ),
+						'item1_desc'  => array( 'type' => 'textarea', 'label' => 'Mốc 1 — mô tả', 'default' => 'Bắt đầu xây dựng chuỗi cung ứng trà sữa với nguồn gốc từ Đài Loan.' ),
+						'item2_year'  => array( 'type' => 'text', 'label' => 'Mốc 2 — năm', 'default' => 'Nhà Máy' ),
+						'item2_title' => array( 'type' => 'text', 'label' => 'Mốc 2 — tiêu đề', 'default' => 'Tự Chủ Sản Xuất' ),
+						'item2_desc'  => array( 'type' => 'textarea', 'label' => 'Mốc 2 — mô tả', 'default' => 'Xây dựng nhà máy hiện đại, tự nghiên cứu phát triển nguyên liệu độc lập.' ),
+						'item3_year'  => array( 'type' => 'text', 'label' => 'Mốc 3 — năm', 'default' => 'Nhượng Quyền' ),
+						'item3_title' => array( 'type' => 'text', 'label' => 'Mốc 3 — tiêu đề', 'default' => 'Mở Rộng Hệ Thống' ),
+						'item3_desc'  => array( 'type' => 'textarea', 'label' => 'Mốc 3 — mô tả', 'default' => 'Vận hành mô hình nhượng quyền, đồng hành cùng các cửa hàng đối tác.' ),
+						'item4_year'  => array( 'type' => 'text', 'label' => 'Mốc 4 — năm', 'default' => 'Hôm Nay' ),
+						'item4_title' => array( 'type' => 'text', 'label' => 'Mốc 4 — tiêu đề', 'default' => 'Hơn 500 Cửa Hàng Đối Tác' ),
+						'item4_desc'  => array( 'type' => 'textarea', 'label' => 'Mốc 4 — mô tả', 'default' => 'Hệ thống tích hợp nghiên cứu phát triển, sản xuất, logistics và vận hành nhượng quyền trên toàn quốc.' ),
 					),
 				),
 

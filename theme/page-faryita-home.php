@@ -45,6 +45,20 @@ for ( $fy_n = 1; $fy_n <= 4; $fy_n++ ) {
 	);
 }
 
+// Khối "Topping Đa Dạng" — lấy sản phẩm thật trong danh mục "Topping" (client thêm/sửa
+// ngay trong wp-admin > Sản phẩm). Chưa có sản phẩm topping nào thì rơi về danh sách
+// biểu tượng mặc định ($fy_menu) khai báo ở khối "Nội dung Trang chủ".
+$fy_topping_products = array();
+if ( class_exists( 'WooCommerce' ) ) {
+	$fy_topping_products = wc_get_products( array(
+		'status'   => 'publish',
+		'limit'    => 3,
+		'orderby'  => 'menu_order',
+		'order'    => 'ASC',
+		'category' => array( 'topping' ),
+	) );
+}
+
 $fy_features = array(
 	fy_pc( 'strip', 'word1' ),
 	fy_pc( 'strip', 'word2' ),
@@ -61,20 +75,11 @@ $fy_store_btn_url = $fy_store_btn_url ? $fy_store_btn_url : home_url( '/cua-hang
 
 	<section class="fy-hero">
 		<div class="fy-blob fy-blob-1" aria-hidden="true"></div>
-		<div class="fy-blob fy-blob-2" aria-hidden="true"></div>
 		<div class="fy-hero-banner owl-carousel fy-hero-slider">
 			<div class="item"><?php echo fy_pc_media( 'banner', 'slide1', $fy_banner_url, array( 'alt' => 'Không gian quán Trà Sữa Điểm 10', 'wrap_class' => 'fy-pc-media fy-hero-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
 			<div class="item"><?php echo fy_pc_media( 'banner', 'slide2', $fy_counter_url, array( 'alt' => 'Quầy pha chế Trà Sữa Điểm 10', 'wrap_class' => 'fy-pc-media fy-hero-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
 		</div>
-		<svg class="fy-wave fy-hero-wave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
-			<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>
-		</svg>
 	</section>
-
-	<div class="fy-side-cta">
-		<a href="#fy-products"><?php echo esc_html( fy_pc( 'intro', 'button' ) ); ?></a>
-		<a href="<?php echo esc_url( home_url( '/lien-he' ) ); ?>">Liên Hệ</a>
-	</div>
 
 	<section class="fy-intro">
 		<div class="fy-container fy-row">
@@ -166,17 +171,52 @@ $fy_store_btn_url = $fy_store_btn_url ? $fy_store_btn_url : home_url( '/cua-hang
 		</div>
 		<div class="fy-promo-right">
 			<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'promo', 'heading' ) ); ?></h2>
-			<?php foreach ( $fy_menu as $i => $m ) : ?>
-				<div class="fy-menu-item fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>">
-					<div class="fy-menu-emoji" aria-hidden="true"><?php echo esc_html( $m['emoji'] ); ?></div>
-					<div class="fy-menu-info">
-						<div class="fy-menu-top">
-							<h4><?php echo esc_html( $m['name'] ); ?></h4>
+			<?php if ( $fy_topping_products ) : ?>
+				<?php foreach ( $fy_topping_products as $i => $fy_top ) :
+					$fy_top_img = $fy_top->get_image_id() ? wp_get_attachment_image_url( $fy_top->get_image_id(), 'thumbnail' ) : '';
+					?>
+					<a class="fy-menu-item fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>" href="<?php echo esc_url( $fy_top->get_permalink() ); ?>">
+						<div class="fy-menu-emoji" aria-hidden="true">
+							<?php if ( $fy_top_img ) : ?>
+								<img src="<?php echo esc_url( $fy_top_img ); ?>" alt="<?php echo esc_attr( $fy_top->get_name() ); ?>" loading="lazy">
+							<?php else : ?>🧋<?php endif; ?>
 						</div>
-						<p><?php echo esc_html( $m['desc'] ); ?></p>
+						<div class="fy-menu-info">
+							<div class="fy-menu-top">
+								<h4><?php echo esc_html( $fy_top->get_name() ); ?></h4>
+							</div>
+							<?php $fy_top_desc = $fy_top->get_short_description(); ?>
+							<?php if ( $fy_top_desc ) : ?>
+								<p><?php echo esc_html( wp_strip_all_tags( $fy_top_desc ) ); ?></p>
+							<?php endif; ?>
+						</div>
+					</a>
+				<?php endforeach; ?>
+			<?php else : ?>
+				<?php foreach ( $fy_menu as $i => $m ) : ?>
+					<div class="fy-menu-item fy-reveal fy-reveal-d<?php echo esc_attr( ( $i % 5 ) + 1 ); ?>">
+						<div class="fy-menu-emoji" aria-hidden="true"><?php echo esc_html( $m['emoji'] ); ?></div>
+						<div class="fy-menu-info">
+							<div class="fy-menu-top">
+								<h4><?php echo esc_html( $m['name'] ); ?></h4>
+							</div>
+							<p><?php echo esc_html( $m['desc'] ); ?></p>
+						</div>
 					</div>
-				</div>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
+			<?php
+			// get_term_link() trả về WP_Error nếu danh mục "topping" chưa tồn tại (vd. site
+			// chưa có danh mục sản phẩm nào) — esc_url() không nhận WP_Error, gây fatal
+			// TypeError. Fallback về trang Sản Phẩm khi đó.
+			$fy_topping_link = get_term_link( 'topping', 'product_cat' );
+			if ( is_wp_error( $fy_topping_link ) ) {
+				$fy_topping_link = get_permalink( wc_get_page_id( 'shop' ) );
+			}
+			?>
+			<p class="fy-promo-more fy-reveal">
+				<a href="<?php echo esc_url( $fy_topping_link ); ?>">Xem tất cả topping →</a>
+			</p>
 		</div>
 	</section>
 
@@ -238,6 +278,74 @@ $fy_store_btn_url = $fy_store_btn_url ? $fy_store_btn_url : home_url( '/cua-hang
 		wp_reset_postdata();
 	endif;
 	?>
+
+	<?php
+	// Mục "Khách Hàng Nói Gì Về Chúng Tôi" — lấy cảm hứng bố cục từ mục "Cảm nhận của khách
+	// hàng" trên wujiateavn.com: lưới thẻ trắng (sao vàng + trích dẫn + avatar chữ cái đầu),
+	// nằm ngay trước khối đăng ký nhượng quyền. Nội dung khách hàng sửa được qua wp-admin.
+	$fy_testimonials = array();
+	for ( $fy_t = 1; $fy_t <= 3; $fy_t++ ) {
+		$fy_t_name = fy_pc( 'testimonials', "item{$fy_t}_name" );
+		if ( '' === $fy_t_name ) {
+			continue;
+		}
+		$fy_testimonials[] = array(
+			'name'    => $fy_t_name,
+			'role'    => fy_pc( 'testimonials', "item{$fy_t}_role" ),
+			'quote'   => fy_pc( 'testimonials', "item{$fy_t}_quote" ),
+			// function_exists guard: một số host tắt extension mbstring — tránh fatal
+			// "Call to undefined function mb_strtoupper()" khiến cả trang chủ die trắng.
+			'initial' => function_exists( 'mb_strtoupper' ) && function_exists( 'mb_substr' )
+				? mb_strtoupper( mb_substr( $fy_t_name, 0, 1 ) )
+				: strtoupper( substr( $fy_t_name, 0, 1 ) ),
+		);
+	}
+	?>
+	<?php if ( $fy_testimonials ) : ?>
+		<section class="fy-testimonials" id="fy-testimonials">
+			<div class="fy-container">
+				<h2 class="fy-reveal"><?php echo esc_html( fy_pc( 'testimonials', 'heading' ) ); ?></h2>
+				<p class="fy-testimonials-desc fy-reveal"><?php echo esc_html( fy_pc( 'testimonials', 'desc' ) ); ?></p>
+
+				<div class="fy-testimonials-layout">
+					<?php // Lưới cảm nhận -> slider hiển thị 2 thẻ/lần + nút điều hướng tròn (kiểu
+					// owl-carousel đã dùng cho hero/sản phẩm liên quan), theo mẫu "Cảm nhận của
+					// khách hàng" wujiateavn.com. Không gắn fy-reveal ở đây: owl-carousel nhân bản
+					// (clone) thẻ để loop, IntersectionObserver của fy-reveal không theo kịp bản
+					// clone -> thẻ bị kẹt ở opacity:0 khi trượt tới. ?>
+					<div class="fy-testimonials-grid fy-testimonials-carousel owl-carousel">
+						<?php foreach ( $fy_testimonials as $i => $fy_t_item ) : ?>
+							<div class="fy-testimonial-card">
+								<div class="fy-testimonial-quote" aria-hidden="true">&ldquo;</div>
+								<div class="fy-testimonial-stars" aria-hidden="true">★★★★★</div>
+								<p class="fy-testimonial-text"><?php echo esc_html( $fy_t_item['quote'] ); ?></p>
+								<div class="fy-testimonial-author">
+									<div class="fy-testimonial-avatar" aria-hidden="true"><?php echo esc_html( $fy_t_item['initial'] ); ?></div>
+									<div>
+										<strong><?php echo esc_html( $fy_t_item['name'] ); ?></strong>
+										<span><?php echo esc_html( $fy_t_item['role'] ); ?></span>
+									</div>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</div>
+
+					<?php // Cột ảnh bên phải — client tự gắn ảnh khách hàng thật qua wp-admin (Trang chủ >
+					// Mục "Khách Hàng Nói Gì Về Chúng Tôi" > Ảnh khách hàng); để trống thì hiện khung chờ. ?>
+					<div class="fy-testimonials-media fy-reveal fy-reveal-d2">
+						<?php if ( fy_pc_has_media( 'testimonials', 'media' ) ) : ?>
+							<?php echo fy_pc_media( 'testimonials', 'media', '', array( 'alt' => 'Khách hàng Trà Sữa DIEM 10', 'wrap_class' => 'fy-pc-media fy-testimonials-photo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+						<?php else : ?>
+							<div class="fy-testimonials-placeholder" aria-hidden="true">
+								<span class="fy-testimonials-placeholder-icon">🖼️</span>
+								<p>Ảnh khách hàng<br>sẽ hiển thị ở đây</p>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
 
 	<section class="fy-franchise" id="fy-franchise">
 		<div class="fy-container fy-franchise-grid fy-reveal">

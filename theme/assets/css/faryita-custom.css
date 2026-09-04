@@ -16,13 +16,22 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .footer-top li,
 .footer-top .footer-col > a{font-size:16px;font-weight:400;line-height:1.6}
 
-/* Logo cột 1 footer: nằm phía trên khối text (Trà Sữa DIEM 10 — ... / công ty — địa chỉ). */
+/* Logo cột 1 footer: nằm phía trên khối text (Trà Sữa DIEM 10 — ... / công ty — địa chỉ),
+   canh giữa theo chiều ngang trong cột (chữ bên dưới vẫn giữ căn trái). */
 .footer-col-brand{display:flex;flex-direction:column}
-.footer-logo{margin-bottom:16px}
-.footer-logo img{max-width:96px;height:auto;display:block}
+.footer-logo{margin-bottom:16px;text-align:center}
+.footer-logo img{max-width:96px;height:auto;display:inline-block}
 
-/* Pháp nhân công ty ở cột 1 (tên công ty + MST) — chữ nhỏ, mờ nhẹ, tách khỏi dòng slogan. */
-.footer-top .fy-footer-legal{font-size:13px;opacity:.85;margin-top:8px;line-height:1.6}
+/* Pháp nhân công ty ở cột 1 (tên công ty + MST) — chữ nhỏ, tách khỏi dòng slogan, nhưng
+   giữ độ đậm chữ như các dòng khác trong footer (bỏ opacity mờ trước đây). */
+.footer-top .fy-footer-legal{font-size:13px;margin-top:8px;line-height:1.6}
+
+/* Cột 2/3 footer (Thông Tin Liên Hệ / Cửa Hàng): các dòng <p> chi tiết đang kế thừa
+   p{margin-bottom:1.5em} ở style.css (~24px) nên cách nhau xa và không khác gì khoảng cách
+   với tiêu đề. Kéo các dòng chi tiết sát lại nhau, giữ khoảng cách rõ ràng riêng dưới Title. */
+.footer-top .footer-col:not(.footer-col-brand) .widget-title{margin-bottom:24px}
+.footer-top .footer-col:not(.footer-col-brand) p{font-size:16px;font-weight:400;line-height:1.4;margin-bottom:1em}
+.footer-top .footer-col:not(.footer-col-brand) p:last-child{margin-bottom:0}
 
 /* Padding footer theo yêu cầu client 08/2026: 40px trên + 40px dưới (thay cho 40/20 mặc định).
    Bỏ luôn margin-bottom 35px mà style.css áp cho .widget trong footer để khoảng trắng dưới
@@ -40,10 +49,8 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-home .fy-container{max-width:1200px;margin:0 auto;padding:0 24px}
 
 /* Hero (trang chủ) */
-.fy-hero{background:linear-gradient(160deg,var(--fy-cream) 0%,var(--fy-orange) 100%);position:relative;padding:0 0 130px;text-align:center;overflow:hidden}
+.fy-hero{background:var(--fy-cream);position:relative;padding:0 0 130px;text-align:center;overflow:hidden}
 .fy-hero .fy-eyebrow{color:#fff;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:14px}
-.fy-hero-wave{position:absolute;left:0;bottom:-1px;width:100%;height:110px;display:block;z-index:1}
-.fy-hero-wave path{fill:var(--fy-cream)}
 .fy-hero h1{font-size:56px;line-height:1.1;color:var(--fy-dark);margin:10px 0 18px}
 .fy-hero p{max-width:560px;margin:0 auto 26px;color:rgba(23,50,34,.78)}
 .fy-hero-fruits{margin-top:30px;font-size:64px;line-height:1;display:flex;justify-content:center;gap:6px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.08))}
@@ -91,17 +98,9 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 /* Khối bo tròn trang trí phía sau hero (mượn phong cách blob) */
 .fy-blob{position:absolute;border-radius:58% 42% 65% 35% / 45% 55% 45% 55%;z-index:0;opacity:.55}
 .fy-blob-1{width:340px;height:340px;background:var(--fy-yellow);top:-90px;left:-100px}
-.fy-blob-2{width:260px;height:260px;background:var(--fy-orange);bottom:-70px;right:-80px;opacity:.35}
 .fy-hero .fy-container{position:relative;z-index:1}
 
-@media(max-width:900px){.fy-blob-1{width:220px;height:220px}.fy-blob-2{width:180px;height:180px}}
-
-/* Nút dọc cố định cạnh phải màn hình (mượn phong cách Order Now / Contact Us) */
-.fy-side-cta{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column}
-.fy-side-cta a{writing-mode:vertical-rl;text-orientation:mixed;background:var(--fy-orange);color:#fff;font-weight:700;font-size:13px;letter-spacing:.05em;text-decoration:none;padding:18px 10px;text-align:center}
-.fy-side-cta a:nth-child(2){background:var(--fy-dark)}
-.fy-side-cta a:hover{padding-right:16px}
-@media(max-width:700px){.fy-side-cta{display:none}}
+@media(max-width:900px){.fy-blob-1{width:220px;height:220px}}
 
 /* Page hero (trang con: our story / shop) */
 .fy-page-hero{background:var(--fy-cream);padding:60px 0;text-align:center}
@@ -123,9 +122,17 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-page-hero-shop p{color:rgba(23,50,34,.78)}
 .fy-page-hero-desc{max-width:600px;margin:10px auto 0;color:rgba(23,50,34,.78);font-size:14px}
 
-.fy-btn{display:inline-block;background:var(--fy-yellow);color:var(--fy-dark);font-weight:700;padding:14px 32px;border-radius:999px;text-decoration:none;transition:transform .15s ease;border:none;cursor:pointer;font-size:15px}
-.fy-btn:hover{transform:translateY(-2px);color:var(--fy-dark)}
-.fy-btn-outline{background:transparent;border:2px solid var(--fy-dark);color:var(--fy-dark)}
+/* Tab lọc danh mục trên trang Sản Phẩm: Tất Cả / Trà Trái Cây / Trà Sữa / Topping —
+   cùng nền kem + cùng nút .fy-tab-btn (nền trắng, viền cam khi hover, xanh khi active)
+   như section "Đồ Uống Đáng Thử Nhất" ở trang chủ. */
+.fy-shop-cats{background:var(--fy-cream);padding:36px 0}
+.fy-shop-tabs{margin-bottom:0}
+.fy-shop-tabs .fy-tab-btn{text-decoration:none}
+
+.fy-btn{display:inline-block;background:var(--fy-green);color:#fff;font-weight:700;padding:14px 32px;border-radius:999px;text-decoration:none;transition:background .2s ease,transform .15s ease;border:none;cursor:pointer;font-size:15px}
+.fy-btn:hover{background:var(--fy-yellow);transform:translateY(-2px);color:var(--fy-dark)}
+.fy-btn-outline{background:transparent;border:2px solid var(--fy-green);color:var(--fy-green)}
+.fy-btn-outline:hover{background:var(--fy-yellow);border-color:var(--fy-yellow);color:var(--fy-dark)}
 
 /* Intro (trang chủ) */
 .fy-intro{background:var(--fy-cream);padding:60px 0 80px}
@@ -176,7 +183,7 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-card .fy-branch-address{display:block;font-size:13px;color:#4a4a4a;line-height:1.5;margin-top:2px}
 .fy-card .fy-cat{display:inline-block;font-size:12px;font-weight:700;color:var(--fy-green);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
 .fy-card .fy-addcart{margin-top:12px;display:inline-block;background:var(--fy-green);color:#fff;font-weight:700;padding:8px 20px;border-radius:999px;text-decoration:none;font-size:13px;border:none;cursor:pointer}
-.fy-card .fy-addcart:hover{background:var(--fy-dark);color:#fff}
+.fy-card .fy-addcart:hover{background:var(--fy-yellow);color:var(--fy-dark)}
 
 /* Trang chi tiết sản phẩm */
 .fy-detail{background:#fff;padding:60px 0 80px}
@@ -202,7 +209,7 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-detail-cart .quantity{display:inline-block}
 .fy-detail-cart .qty{width:70px;padding:12px 14px;border:2px solid var(--fy-cream);border-radius:999px;font-size:15px;color:var(--fy-dark)}
 .fy-detail-cart .single_add_to_cart_button{background:var(--fy-green);color:#fff;font-weight:700;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;font-size:15px;text-decoration:none;display:inline-block;transition:background .2s ease}
-.fy-detail-cart .single_add_to_cart_button:hover{background:var(--fy-dark);color:#fff}
+.fy-detail-cart .single_add_to_cart_button:hover{background:var(--fy-yellow);color:var(--fy-dark)}
 .fy-detail-cart .stock{width:100%;color:#6b6b6b;font-size:14px}
 
 /* Khối Mô Tả + Lợi Ích Dinh Dưỡng + Thông Tin Thêm + Sản Phẩm Liên Quan (dưới trang chi tiết sản phẩm) */
@@ -235,25 +242,96 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-promo{display:flex;flex-wrap:wrap}
 .fy-promo .fy-promo-left{flex:1 1 380px;background:var(--fy-orange);color:#fff;padding:80px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .fy-promo-left .fy-jar{font-size:110px;margin-bottom:18px}
-.fy-promo-left h3{font-size:23px;line-height:1.45;margin:0;font-weight:800}
+.fy-promo-left h3{font-size:23px;line-height:1.45;margin:0;font-weight:800;text-transform:uppercase}
 .fy-promo .fy-promo-right{flex:1 1 480px;background:var(--fy-green);color:#fff;padding:70px 40px}
 .fy-promo-right h2{font-size:32px;margin:0 0 30px}
 .fy-menu-item{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.15)}
 .fy-menu-item:last-child{border-bottom:none}
-.fy-menu-emoji{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0}
+a.fy-menu-item{color:inherit;text-decoration:none;transition:transform .18s ease}
+a.fy-menu-item:hover{transform:translateX(4px)}
+a.fy-menu-item:hover h4{text-decoration:underline}
+.fy-menu-emoji{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;overflow:hidden}
+.fy-menu-emoji img{width:100%;height:100%;object-fit:cover;display:block}
 .fy-menu-info{flex:1}
 .fy-menu-info .fy-menu-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .fy-menu-info h4{margin:0;font-size:19px}
 .fy-menu-info .fy-price{font-weight:800;white-space:nowrap}
 .fy-menu-info p{margin:4px 0 0;font-size:14px;color:rgba(255,255,255,.8)}
+.fy-promo-more{margin:26px 0 0}
+.fy-promo-more a{color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid rgba(255,255,255,.5);padding-bottom:2px}
+.fy-promo-more a:hover{border-bottom-color:#fff}
+
+/* Mục "Khách Hàng Nói Gì Về Chúng Tôi" (trang chủ, ngay trước khối đăng ký nhượng quyền) —
+   ĐÃ THỬ dải chữ chạy và thẻ nổi bo góc/đổ bóng, cả 2 đều không hợp vì tách bạch quá mức so
+   với phong cách full-width phẳng của các section khác trên trang. Quay lại full-width phẳng,
+   chỉ đổi MÀU NỀN xen kẽ (trắng, thay vì kem) để tách khỏi "Ghé Thăm Cửa Hàng Gần Bạn" (kem)
+   ngay phía trên — ranh giới rõ bằng chính đường nối màu, không cần thêm khung/viền/bóng gì.
+   Lưới thẻ cảm nhận đổi thành slider 2 thẻ/lần (owl-carousel) + nút điều hướng tròn, thẻ nền
+   trắng + đổ bóng nhẹ để vẫn nổi trên nền trắng của section — theo mẫu "Cảm nhận của khách
+   hàng" wujiateavn.com. Chiều cao khu vực giờ theo đúng 1 hàng thẻ (trước đây lưới tĩnh 3 thẻ
+   tự xuống 2 hàng nên khu vực rất cao). */
+.fy-testimonials{background:#fff;padding:64px 0}
+.fy-testimonials h2{text-align:center;font-size:34px;color:var(--fy-dark);margin:0 0 12px}
+.fy-testimonials-desc{text-align:center;max-width:560px;margin:0 auto 40px;color:rgba(23,50,34,.75);font-size:15px;line-height:1.6}
+
+/* Bố cục 2 cột: slider cảm nhận bên trái, ảnh khách hàng thật (client tự gắn qua wp-admin)
+   bên phải — chưa có ảnh thì hiện khung chờ nét đứt để client biết vị trí sẽ hiển thị. Cả 2
+   cột co giãn theo đúng chiều cao 1 hàng thẻ (align-items:stretch). */
+.fy-testimonials-layout{display:flex;gap:36px;align-items:stretch}
+.fy-testimonials-grid{flex:1 1 60%;min-width:0;position:relative}
+.fy-testimonial-card{background:#fff;border-radius:20px;padding:28px 26px;box-shadow:0 10px 24px rgba(0,0,0,.08);display:flex;flex-direction:column;height:100%;box-sizing:border-box;position:relative;overflow:hidden}
+/* Hover: ảnh nền (splash) hiện lên ở dải dưới thẻ, giống mục "What Our Clients Are Saying"
+   ở faryita.wpenginepowered.com — nội dung chữ (>*) nổi lên trên ảnh nhờ z-index. */
+.fy-testimonial-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:58%;background:url(../images/brand/testimonial-hover.png) center bottom/cover no-repeat;opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:0;border-radius:0 0 20px 20px}
+.fy-testimonial-card:hover::after{opacity:1}
+.fy-testimonial-card>*{position:relative;z-index:1}
+.fy-testimonial-quote{font-size:48px;line-height:1;color:var(--fy-yellow);font-weight:800;margin-bottom:4px}
+.fy-testimonial-stars{color:var(--fy-yellow);font-size:15px;letter-spacing:2px;margin-bottom:14px}
+.fy-testimonial-text{color:var(--fy-dark);font-size:15px;line-height:1.7;margin:0 0 22px;flex:1}
+.fy-testimonial-author{display:flex;align-items:center;gap:12px}
+.fy-testimonial-avatar{width:44px;height:44px;border-radius:50%;background:var(--fy-green);color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fy-testimonial-author strong{display:block;color:var(--fy-dark);font-size:15px}
+.fy-testimonial-author span{display:block;color:rgba(23,50,34,.65);font-size:13px}
+
+/* Nút điều hướng slider: 2 mũi tên tròn nổi bên trái/phải khối thẻ (vắt nhẹ ra mép, không
+   chồng lên cột ảnh bên phải), giữa theo chiều cao hàng thẻ — cùng ý tưởng với
+   .fy-hero-banner .owl-nav ở banner đầu trang, theo mẫu wujiateavn.com. */
+.fy-testimonials-carousel .owl-nav{position:absolute;top:50%;left:-14px;right:-14px;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none;margin:0;z-index:2}
+.fy-testimonials-carousel .owl-nav button.owl-prev,
+.fy-testimonials-carousel .owl-nav button.owl-next{pointer-events:auto;display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--fy-dark);font-size:16px;line-height:1;box-shadow:0 6px 16px rgba(0,0,0,.18);cursor:pointer;transition:background .2s ease,transform .2s ease}
+.fy-testimonials-carousel .owl-nav button.owl-prev:hover,
+.fy-testimonials-carousel .owl-nav button.owl-next:hover{background:var(--fy-yellow);transform:scale(1.08)}
+.fy-testimonials-carousel .owl-nav button.disabled{opacity:.35;cursor:default}
+@media(max-width:640px){
+	.fy-testimonials-carousel .owl-nav{left:-8px;right:-8px}
+	.fy-testimonials-carousel .owl-nav button.owl-prev,
+	.fy-testimonials-carousel .owl-nav button.owl-next{width:36px;height:36px;font-size:14px}
+}
+
+/* Cột ảnh bên phải (~40%): ảnh thật đổ đầy khung bo góc; chưa có ảnh thì hiện khung nét đứt
+   + icon + gợi ý, cao bằng đúng 1 hàng thẻ cảm nhận bên trái (align-items:stretch phía trên). */
+.fy-testimonials-media{flex:1 1 38%;min-height:260px}
+.fy-testimonials-photo{width:100%;height:100%;object-fit:cover;border-radius:20px;display:block}
+.fy-testimonials-placeholder{width:100%;height:100%;min-height:260px;border:2px dashed rgba(23,50,34,.25);border-radius:20px;background:var(--fy-cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:rgba(23,50,34,.55)}
+.fy-testimonials-placeholder-icon{font-size:38px}
+.fy-testimonials-placeholder p{margin:0;font-size:14px;line-height:1.5}
+
+@media(max-width:1000px){
+	.fy-testimonials-layout{flex-direction:column}
+	.fy-testimonials-media,
+	.fy-testimonials-placeholder{min-height:220px}
+}
+@media(max-width:640px){
+	.fy-testimonials{padding:48px 0}
+}
 
 /* CTA cuối trang */
 .fy-cta{background:var(--fy-dark);color:#fff;text-align:center;padding:70px 24px}
 .fy-cta h2{font-size:30px;margin:0 0 20px}
 
-/* Section đăng ký nhượng quyền (trang chủ, trước footer) — full-width như các section khác
-   của trang, nền trắng để tách biệt rõ với section kem (Bài Viết Mới) ngay phía trên thay vì
-   bị chìm cùng màu kem toàn cục. */
+/* Section đăng ký nhượng quyền (trang chủ, trước footer) — full-width, nền trắng giống hẳn
+   "Khách Hàng Nói Gì Về Chúng Tôi" ngay phía trên theo yêu cầu client (2 section liền nhau
+   cùng trắng, không tách màu ở ranh giới này). */
 .fy-franchise{
 	background:#fff;
 	padding:70px 24px;
@@ -270,12 +348,16 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 .fy-franchise-label{color:var(--fy-dark);font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
 .fy-franchise-control{width:100%;padding:12px 16px;border:1px solid #E2E8F0;border-radius:10px;font-size:14px;font-family:inherit;color:var(--fy-dark);background:#fff;box-sizing:border-box;appearance:none}
 .fy-franchise-control:focus{outline:none;border-color:var(--fy-green)}
+/* Padding-left ô nhập của form đăng ký nhượng quyền/liên hệ: gốc 16px +10px theo yêu cầu
+   client, để chữ placeholder không dính sát viền trái. */
+.fy-franchise-control{padding-left:26px}
 select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23173226' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:14px;cursor:pointer}
 .fy-franchise-textarea{border-radius:10px;resize:vertical;min-height:100px}
 .fy-franchise-consent{align-self:center;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fy-dark);text-align:center}
+.fy-franchise-recaptcha{align-self:center}
 .fy-franchise-consent input{width:16px;height:16px;flex-shrink:0;accent-color:var(--fy-green)}
 .fy-franchise-submit{align-self:center;margin-top:2px;display:inline-flex;align-items:center;gap:8px;background:var(--fy-green);color:#fff;font-weight:800;padding:9px 22px;border-radius:999px;border:none;cursor:pointer;font-size:13px;transition:background .2s ease,transform .15s ease}
-.fy-franchise-submit:hover{background:var(--fy-dark);transform:translateY(-2px)}
+.fy-franchise-submit:hover{background:var(--fy-yellow);color:var(--fy-dark);transform:translateY(-2px)}
 .fy-franchise .fy-contact-alert{margin-bottom:14px;font-size:13px;text-align:center}
 @media(max-width:700px){
 	.fy-franchise{padding:40px 20px}
@@ -310,6 +392,13 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 
 /* Our Story: đội ngũ */
 .fy-story-text{background:#fff;padding:70px 0}
+/* Riêng khối "Ghé Thăm Cửa Hàng Gần Bạn" ở trang chủ: nền kem như các section khác của
+   trang (thay vì trắng mặc định của .fy-story-text — vẫn giữ trắng ở trang Giới Thiệu/Câu
+   Chuyện vì 2 trang đó không dùng nền kem). ĐÃ THỬ bọc thành thẻ nổi bo góc/đổ bóng nhưng bị
+   lạc tông so với phong cách full-width phẳng của trang — bỏ, giữ full-width phẳng; ranh giới
+   với "Khách Hàng Nói Gì Về Chúng Tôi" ngay dưới giờ tách nhờ đổi màu nền (section đó dùng
+   trắng) thay vì thêm khung/viền. */
+#fy-store-intro.fy-story-text{background:var(--fy-cream)}
 .fy-story-text .fy-row{display:flex;align-items:center;gap:60px;flex-wrap:wrap}
 .fy-story-text .fy-col{flex:1 1 420px}
 .fy-story-text .fy-visual{flex:1 1 320px;text-align:center;font-size:130px}
@@ -454,7 +543,7 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 .archive-product ul.products li.product .woocommerce-loop-product__title{font-size:18px;color:var(--fy-dark);margin:48px 0 4px;font-weight:700}
 .archive-product ul.products li.product .price{display:none}
 .archive-product ul.products li.product .button{display:inline-block;margin-top:14px;background:var(--fy-green);color:#fff;font-weight:700;padding:8px 22px;border-radius:999px;text-decoration:none;font-size:13px;border:none;cursor:pointer;transition:background .2s ease}
-.archive-product ul.products li.product .button:hover{background:var(--fy-dark);color:#fff}
+.archive-product ul.products li.product .button:hover{background:var(--fy-yellow);color:var(--fy-dark)}
 @media(max-width:900px){.archive-product ul.products{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.archive-product ul.products{grid-template-columns:1fr}}
 
@@ -630,3 +719,18 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 	.fy-post-grid{grid-template-columns:1fr}
 	.fy-post-sidebar-box{position:static}
 }
+
+/* Padding-left ô nhập cho TẤT CẢ form còn lại trên site (ô tìm kiếm header/footer/sidebar,
+   input mặc định WordPress dùng ở trang tài khoản/giỏ hàng...) — +10px so với gốc, đồng bộ
+   với .fy-franchise-control (form đăng ký nhượng quyền/liên hệ) đã chỉnh ở trên. */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+textarea{padding-left:13px} /* gốc 3px ở style.css +10px */
+.search-form input[type="search"]{padding-left:25px} /* gốc 15px +10px */
+.inner_searchbox input.search-field,
+.default_footer_search input.search-field{padding-left:20px} /* gốc 10px +10px */

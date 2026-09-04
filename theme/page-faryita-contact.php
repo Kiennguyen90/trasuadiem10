@@ -9,7 +9,7 @@ get_header();
 
 $fy_store_name  = get_theme_mod( 'fy_store_name', 'Trà Sữa DIEM 10' );
 $fy_store_phone = get_theme_mod( 'fy_store_phone', '0900 000 000' );
-$fy_store_email = get_theme_mod( 'fy_store_email', 'lienhe@faryita.vn' );
+$fy_store_email = get_theme_mod( 'fy_store_email', 'lienhe@trasuadiem10.com' );
 $fy_store_hours = get_theme_mod( 'fy_store_hours', '08:00 - 22:00 (Tất cả các ngày trong tuần)' );
 
 $fy_status = isset( $_GET['fy_contact'] ) ? sanitize_key( $_GET['fy_contact'] ) : '';
@@ -71,6 +71,8 @@ $fy_status = isset( $_GET['fy_contact'] ) ? sanitize_key( $_GET['fy_contact'] ) 
 							<span class="fy-franchise-label">Nội Dung</span>
 							<textarea class="fy-franchise-control fy-franchise-textarea" name="fy_message" rows="4" placeholder="Nhập nội dung chi tiết của bạn"></textarea>
 						</label>
+
+						<div class="fy-franchise-recaptcha g-recaptcha" data-sitekey="<?php echo esc_attr( FY_RECAPTCHA_SITE_KEY ); ?>"></div>
 
 						<button type="submit" class="fy-franchise-submit"><?php echo esc_html( fy_pc( 'form', 'submit_label' ) ); ?> <span aria-hidden="true">→</span></button>
 					</form>

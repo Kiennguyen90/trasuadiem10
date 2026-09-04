@@ -11,6 +11,18 @@ if ( ! defined( 'ART_BLOG_VERSION' ) ) {
 	define( 'ART_BLOG_VERSION', '1.0.0' );
 }
 
+/**
+ * Google reCAPTCHA v2 ("Tôi không phải là người máy") — gắn cho tất cả form gửi dữ liệu
+ * trên site (đăng ký nhượng quyền + liên hệ). Site key hiển thị công khai trong HTML (bình
+ * thường), Secret key chỉ dùng phía server ở faryita_verify_recaptcha() để xác minh với Google.
+ */
+if ( ! defined( 'FY_RECAPTCHA_SITE_KEY' ) ) {
+	define( 'FY_RECAPTCHA_SITE_KEY', '6LeKY6ktAAAAAJAJ94fPn4UC7gKc54xagUU9UL6R' );
+}
+if ( ! defined( 'FY_RECAPTCHA_SECRET_KEY' ) ) {
+	define( 'FY_RECAPTCHA_SECRET_KEY', '6LeKY6ktAAAAADJ1J0FsGsuvn6Y_QJrSf1AO9PSQ' );
+}
+
 function art_blog_setup() {
 
 	load_theme_textdomain( 'milktea-90', get_template_directory() . '/languages' );
@@ -199,8 +211,16 @@ function art_blog_scripts() {
     // Owl Carousel CSS
     wp_enqueue_style('owl-carousel-style', get_template_directory_uri() . '/revolution/assets/css/owl.carousel.css', array(), '2.3.4');
 
-    // Main stylesheet
-    wp_enqueue_style('art-blog-style', get_stylesheet_uri(), array(), wp_get_theme()->get('Version'));
+    // Main stylesheet — version theo filemtime (không phải theo số version cố định của
+    // theme) để trình duyệt khách tự tải bản mới mỗi khi file này được sửa/deploy, không
+    // bị kẹt cache cũ như trước đây.
+    $art_blog_style_path = get_stylesheet_directory() . '/style.css';
+    wp_enqueue_style(
+        'art-blog-style',
+        get_stylesheet_uri(),
+        array(),
+        file_exists( $art_blog_style_path ) ? filemtime( $art_blog_style_path ) : wp_get_theme()->get( 'Version' )
+    );
 
     // Add custom inline styles safely
     $custom_style_path = get_parent_theme_file_path('/custom-style.php');
@@ -227,6 +247,10 @@ function art_blog_scripts() {
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
+
+    // Google reCAPTCHA v2 — nạp toàn site (không chỉ trang chủ/liên hệ) vì popup "Tư Vấn
+    // Nhượng Quyền" chứa form có thể mở ra từ nút CTA trên menu ở MỌI trang.
+    wp_enqueue_script( 'google-recaptcha', 'https://www.google.com/recaptcha/api.js', array(), null, true );
 }
 add_action('wp_enqueue_scripts', 'art_blog_scripts');
 
@@ -830,7 +854,7 @@ function faryita_store_info_fields() {
 		),
 		'fy_store_email'   => array(
 			'label'   => __( 'Email liên hệ', 'milktea-90' ),
-			'default' => 'lienhe@faryita.vn',
+			'default' => 'lienhe@trasuadiem10.com',
 			'type'    => 'email',
 		),
 	);
@@ -887,7 +911,10 @@ function faryita_social_icon_for_url( $url ) {
 		return array( 'icon' => 'fab fa-youtube', 'label' => 'youtube' );
 	}
 	if ( false !== strpos( $url, 'tiktok.com' ) ) {
-		return array( 'icon' => 'fab fa-tiktok', 'label' => 'tiktok' );
+		// Glyph "fa-tiktok" dùng mã Unicode vùng riêng (\e07b) mà font Font Awesome 5 Brands
+		// bundle trong theme không render được (hiện ô đen "notdef" thay vì icon) — dùng SVG
+		// inline thay icon font để luôn hiển thị đúng, không phụ thuộc font nữa.
+		return array( 'icon' => 'svg-tiktok', 'label' => 'tiktok' );
 	}
 	if ( false !== strpos( $url, 'instagram.com' ) ) {
 		return array( 'icon' => 'fab fa-instagram', 'label' => 'instagram' );
@@ -908,11 +935,17 @@ function faryita_render_social_floating_bar() {
 	}
 	?>
 	<style>
-		.fy-social-float{position:fixed;right:18px;bottom:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+		/* Khối đen tưởng là "lỗi icon TikTok" thực ra là nút "Về đầu trang" (.footer-go-to-top,
+		   style.css — nền đen, bottom:30px/right:20-30px, chỉ hiện khi cuộn xuống nhờ class
+		   .show) nằm CHỒNG vào đúng vị trí icon cuối (TikTok) của thanh mạng xã hội — z-index
+		   thanh này cao hơn nên che hầu hết nút đen, chỉ lộ góc vuông ra ngoài viền tròn. Đẩy
+		   thanh mạng xã hội lên cao hơn hẳn vùng nút đó (bottom 30–70px) để không còn chồng. */
+		.fy-social-float{position:fixed;right:18px;bottom:84px;z-index:9999;display:flex;flex-direction:column;gap:10px}
 		.fy-social-float a{width:48px;height:48px;border-radius:50%;background:#1877f2;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,.25);text-decoration:none;font-size:20px;transition:transform .2s ease}
 		.fy-social-float a:hover{transform:scale(1.08)}
 		.fy-social-float .fy-social-zalo-text{font-size:12px;font-weight:800;font-style:normal;letter-spacing:-.5px}
-		@media(max-width:600px){.fy-social-float{right:10px;bottom:16px}.fy-social-float a{width:42px;height:42px;font-size:17px}}
+		.fy-social-float .fy-social-svg{width:20px;height:20px;fill:currentColor}
+		@media(max-width:600px){.fy-social-float{right:10px;bottom:78px}.fy-social-float a{width:42px;height:42px;font-size:17px}.fy-social-float .fy-social-svg{width:17px;height:17px}}
 	</style>
 	<div class="fy-social-float">
 		<?php
@@ -928,6 +961,8 @@ function faryita_render_social_floating_bar() {
 			<a href="<?php echo esc_url( $item->url ); ?>"<?php echo $fy_target; // phpcs:ignore ?> aria-label="<?php echo esc_attr( $item->title ); ?>" title="<?php echo esc_attr( $item->title ); ?>">
 				<?php if ( 'zalo' === $fy_info['label'] ) : ?>
 					<span class="fy-social-zalo-text">Zalo</span>
+				<?php elseif ( 'svg-tiktok' === $fy_info['icon'] ) : ?>
+					<svg class="fy-social-svg" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/></svg>
 				<?php else : ?>
 					<i class="<?php echo esc_attr( $fy_info['icon'] ); ?>" aria-hidden="true"></i>
 				<?php endif; ?>
@@ -956,9 +991,13 @@ function faryita_render_franchise_modal() {
 	.fy-modal-close:hover{background:#fefaee;box-shadow:inset 0 0 0 2px #173226}
 	.fy-modal-title{font-size:22px;line-height:1.35;color:#173226;text-transform:uppercase;font-weight:800;text-align:center;margin:0 0 22px}
 	body.fy-modal-open{overflow:hidden}
-	.fy-header-cta{display:none;align-items:center;background:#f6c945;color:#173226;font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;padding:10px 20px;border-radius:999px;white-space:nowrap;transition:transform .15s ease}
-	.fy-header-cta:hover{transform:translateY(-2px);color:#173226}
+	.fy-header-cta{display:none;align-items:center;background:#0f7a44;color:#fff;font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;padding:10px 20px;border-radius:999px;white-space:nowrap;transition:background .2s ease,transform .15s ease}
+	.fy-header-cta:hover{background:#f6c945;transform:translateY(-2px);color:#173226}
 	@media screen and (min-width:901px){.fy-header-cta{display:inline-flex;margin-left:14px}}
+	/* Nút "Về đầu trang" (footer.php) đổi icon mũi tên thành ly trà sữa 🧋 — cỡ chữ 14px gốc
+	   (style.css) quá nhỏ cho emoji, tăng lên cho rõ. Đặt ở đây (không phải faryita-custom.css)
+	   vì nút này site-wide còn CSS kia chỉ load có điều kiện trên vài template. */
+	.footer-go-to-top{font-size:20px}
 	</style>
 	<div class="fy-modal-overlay" id="fy-franchise-modal" aria-hidden="true">
 		<div class="fy-modal-box" role="dialog" aria-modal="true" aria-labelledby="fy-franchise-modal-title">
@@ -1131,7 +1170,7 @@ function faryita_maybe_create_contacts_table() {
 add_action( 'init', 'faryita_maybe_create_contacts_table' );
 
 /**
- * Giới hạn số lần gửi form theo IP (chống spam tạm thời trong lúc chưa gắn reCAPTCHA).
+ * Giới hạn số lần gửi form theo IP (lớp chống spam bổ sung, cùng với reCAPTCHA bên dưới).
  */
 function faryita_fy_rate_limited( $bucket, $max = 3 ) {
 	$ip  = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) );
@@ -1142,6 +1181,31 @@ function faryita_fy_rate_limited( $bucket, $max = 3 ) {
 	}
 	set_transient( $key, $count + 1, HOUR_IN_SECONDS );
 	return false;
+}
+
+/**
+ * Xác minh Google reCAPTCHA v2 phía server — gọi API siteverify của Google với token
+ * ($_POST['g-recaptcha-response']) do widget "Tôi không phải là người máy" sinh ra ở form.
+ * Trả false nếu thiếu token, gọi API lỗi, hoặc Google báo không hợp lệ (bot/hết hạn).
+ */
+function faryita_verify_recaptcha() {
+	$token = isset( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
+	if ( '' === $token ) {
+		return false;
+	}
+	$response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', array(
+		'timeout' => 10,
+		'body'    => array(
+			'secret'   => FY_RECAPTCHA_SECRET_KEY,
+			'response' => $token,
+			'remoteip' => sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) ),
+		),
+	) );
+	if ( is_wp_error( $response ) ) {
+		return false;
+	}
+	$body = json_decode( wp_remote_retrieve_body( $response ), true );
+	return ! empty( $body['success'] );
 }
 
 /**
@@ -1158,6 +1222,11 @@ function faryita_handle_contact_submit() {
 	// Honeypot chống spam bot: field ẩn, người dùng thật sẽ không điền.
 	if ( ! empty( $_POST['fy_website'] ) ) {
 		wp_safe_redirect( add_query_arg( 'fy_contact', 'success', $redirect ) );
+		exit;
+	}
+
+	if ( ! faryita_verify_recaptcha() ) {
+		wp_safe_redirect( add_query_arg( 'fy_contact', 'error', $redirect ) );
 		exit;
 	}
 
@@ -1187,8 +1256,28 @@ function faryita_handle_contact_submit() {
 		)
 	);
 
+	faryita_send_contact_email( $name, $email, $phone, $address, $message );
+
 	wp_safe_redirect( add_query_arg( 'fy_contact', 'success', $redirect ) );
 	exit;
+}
+
+/**
+ * Gửi email báo có liên hệ mới tới hộp thư cấu hình ở "Tùy biến" → "Thông tin cửa hàng"
+ * (fy_store_email, mặc định lienhe@trasuadiem10.com). Lỗi gửi mail (host chặn SMTP...)
+ * không chặn việc lưu liên hệ vào DB — dữ liệu vẫn xem được trong wp-admin.
+ */
+function faryita_send_contact_email( $name, $email, $phone, $address, $message ) {
+	$to      = get_theme_mod( 'fy_store_email', 'lienhe@trasuadiem10.com' );
+	$subject = sprintf( '[Liên hệ website] %s', $name );
+	$body    = "Có một liên hệ mới từ website:\n\n"
+		. "Họ tên: {$name}\n"
+		. "Email: {$email}\n"
+		. "Điện thoại: {$phone}\n"
+		. ( $address ? "Địa chỉ: {$address}\n" : '' )
+		. ( $message ? "Nội dung:\n{$message}\n" : '' );
+	$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
+	wp_mail( $to, $subject, $body, $headers );
 }
 add_action( 'admin_post_nopriv_fy_submit_contact', 'faryita_handle_contact_submit' );
 add_action( 'admin_post_fy_submit_contact', 'faryita_handle_contact_submit' );
@@ -1239,6 +1328,8 @@ function faryita_render_franchise_form( $id_suffix = '' ) {
 			<span>Tôi đồng ý với chính sách bảo mật</span>
 		</label>
 
+		<div class="fy-franchise-recaptcha g-recaptcha" data-sitekey="<?php echo esc_attr( FY_RECAPTCHA_SITE_KEY ); ?>"></div>
+
 		<button type="submit" class="fy-franchise-submit">Đăng ký <span aria-hidden="true">→</span></button>
 	</form>
 	<?php
@@ -1262,7 +1353,10 @@ function faryita_handle_franchise_submit() {
 		exit;
 	}
 
-	// TODO: khi có Google reCAPTCHA site/secret key, verify $_POST['g-recaptcha-response'] tại đây trước khi tiếp tục.
+	if ( ! faryita_verify_recaptcha() ) {
+		wp_safe_redirect( add_query_arg( 'fy_franchise', 'error', $redirect ) . '#fy-franchise' );
+		exit;
+	}
 
 	if ( faryita_fy_rate_limited( 'franchise' ) ) {
 		wp_safe_redirect( add_query_arg( 'fy_franchise', 'error', $redirect ) . '#fy-franchise' );
@@ -1297,11 +1391,31 @@ function faryita_handle_franchise_submit() {
 		)
 	);
 
+	faryita_send_franchise_email( $name, $email, $phone, $gender, $region );
+
 	wp_safe_redirect( add_query_arg( 'fy_franchise', 'success', $redirect ) . '#fy-franchise' );
 	exit;
 }
 add_action( 'admin_post_nopriv_fy_submit_franchise', 'faryita_handle_franchise_submit' );
 add_action( 'admin_post_fy_submit_franchise', 'faryita_handle_franchise_submit' );
+
+/**
+ * Gửi email báo có đăng ký tư vấn nhượng quyền mới, tới cùng hộp thư cấu hình ở
+ * "Tùy biến" → "Thông tin cửa hàng" (fy_store_email) như form liên hệ. Lỗi gửi mail
+ * không chặn việc lưu đăng ký vào DB — dữ liệu vẫn xem được trong wp-admin.
+ */
+function faryita_send_franchise_email( $name, $email, $phone, $gender, $region ) {
+	$to      = get_theme_mod( 'fy_store_email', 'lienhe@trasuadiem10.com' );
+	$subject = sprintf( '[Đăng ký nhượng quyền] %s', $name );
+	$body    = "Có một đăng ký tư vấn nhượng quyền mới từ website:\n\n"
+		. "Họ tên: {$name}\n"
+		. "Email: {$email}\n"
+		. "Điện thoại: {$phone}\n"
+		. ( $gender ? "Giới tính: {$gender}\n" : '' )
+		. ( $region ? "Khu vực muốn đăng ký: {$region}\n" : '' );
+	$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
+	wp_mail( $to, $subject, $body, $headers );
+}
 
 /**
  * Trang quản trị "Thông tin liên hệ".
@@ -1588,14 +1702,38 @@ function faryita_maintenance_mode_redirect() {
 	nocache_headers();
 	header( 'HTTP/1.1 503 Service Temporarily Unavailable' );
 	header( 'Retry-After: 3600' );
-	wp_die(
-		'<div style="font-family:sans-serif;text-align:center;padding:80px 20px;">' .
-		'<h1 style="font-size:28px;">Website đang bảo trì</h1>' .
-		'<p style="font-size:16px;color:#555;">Chúng tôi đang cập nhật để mang lại trải nghiệm tốt hơn. Vui lòng quay lại sau nhé!</p>' .
-		'</div>',
-		'Đang bảo trì',
-		array( 'response' => 503 )
-	);
+	header( 'Content-Type: text/html; charset=utf-8' );
+	// Banner "Trà Sữa DIEM 10" — dùng làm ảnh nền toàn màn hình cho trang bảo trì (tự dựng
+	// trang HTML riêng thay vì wp_die() mặc định để ảnh nền phủ hết viewport, không bị
+	// khung #error-page của WP core bó lại).
+	$fy_maint_banner = get_template_directory_uri() . '/assets/images/brand/shop-banner.jpg';
+	?>
+	<!DOCTYPE html>
+	<html lang="vi">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Đang bảo trì — Trà Sữa DIEM 10</title>
+		<style>
+			html,body{margin:0;padding:0;min-height:100%;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+			.fy-maint{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;
+				background:linear-gradient(rgba(15,50,34,.6),rgba(15,50,34,.6)),url('<?php echo esc_url( $fy_maint_banner ); ?>') center/cover no-repeat;}
+			.fy-maint-card{background:rgba(255,255,255,.95);border-radius:20px;padding:48px 40px;max-width:480px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+			.fy-maint-card h1{font-size:26px;color:#173226;margin:0 0 14px}
+			.fy-maint-card p{font-size:16px;color:#555;margin:0;line-height:1.6}
+		</style>
+	</head>
+	<body>
+		<div class="fy-maint">
+			<div class="fy-maint-card">
+				<h1>Website đang bảo trì</h1>
+				<p>Chúng tôi đang cập nhật để mang lại trải nghiệm tốt hơn. Vui lòng quay lại sau nhé!</p>
+			</div>
+		</div>
+	</body>
+	</html>
+	<?php
+	exit;
 }
 add_action( 'template_redirect', 'faryita_maintenance_mode_redirect' );
 
@@ -1627,11 +1765,11 @@ add_shortcode( 'fy_footer_brand', 'faryita_footer_brand_shortcode' );
 
 function faryita_footer_contact_shortcode() {
 	$phone   = get_theme_mod( 'fy_store_phone', '0900 000 000' );
-	$email   = get_theme_mod( 'fy_store_email', 'lienhe@faryita.vn' );
+	$email   = get_theme_mod( 'fy_store_email', 'lienhe@trasuadiem10.com' );
 	$address = get_theme_mod( 'fy_store_address', '366 Nguyễn Trãi, P. An Đông, TP. Hồ Chí Minh' );
 	ob_start();
 	?>
-	<h2 class="widget-title">Thông Tin Liên Hệ</h2>
+	<h2 class="widget-title">Liên Hệ</h2>
 	<p>
 		<i class="fas fa-phone-alt" aria-hidden="true"></i>
 		<a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
@@ -1685,3 +1823,48 @@ function faryita_remove_comments_admin_bar_node( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'comments' );
 }
 add_action( 'admin_bar_menu', 'faryita_remove_comments_admin_bar_node', 999 );
+
+/**
+ * Tab lọc danh mục trên trang Sản Phẩm (trang Shop WooCommerce) — cho khách bấm chuyển
+ * giữa Tất Cả / Trà Trái Cây / Trà Sữa / Topping ngay trên /san-pham/ (lọc qua query string
+ * ?fy_cat=<slug>, không rời sang URL danh mục riêng), vẫn giữ phân trang 9 sản phẩm/trang.
+ */
+function faryita_shop_cat_tabs() {
+	return array(
+		'tra-trai-cay' => 'Trà Trái Cây',
+		'tra-sua'      => 'Trà Sữa',
+		'topping'      => 'Topping',
+	);
+}
+
+function faryita_filter_shop_query_by_tab( $q ) {
+	if ( ! is_shop() || ! $q->is_main_query() ) {
+		return;
+	}
+	$fy_cat = isset( $_GET['fy_cat'] ) ? sanitize_title( wp_unslash( $_GET['fy_cat'] ) ) : '';
+	if ( $fy_cat && array_key_exists( $fy_cat, faryita_shop_cat_tabs() ) ) {
+		$q->set( 'product_cat', $fy_cat );
+	}
+}
+add_action( 'woocommerce_product_query', 'faryita_filter_shop_query_by_tab' );
+
+function faryita_render_shop_cat_tabs() {
+	if ( ! is_shop() ) {
+		return;
+	}
+	$fy_active = isset( $_GET['fy_cat'] ) ? sanitize_title( wp_unslash( $_GET['fy_cat'] ) ) : '';
+	$fy_tabs   = faryita_shop_cat_tabs();
+	$fy_base   = get_permalink( wc_get_page_id( 'shop' ) );
+	?>
+	<section class="fy-home fy-shop-cats">
+		<div class="fy-container">
+			<div class="fy-tabs fy-shop-tabs" role="tablist">
+				<a href="<?php echo esc_url( $fy_base ); ?>" class="fy-tab-btn<?php echo '' === $fy_active ? ' is-active' : ''; ?>">Tất Cả</a>
+				<?php foreach ( $fy_tabs as $fy_slug => $fy_label ) : ?>
+					<a href="<?php echo esc_url( add_query_arg( 'fy_cat', $fy_slug, $fy_base ) ); ?>" class="fy-tab-btn<?php echo $fy_active === $fy_slug ? ' is-active' : ''; ?>"><?php echo esc_html( $fy_label ); ?></a>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php
+}

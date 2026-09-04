@@ -28,7 +28,7 @@ get_header( 'shop' ); ?>
 	<div class="fy-container fy-reveal">
 		<h1><?php woocommerce_page_title(); ?></h1>
 		<?php if ( is_shop() ) : ?>
-			<p>Chọn cho mình ly nước ép, sinh tố hay detox yêu thích — tất cả đều tươi mới mỗi ngày.</p>
+			<p>Chọn cho mình ly trà, trà sữa hay topping yêu thích — nguyên liệu tươi mới, pha ngon mỗi ngày.</p>
 		<?php elseif ( is_product_taxonomy() ) : ?>
 			<?php $fy_term_desc = term_description(); ?>
 			<?php if ( $fy_term_desc ) : ?>
@@ -40,6 +40,8 @@ get_header( 'shop' ); ?>
 		<path d="M0,50 C200,150 400,-50 600,50 C800,150 1000,-50 1200,50 L1200,120 L0,120 Z"></path>
 	</svg>
 </section>
+
+<?php faryita_render_shop_cat_tabs(); ?>
 
 <div class="container">
 	<div class="site-wrapper archive-product fy-home">
