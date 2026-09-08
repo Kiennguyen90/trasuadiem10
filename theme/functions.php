@@ -1009,7 +1009,7 @@ add_action( 'wp_footer', 'faryita_render_social_floating_bar' );
  * JS đóng/mở viết inline ngay tại đây cho tự chứa, không phụ thuộc file JS enqueue có điều kiện.
  */
 function faryita_render_franchise_modal() {
-	$fy_form_bg = esc_url( get_template_directory_uri() . '/assets/images/brand/form-bg.jpg' );
+	$fy_form_bg = esc_url( get_template_directory_uri() . '/assets/images/brand/popup-bg.png' );
 	?>
 	<style>
 	/* Popup + nút CTA header — CSS tự chứa (in ngay đây) để áp dụng trên MỌI trang, kể cả
@@ -1017,9 +1017,8 @@ function faryita_render_franchise_modal() {
 	.fy-modal-overlay{--fy-yellow:#f6c945;--fy-cream:#fefaee;--fy-green:#0f7a44;--fy-orange:#59ad00;--fy-dark:#173226;position:fixed;inset:0;background:rgba(23,50,34,.65);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100000;opacity:0;visibility:hidden;transition:opacity .25s ease}
 	.fy-modal-overlay.is-open{opacity:1;visibility:visible}
 	/* Bề rộng popup: 936px = 520px gốc × 1.8 (yêu cầu client 09/2026).
-	   Nền: ảnh lá trà form-bg.jpg (dùng chung cho cả 3 form — popup / trang chủ / liên hệ),
-	   phủ 1 lớp trắng mờ 30% để chữ + ô nhập vẫn rõ (yêu cầu client 09/2026). */
-	.fy-modal-box{background:linear-gradient(rgba(255,255,255,.3),rgba(255,255,255,.3)),#d7e9bb url("<?php echo $fy_form_bg; // phpcs:ignore WordPress.Security.EscapeOutput ?>") center center / cover no-repeat;border-radius:22px;padding:40px 44px;max-width:936px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform .25s ease;box-sizing:border-box}
+	   Nền: ảnh lá trà popup-bg.png (dùng chung cho tất cả popup — yêu cầu client 09/2026). */
+	.fy-modal-box{background:#e4f0cf url("<?php echo $fy_form_bg; // phpcs:ignore WordPress.Security.EscapeOutput ?>") center center / cover no-repeat;border-radius:22px;padding:40px 44px;max-width:936px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform .25s ease;box-sizing:border-box}
 	.fy-modal-overlay.is-open .fy-modal-box{transform:translateY(0)}
 	.fy-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:none;background:#fefaee;color:#173226;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
 	.fy-modal-close:hover{background:#fff;box-shadow:inset 0 0 0 2px #173226}

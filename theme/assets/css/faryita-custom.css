@@ -758,9 +758,9 @@ textarea{padding-left:13px} /* gốc 3px ở style.css +10px */
 .default_footer_search input.search-field{padding-left:20px} /* gốc 10px +10px */
 
 /* Popup Trang chủ — form "Tư Vấn Nhượng Quyền" (JS: promoPopup() trong faryita-custom.js,
-   hiện 1 lần/trình duyệt, nhớ qua localStorage). Bố cục 2 cột trên nền xanh navy hoạ tiết
-   sóng: ảnh bên trái (client cập nhật sau ở "Popup Trang chủ"), form bên phải. Form dùng
-   chung faryita_render_franchise_form() — override màu ở dưới cho hợp nền tối. */
+   hiện 1 lần/trình duyệt, nhớ qua localStorage). Bố cục 2 cột trên nền ảnh lá trà popup-bg.png
+   (dùng chung cho tất cả popup — yêu cầu client 09/2026): ảnh bên trái, form bên phải.
+   Form dùng chung faryita_render_franchise_form() — override màu ở dưới cho hợp nền sáng. */
 .fy-promo-popup-overlay{position:fixed;inset:0;background:rgba(10,20,45,.72);display:flex;align-items:center;justify-content:center;padding:20px;z-index:99998;opacity:0;visibility:hidden;transition:opacity .25s ease;box-sizing:border-box}
 .fy-promo-popup-overlay.is-open{opacity:1;visibility:visible}
 .fy-promo-popup-box{
@@ -768,34 +768,28 @@ textarea{padding-left:13px} /* gốc 3px ở style.css +10px */
 	border-radius:22px;max-width:1120px;width:100%;max-height:92vh;overflow-y:auto;position:relative;
 	transform:translateY(20px);transition:transform .25s ease;box-shadow:0 24px 60px rgba(0,0,0,.45);
 	display:flex;gap:0;padding:26px;box-sizing:border-box;
-	background-color:var(--fy-navy);
-	background-image:
-		radial-gradient(circle at 30% -10%,rgba(255,255,255,.10),transparent 55%),
-		radial-gradient(circle at 100% 150%,var(--fy-navy) 24%,rgba(255,255,255,.05) 25%,rgba(255,255,255,.05) 28%,var(--fy-navy) 29%,var(--fy-navy) 36%,rgba(255,255,255,.05) 36%,rgba(255,255,255,.05) 40%,transparent 40%,transparent),
-		radial-gradient(circle at 0 150%,var(--fy-navy) 24%,rgba(255,255,255,.05) 25%,rgba(255,255,255,.05) 28%,var(--fy-navy) 29%,var(--fy-navy) 36%,rgba(255,255,255,.05) 36%,rgba(255,255,255,.05) 40%,transparent 40%,transparent),
-		radial-gradient(circle at 50% 100%,rgba(255,255,255,.05) 10%,var(--fy-navy) 11%,var(--fy-navy) 23%,rgba(255,255,255,.05) 24%,rgba(255,255,255,.05) 30%,var(--fy-navy) 31%,var(--fy-navy) 43%,rgba(255,255,255,.05) 44%,rgba(255,255,255,.05) 50%,var(--fy-navy) 51%,var(--fy-navy) 63%,rgba(255,255,255,.05) 64%,rgba(255,255,255,.05) 71%,transparent 71%,transparent);
-	background-size:auto,100px 50px,100px 50px,100px 50px;
+	background:#e4f0cf url("../images/brand/popup-bg.png") center center / cover no-repeat;
 }
 .fy-promo-popup-overlay.is-open .fy-promo-popup-box{transform:translateY(0)}
-.fy-promo-popup-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:10px;border:2px solid rgba(255,255,255,.7);background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:2;transition:background .2s ease,border-color .2s ease}
-.fy-promo-popup-close:hover{background:rgba(255,255,255,.15);border-color:#fff}
-.fy-promo-popup-media{flex:0 0 42%;max-width:42%;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06);align-self:stretch;min-height:420px}
+.fy-promo-popup-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:10px;border:2px solid var(--fy-navy);background:rgba(255,255,255,.6);color:var(--fy-navy);font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:2;transition:background .2s ease,border-color .2s ease}
+.fy-promo-popup-close:hover{background:#fff;border-color:var(--fy-navy)}
+.fy-promo-popup-media{flex:0 0 42%;max-width:42%;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.35);align-self:stretch;min-height:420px}
 .fy-promo-popup-media .fy-pc-media-img{width:100%;height:100%;object-fit:cover;display:block}
 .fy-promo-popup-media .fy-pc-media-video{width:100%;height:100%}
 .fy-promo-popup-media .fy-pc-media-video video,
 .fy-promo-popup-media .fy-pc-media-video iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
 .fy-promo-popup-body{flex:1 1 auto;min-width:0;padding:18px 26px 8px 40px;text-align:left}
-.fy-promo-popup-body h2{font-size:32px;color:#fff;margin:0 0 6px;line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
-.fy-promo-popup-body p{font-size:15px;color:rgba(255,255,255,.82);margin:0 0 18px;line-height:1.55}
-/* ---- Override form (nền tối) chỉ trong popup Trang chủ ---- */
+.fy-promo-popup-body h2{font-size:32px;color:var(--fy-navy);margin:0 0 6px;line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+.fy-promo-popup-body p{font-size:15px;color:rgba(20,48,110,.82);margin:0 0 18px;line-height:1.55}
+/* ---- Override form (nền sáng lá trà) chỉ trong popup Trang chủ ---- */
 .fy-promo-popup-body .fy-franchise-form{gap:16px;margin-top:18px}
 .fy-promo-popup-body .fy-franchise-row{gap:16px}
-.fy-promo-popup-body .fy-franchise-label{color:#fff;font-size:12px}
+.fy-promo-popup-body .fy-franchise-label{color:var(--fy-navy);font-size:12px;font-weight:800}
 .fy-promo-popup-body .fy-franchise-control{border:none;border-radius:12px;padding:14px 18px;font-size:15px;color:#14306e;background-color:#fff;background-image:none}
 .fy-promo-popup-body .fy-franchise-control::placeholder{color:#9aa3b2}
-.fy-promo-popup-body .fy-franchise-control:focus{outline:2px solid rgba(255,255,255,.55);outline-offset:1px}
+.fy-promo-popup-body .fy-franchise-control:focus{outline:2px solid rgba(20,48,110,.55);outline-offset:1px}
 .fy-promo-popup-body select.fy-franchise-control{background-color:#fff;background-repeat:no-repeat;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314306e' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-position:right 16px center;background-size:16px;padding-right:44px}
-.fy-promo-popup-body .fy-franchise-consent{align-self:flex-start;color:rgba(255,255,255,.85);text-align:left}
+.fy-promo-popup-body .fy-franchise-consent{align-self:flex-start;color:rgba(20,48,110,.9);text-align:left}
 .fy-promo-popup-body .fy-franchise-consent input{accent-color:#e11d2a}
 .fy-promo-popup-body .fy-franchise-recaptcha{align-self:flex-start}
 .fy-promo-popup-body .fy-franchise-submit{align-self:flex-start;background:#e11d2a;color:#fff;font-size:15px;padding:13px 30px;margin-top:4px}
