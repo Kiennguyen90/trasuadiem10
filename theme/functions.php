@@ -604,6 +604,36 @@ function fy_news_enabled_setting_init() {
 }
 add_action( 'admin_init', 'fy_news_enabled_setting_init' );
 
+/**
+ * Bật/tắt popup khuyến mãi hiện lần đầu khách vào Trang chủ (chỉ hiện 1 lần/trình duyệt,
+ * nhớ qua localStorage). Nội dung (tiêu đề/mô tả/ảnh/nút) sửa được ở khối "Popup Khuyến Mãi"
+ * trong nội dung Trang chủ (wp-admin > Trang > Trang chủ).
+ */
+function fy_promo_popup_enabled() {
+	$opt = get_option( 'fy_promo_popup_enabled', '1' );
+	return (bool) apply_filters( 'fy_promo_popup_enabled', '1' === (string) $opt );
+}
+
+function fy_promo_popup_enabled_setting_init() {
+	register_setting( 'general', 'fy_promo_popup_enabled', array(
+		'type'              => 'string',
+		'sanitize_callback' => static function ( $v ) { return '1' === (string) $v ? '1' : '0'; },
+		'default'           => '1',
+	) );
+	add_settings_field(
+		'fy_promo_popup_enabled',
+		'Popup khuyến mãi',
+		static function () {
+			printf(
+				'<label><input type="checkbox" name="fy_promo_popup_enabled" value="1" %s> Hiện popup khuyến mãi khi khách vào Trang chủ lần đầu</label>',
+				checked( get_option( 'fy_promo_popup_enabled', '1' ), '1', false )
+			);
+		},
+		'general'
+	);
+}
+add_action( 'admin_init', 'fy_promo_popup_enabled_setting_init' );
+
 
 //////////////////////////////////////////////   Function for Translation Error   //////////////////////////////////////////////////////
 function art_blog_enqueue_function() {
@@ -849,7 +879,7 @@ function faryita_store_info_fields() {
 		),
 		'fy_store_phone'   => array(
 			'label'   => __( 'Số điện thoại / Zalo', 'milktea-90' ),
-			'default' => '0900 000 000',
+			'default' => '0973285017',
 			'type'    => 'text',
 		),
 		'fy_store_email'   => array(
@@ -979,18 +1009,41 @@ add_action( 'wp_footer', 'faryita_render_social_floating_bar' );
  * JS đóng/mở viết inline ngay tại đây cho tự chứa, không phụ thuộc file JS enqueue có điều kiện.
  */
 function faryita_render_franchise_modal() {
+	$fy_form_bg = esc_url( get_template_directory_uri() . '/assets/images/brand/form-bg.jpg' );
 	?>
 	<style>
 	/* Popup + nút CTA header — CSS tự chứa (in ngay đây) để áp dụng trên MỌI trang, kể cả
 	   những trang không load faryita-custom.css (chỉ enqueue có điều kiện trên 1 số template). */
 	.fy-modal-overlay{--fy-yellow:#f6c945;--fy-cream:#fefaee;--fy-green:#0f7a44;--fy-orange:#59ad00;--fy-dark:#173226;position:fixed;inset:0;background:rgba(23,50,34,.65);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100000;opacity:0;visibility:hidden;transition:opacity .25s ease}
 	.fy-modal-overlay.is-open{opacity:1;visibility:visible}
-	.fy-modal-box{background:#fefaee;border-radius:22px;padding:36px 32px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform .25s ease;box-sizing:border-box}
+	/* Bề rộng popup: 936px = 520px gốc × 1.8 (yêu cầu client 09/2026).
+	   Nền: ảnh lá trà form-bg.jpg (dùng chung cho cả 3 form — popup / trang chủ / liên hệ),
+	   phủ 1 lớp trắng mờ 30% để chữ + ô nhập vẫn rõ (yêu cầu client 09/2026). */
+	.fy-modal-box{background:linear-gradient(rgba(255,255,255,.3),rgba(255,255,255,.3)),#d7e9bb url("<?php echo $fy_form_bg; // phpcs:ignore WordPress.Security.EscapeOutput ?>") center center / cover no-repeat;border-radius:22px;padding:40px 44px;max-width:936px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform .25s ease;box-sizing:border-box}
 	.fy-modal-overlay.is-open .fy-modal-box{transform:translateY(0)}
-	.fy-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:none;background:#fff;color:#173226;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
-	.fy-modal-close:hover{background:#fefaee;box-shadow:inset 0 0 0 2px #173226}
+	.fy-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:none;background:#fefaee;color:#173226;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+	.fy-modal-close:hover{background:#fff;box-shadow:inset 0 0 0 2px #173226}
 	.fy-modal-title{font-size:22px;line-height:1.35;color:#173226;text-transform:uppercase;font-weight:800;text-align:center;margin:0 0 22px}
 	body.fy-modal-open{overflow:hidden}
+	/* Form nhượng quyền TRONG popup — copy tự chứa (giá trị y hệt .fy-franchise-* trong
+	   faryita-custom.css) để popup mở ở trang nào cũng đồng bộ kiểu với form trang chủ/liên hệ,
+	   kể cả các trang không load faryita-custom.css. Scope .fy-modal-overlay để không đụng trang khác. */
+	.fy-modal-overlay .fy-franchise-form{display:flex;flex-direction:column;gap:22px;text-align:left}
+	.fy-modal-overlay .fy-franchise-row{display:flex;gap:20px;flex-wrap:wrap}
+	.fy-modal-overlay .fy-franchise-field{flex:1 1 180px;display:flex;flex-direction:column;gap:6px}
+	.fy-modal-overlay .fy-franchise-field-full{width:100%;flex:0 0 auto}
+	.fy-modal-overlay .fy-franchise-label{color:#173226;font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+	.fy-modal-overlay .fy-franchise-control{width:100%;padding:12px 16px 12px 26px;border:1px solid #E2E8F0;border-radius:10px;font-size:14px;font-family:inherit;color:#173226;background-color:#fff;box-sizing:border-box;appearance:none}
+	.fy-modal-overlay .fy-franchise-control:focus{outline:none;border-color:#0f7a44}
+	.fy-modal-overlay select.fy-franchise-control{background-repeat:no-repeat;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23173226' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-position:right 14px center;background-size:14px;padding-right:40px;cursor:pointer}
+	.fy-modal-overlay .fy-franchise-textarea{border-radius:10px;resize:vertical;min-height:100px}
+	.fy-modal-overlay .fy-franchise-consent{align-self:center;display:flex;align-items:center;gap:8px;font-size:13px;color:#173226;text-align:center}
+	.fy-modal-overlay .fy-franchise-consent input{width:16px;height:16px;flex-shrink:0;accent-color:#0f7a44}
+	.fy-modal-overlay .fy-franchise-recaptcha{align-self:center}
+	.fy-modal-overlay .fy-franchise-submit{align-self:center;margin-top:2px;display:inline-flex;align-items:center;gap:8px;background:#0f7a44;color:#fff;font-weight:800;padding:9px 22px;border-radius:999px;border:none;cursor:pointer;font-size:13px;transition:background .2s ease,transform .15s ease}
+	.fy-modal-overlay .fy-franchise-submit:hover{background:#f6c945;color:#173226;transform:translateY(-2px)}
+	@media screen and (max-width:960px){.fy-modal-box{padding:32px 24px}}
+	@media screen and (max-width:700px){.fy-modal-overlay .fy-franchise-row{flex-direction:column;gap:14px}.fy-modal-overlay .fy-franchise-field{flex:0 0 auto}.fy-modal-overlay .fy-franchise-form{gap:14px}}
 	.fy-header-cta{display:none;align-items:center;background:#0f7a44;color:#fff;font-weight:800;font-size:13px;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;padding:10px 20px;border-radius:999px;white-space:nowrap;transition:background .2s ease,transform .15s ease}
 	.fy-header-cta:hover{background:#f6c945;transform:translateY(-2px);color:#173226}
 	@media screen and (min-width:901px){.fy-header-cta{display:inline-flex;margin-left:14px}}
@@ -1308,16 +1361,25 @@ function faryita_render_franchise_form( $id_suffix = '' ) {
 				<input class="fy-franchise-control" type="text" name="fy_name" placeholder="Họ và tên" required>
 			</label>
 			<label class="fy-franchise-field">
-				<span class="fy-franchise-label">Số Điện Thoại</span>
-				<input class="fy-franchise-control" type="text" name="fy_phone" placeholder="Số điện thoại" required>
+				<span class="fy-franchise-label">Giới Tính</span>
+				<select class="fy-franchise-control" name="fy_gender">
+					<option value="Nam">Nam</option>
+					<option value="Nữ">Nữ</option>
+				</select>
 			</label>
 		</div>
 		<div class="fy-franchise-row">
 			<label class="fy-franchise-field">
+				<span class="fy-franchise-label">Số Điện Thoại</span>
+				<input class="fy-franchise-control" type="text" name="fy_phone" placeholder="Số điện thoại" required>
+			</label>
+			<label class="fy-franchise-field">
 				<span class="fy-franchise-label">Email</span>
 				<input class="fy-franchise-control" type="email" name="fy_email" placeholder="Email" required>
 			</label>
-			<label class="fy-franchise-field">
+		</div>
+		<div class="fy-franchise-row">
+			<label class="fy-franchise-field fy-franchise-field-full">
 				<span class="fy-franchise-label">Khu Vực Muốn Đăng Ký</span>
 				<input class="fy-franchise-control" type="text" name="fy_region" placeholder="Tỉnh thành">
 			</label>
@@ -1764,7 +1826,7 @@ function faryita_footer_brand_shortcode() {
 add_shortcode( 'fy_footer_brand', 'faryita_footer_brand_shortcode' );
 
 function faryita_footer_contact_shortcode() {
-	$phone   = get_theme_mod( 'fy_store_phone', '0900 000 000' );
+	$phone   = get_theme_mod( 'fy_store_phone', '0973285017' );
 	$email   = get_theme_mod( 'fy_store_email', 'lienhe@trasuadiem10.com' );
 	$address = get_theme_mod( 'fy_store_address', '366 Nguyễn Trãi, P. An Đông, TP. Hồ Chí Minh' );
 	ob_start();

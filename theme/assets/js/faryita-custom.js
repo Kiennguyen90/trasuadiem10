@@ -110,6 +110,53 @@
 		});
 	}
 
+	function promoPopup() {
+		var overlay = document.getElementById('fy-promo-popup');
+		if (!overlay) {
+			return;
+		}
+		var STORAGE_KEY = 'fy_promo_popup_seen';
+		var alreadySeen;
+		try {
+			alreadySeen = window.localStorage.getItem(STORAGE_KEY);
+		} catch (e) {
+			alreadySeen = null; // localStorage bị chặn (private mode...) — cứ hiện popup, không chặn trải nghiệm.
+		}
+		if (alreadySeen) {
+			return;
+		}
+
+		function closePopup() {
+			overlay.classList.remove('is-open');
+			document.removeEventListener('keydown', onKeydown);
+		}
+		function onKeydown(e) {
+			if (e.key === 'Escape') {
+				closePopup();
+			}
+		}
+
+		var closeBtn = overlay.querySelector('.fy-promo-popup-close');
+		if (closeBtn) {
+			closeBtn.addEventListener('click', closePopup);
+		}
+		overlay.addEventListener('click', function (e) {
+			if (e.target === overlay) {
+				closePopup();
+			}
+		});
+		document.addEventListener('keydown', onKeydown);
+
+		setTimeout(function () {
+			overlay.classList.add('is-open');
+			try {
+				window.localStorage.setItem(STORAGE_KEY, '1');
+			} catch (e) {
+				// bỏ qua — không có localStorage thì popup sẽ hiện lại mỗi lần vào trang, chấp nhận được.
+			}
+		}, 700);
+	}
+
 	function mobileHeaderSpacer() {
 		var page = document.getElementById('page');
 		if (!page) {
@@ -162,6 +209,7 @@
 			relatedProductsCarousel();
 			heroSlider();
 			testimonialsCarousel();
+			promoPopup();
 			mobileHeaderSpacer();
 			productTabs();
 		});
@@ -171,6 +219,7 @@
 		relatedProductsCarousel();
 		heroSlider();
 		testimonialsCarousel();
+		promoPopup();
 		mobileHeaderSpacer();
 		productTabs();
 	}

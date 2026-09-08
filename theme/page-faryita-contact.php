@@ -8,7 +8,7 @@
 get_header();
 
 $fy_store_name  = get_theme_mod( 'fy_store_name', 'Trà Sữa DIEM 10' );
-$fy_store_phone = get_theme_mod( 'fy_store_phone', '0900 000 000' );
+$fy_store_phone = get_theme_mod( 'fy_store_phone', '0973285017' );
 $fy_store_email = get_theme_mod( 'fy_store_email', 'lienhe@trasuadiem10.com' );
 $fy_store_hours = get_theme_mod( 'fy_store_hours', '08:00 - 22:00 (Tất cả các ngày trong tuần)' );
 

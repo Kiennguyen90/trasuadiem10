@@ -41,6 +41,15 @@ function fy_pc_schemas() {
 			'title'    => 'Nội dung Trang chủ',
 			'sections' => array(
 
+				'promo_popup' => array(
+					'label'  => 'Popup Trang chủ — form "Tư Vấn Nhượng Quyền" (hiện khi khách vào Trang chủ lần đầu — bật/tắt ở Cài đặt > Tổng quan)',
+					'fields' => array(
+						'image'   => array( 'type' => 'media', 'label' => 'Ảnh bên trái (cập nhật sau)', 'default_url' => $img . 'shop-banner.jpg' ),
+						'heading' => array( 'type' => 'text', 'label' => 'Tiêu đề form (xuống dòng = 2 dòng)', 'default' => "Tư Vấn Nhượng Quyền\nTrà Sữa DIEM 10" ),
+						'desc'    => array( 'type' => 'textarea', 'label' => 'Dòng mô tả dưới tiêu đề (để trống = ẩn)', 'default' => '' ),
+					),
+				),
+
 				'banner' => array(
 					'label'  => 'Banner (đầu trang)',
 					'fields' => array(
@@ -63,6 +72,14 @@ function fy_pc_schemas() {
 						'stat3_sub' => array( 'type' => 'text', 'label' => 'Chỉ số 3 — mô tả', 'default' => 'Vị trà khó quên' ),
 						'button'    => array( 'type' => 'text', 'label' => 'Nhãn nút', 'default' => 'Xem Menu' ),
 						'media'     => array( 'type' => 'media', 'label' => 'Ảnh / Video minh hoạ', 'default_url' => $img . 'shop-counter.jpg' ),
+					),
+				),
+
+				'intro_video' => array(
+					'label'  => 'Video dưới khối "Không Gian Ấm Cúng" (để trống = ẩn)',
+					'fields' => array(
+						'heading' => array( 'type' => 'text', 'label' => 'Tiêu đề (để trống = không hiện)', 'default' => '' ),
+						'media'   => array( 'type' => 'media', 'label' => 'Video (YouTube / Vimeo / .mp4) — có thể kèm ảnh bìa', 'default_url' => '' ),
 					),
 				),
 

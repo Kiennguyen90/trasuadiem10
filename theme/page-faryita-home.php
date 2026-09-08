@@ -66,12 +66,56 @@ $fy_features = array(
 	fy_pc( 'strip', 'word4' ),
 );
 
+// Icon trong dải chữ chạy: lấy ảnh sản phẩm trà sữa thật đầu tiên (danh mục "tra-sua")
+// thay vì emoji — client đổi ảnh gián tiếp bằng cách đổi thứ tự/ảnh sản phẩm trong wp-admin.
+// Không có sản phẩm nào thì rơi về emoji 🧋 mặc định.
+$fy_strip_icon_url = '';
+if ( class_exists( 'WooCommerce' ) ) {
+	$fy_strip_products = wc_get_products( array(
+		'status'   => 'publish',
+		'limit'    => 1,
+		'orderby'  => 'menu_order',
+		'order'    => 'ASC',
+		'category' => array( 'tra-sua' ),
+	) );
+	if ( $fy_strip_products ) {
+		$fy_strip_img_id = $fy_strip_products[0]->get_image_id();
+		if ( $fy_strip_img_id ) {
+			$fy_strip_icon_url = wp_get_attachment_image_url( $fy_strip_img_id, 'thumbnail' );
+		}
+	}
+}
+
 $fy_store_btn_url = fy_pc( 'store', 'button_url' );
 $fy_store_btn_url = $fy_store_btn_url ? $fy_store_btn_url : home_url( '/cua-hang/' );
 ?>
 
 
 <div class="fy-home">
+
+	<?php if ( fy_promo_popup_enabled() ) :
+		// Popup Trang chủ — form "Tư Vấn Nhượng Quyền". Chỉ hiện 1 lần/trình duyệt (JS nhớ qua
+		// localStorage). Tiêu đề + ảnh bên trái sửa ở khối "Popup Trang chủ" trong nội dung
+		// Trang chủ. Bật/tắt toàn site ở Cài đặt > Tổng quan > "Popup khuyến mãi".
+		$fy_promo_popup_img_url = get_template_directory_uri() . '/assets/images/brand/shop-banner.jpg';
+		$fy_promo_popup_desc    = fy_pc( 'promo_popup', 'desc' );
+		?>
+		<div class="fy-promo-popup-overlay" id="fy-promo-popup" aria-hidden="true">
+			<div class="fy-promo-popup-box" role="dialog" aria-modal="true" aria-labelledby="fy-promo-popup-title">
+				<button type="button" class="fy-promo-popup-close" aria-label="Đóng">&times;</button>
+				<div class="fy-promo-popup-media">
+					<?php echo fy_pc_media( 'promo_popup', 'image', $fy_promo_popup_img_url, array( 'alt' => 'Trà Sữa DIEM 10', 'wrap_class' => 'fy-pc-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				</div>
+				<div class="fy-promo-popup-body">
+					<h2 id="fy-promo-popup-title"><?php echo fy_pc_nl2br( 'promo_popup', 'heading' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+					<?php if ( '' !== trim( $fy_promo_popup_desc ) ) : ?>
+						<p><?php echo esc_html( $fy_promo_popup_desc ); ?></p>
+					<?php endif; ?>
+					<?php faryita_render_franchise_form( 'promo' ); ?>
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
 
 	<section class="fy-hero">
 		<div class="fy-blob fy-blob-1" aria-hidden="true"></div>
@@ -116,11 +160,32 @@ $fy_store_btn_url = $fy_store_btn_url ? $fy_store_btn_url : home_url( '/cua-hang
 		</div>
 	</section>
 
+	<?php if ( fy_pc_has_media( 'intro_video', 'media' ) ) : ?>
+		<?php $fy_intro_video_heading = fy_pc( 'intro_video', 'heading' ); ?>
+		<section class="fy-intro-video">
+			<div class="fy-container">
+				<?php if ( '' !== trim( $fy_intro_video_heading ) ) : ?>
+					<h2 class="fy-reveal"><?php echo esc_html( $fy_intro_video_heading ); ?></h2>
+				<?php endif; ?>
+				<div class="fy-intro-video-frame fy-reveal">
+					<?php echo fy_pc_media( 'intro_video', 'media', '', array( 'alt' => $fy_intro_video_heading, 'wrap_class' => 'fy-pc-media' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+
 	<div class="fy-strip">
 		<div class="fy-track">
 			<?php for ( $r = 0; $r < 2; $r++ ) : ?>
 				<?php foreach ( $fy_features as $f ) : ?>
-					<span>★ <?php echo esc_html( $f ); ?></span>
+					<span>
+						<?php if ( $fy_strip_icon_url ) : ?>
+							<img class="fy-strip-icon" src="<?php echo esc_url( $fy_strip_icon_url ); ?>" alt="" loading="lazy">
+						<?php else : ?>
+							🧋
+						<?php endif; ?>
+						<?php echo esc_html( $f ); ?>
+					</span>
 				<?php endforeach; ?>
 			<?php endfor; ?>
 		</div>

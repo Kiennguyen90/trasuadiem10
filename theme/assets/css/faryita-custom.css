@@ -159,7 +159,10 @@ section.footer-top .widget-title::before{content:none !important;margin-right:0}
 /* Marquee strip */
 .fy-strip{background:var(--fy-orange);color:#fff;padding:16px 0;overflow:hidden;white-space:nowrap}
 .fy-strip .fy-track{display:inline-flex;gap:48px;align-items:center;font-weight:800;letter-spacing:.04em;animation:fy-scroll 22s linear infinite}
-.fy-strip .fy-track span{font-size:22px}
+.fy-strip .fy-track span{font-size:22px;display:inline-flex;align-items:center;gap:10px}
+/* Icon ảnh sản phẩm thật thay cho emoji — cỡ lớn hơn hẳn chữ (theo yêu cầu "up size cho
+   phù hợp với text") để nổi bật thay vì bị chìm như emoji trước đó. */
+.fy-strip .fy-strip-icon{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.7);box-shadow:0 2px 6px rgba(0,0,0,.15)}
 @keyframes fy-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* Product grid (dùng chung cho trang chủ & shop) */
@@ -336,11 +339,15 @@ a.fy-menu-item:hover h4{text-decoration:underline}
 	background:#fff;
 	padding:70px 24px;
 }
-/* Layout xếp chồng: heading nằm ngang phía trên, form bên dưới, tất cả canh giữa. */
-.fy-franchise .fy-franchise-grid{display:flex;flex-direction:column;align-items:center;gap:22px;max-width:640px;margin:0 auto;text-align:center}
+/* Layout xếp chồng: heading nằm ngang phía trên, form bên dưới, tất cả canh giữa.
+   max-width 1200px = đúng bề rộng .fy-container (các section khác), để khối đăng ký rộng
+   bằng kích thước trang (yêu cầu client 09/2026). Field vẫn giữ bố cục 2 cột × 2 hàng. */
+.fy-franchise .fy-franchise-grid{display:flex;flex-direction:column;align-items:center;gap:22px;max-width:1200px;margin:0 auto;text-align:center}
 .fy-franchise-heading{width:100%}
 .fy-franchise-heading h2{font-size:26px;line-height:1.35;color:var(--fy-dark);text-transform:uppercase;margin:0;font-weight:800}
-.fy-franchise-form-wrap{width:100%}
+/* Nền form: ảnh lá trà form-bg.jpg (dùng chung 3 form: trang chủ / popup / liên hệ),
+   phủ lớp trắng mờ 30% cho chữ + ô nhập vẫn rõ (yêu cầu client 09/2026). */
+.fy-franchise-form-wrap{width:100%;box-sizing:border-box;padding:44px 48px;border-radius:22px;background:linear-gradient(rgba(255,255,255,.3),rgba(255,255,255,.3)),#d7e9bb url("../images/brand/form-bg.jpg") center center/cover no-repeat}
 .fy-franchise-form{display:flex;flex-direction:column;gap:22px;text-align:left}
 .fy-franchise-row{display:flex;gap:20px;flex-wrap:wrap}
 .fy-franchise-field{flex:1 1 180px;display:flex;flex-direction:column;gap:6px}
@@ -361,6 +368,7 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 .fy-franchise .fy-contact-alert{margin-bottom:14px;font-size:13px;text-align:center}
 @media(max-width:700px){
 	.fy-franchise{padding:40px 20px}
+	.fy-franchise-form-wrap{padding:26px 20px}
 	.fy-franchise-heading h2{font-size:20px}
 	/* Xếp dọc: bỏ flex-basis 180px (ở chiều column nó tính THÀNH chiều cao → mỗi field
 	   cao 180px, các ô rớt xa nhau) và siết khoảng cách cho gọn. */
@@ -438,6 +446,20 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 @media(max-width:600px){
 	.fy-story-text--media .fy-story-lead{margin-bottom:26px}
 	.fy-story-media{border-radius:14px}
+}
+
+/* Trang chủ — video đặt ngay dưới khối "Không Gian Ấm Cúng" (nền kem nối tiếp fy-intro). */
+.fy-intro-video{background:var(--fy-cream);padding:0 0 80px}
+.fy-intro-video .fy-container{max-width:1040px}
+.fy-intro-video h2{font-size:34px;color:var(--fy-dark);margin:0 0 24px;line-height:1.25;text-align:center}
+.fy-intro-video-frame{border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.18);background:#000;line-height:0}
+.fy-intro-video-frame .fy-pc-media-video{line-height:0}
+.fy-intro-video-frame .fy-pc-media-video video,
+.fy-intro-video-frame .fy-pc-media-video iframe{width:100%;aspect-ratio:16/9;display:block;border:0;object-fit:cover;background:#000}
+@media(max-width:600px){
+	.fy-intro-video{padding-bottom:50px}
+	.fy-intro-video h2{font-size:26px;margin-bottom:18px}
+	.fy-intro-video-frame{border-radius:14px}
 }
 
 /* ---- Vùng nội dung tự do (the_content) trên các trang tùy chỉnh ---- */
@@ -660,7 +682,7 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 
 /* ===================== Trang Liên Hệ ===================== */
 .fy-contact-grid{display:flex;gap:50px;align-items:flex-start;flex-wrap:wrap}
-.fy-contact-form-wrap{flex:1 1 480px}
+.fy-contact-form-wrap{flex:1 1 480px;box-sizing:border-box;padding:40px 42px;border-radius:22px;background:linear-gradient(rgba(255,255,255,.3),rgba(255,255,255,.3)),#d7e9bb url("../images/brand/form-bg.jpg") center center/cover no-repeat}
 .fy-contact-form-wrap h2{font-size:28px;color:var(--fy-dark);margin:0 0 10px}
 .fy-contact-form-wrap .fy-desc{margin:0 0 26px}
 .fy-contact-form{display:flex;flex-direction:column;gap:16px}
@@ -675,7 +697,7 @@ select.fy-franchise-control{background-image:url("data:image/svg+xml;charset=UTF
 .fy-contact-alert-error{background:#fdeaea;color:#b3261e}
 .fy-contact-info-card{flex:1 1 320px;background:var(--fy-cream);border-radius:20px;padding:40px}
 .fy-contact-info-card h3{font-size:24px;color:var(--fy-dark);margin:0 0 22px}
-@media(max-width:600px){.fy-form-row{flex-direction:column}}
+@media(max-width:600px){.fy-form-row{flex-direction:column}.fy-contact-form-wrap{padding:26px 20px}}
 
 /* Trang chi tiết bài viết (Tin Tức) — layout nội dung + sidebar "Bài Viết Liên Quan",
    theo tham khảo bố cục 1 bài blog dạng landing (banner + breadcrumb, khung intro nổi
@@ -734,3 +756,56 @@ textarea{padding-left:13px} /* gốc 3px ở style.css +10px */
 .search-form input[type="search"]{padding-left:25px} /* gốc 15px +10px */
 .inner_searchbox input.search-field,
 .default_footer_search input.search-field{padding-left:20px} /* gốc 10px +10px */
+
+/* Popup Trang chủ — form "Tư Vấn Nhượng Quyền" (JS: promoPopup() trong faryita-custom.js,
+   hiện 1 lần/trình duyệt, nhớ qua localStorage). Bố cục 2 cột trên nền xanh navy hoạ tiết
+   sóng: ảnh bên trái (client cập nhật sau ở "Popup Trang chủ"), form bên phải. Form dùng
+   chung faryita_render_franchise_form() — override màu ở dưới cho hợp nền tối. */
+.fy-promo-popup-overlay{position:fixed;inset:0;background:rgba(10,20,45,.72);display:flex;align-items:center;justify-content:center;padding:20px;z-index:99998;opacity:0;visibility:hidden;transition:opacity .25s ease;box-sizing:border-box}
+.fy-promo-popup-overlay.is-open{opacity:1;visibility:visible}
+.fy-promo-popup-box{
+	--fy-navy:#14306e;
+	border-radius:22px;max-width:1120px;width:100%;max-height:92vh;overflow-y:auto;position:relative;
+	transform:translateY(20px);transition:transform .25s ease;box-shadow:0 24px 60px rgba(0,0,0,.45);
+	display:flex;gap:0;padding:26px;box-sizing:border-box;
+	background-color:var(--fy-navy);
+	background-image:
+		radial-gradient(circle at 30% -10%,rgba(255,255,255,.10),transparent 55%),
+		radial-gradient(circle at 100% 150%,var(--fy-navy) 24%,rgba(255,255,255,.05) 25%,rgba(255,255,255,.05) 28%,var(--fy-navy) 29%,var(--fy-navy) 36%,rgba(255,255,255,.05) 36%,rgba(255,255,255,.05) 40%,transparent 40%,transparent),
+		radial-gradient(circle at 0 150%,var(--fy-navy) 24%,rgba(255,255,255,.05) 25%,rgba(255,255,255,.05) 28%,var(--fy-navy) 29%,var(--fy-navy) 36%,rgba(255,255,255,.05) 36%,rgba(255,255,255,.05) 40%,transparent 40%,transparent),
+		radial-gradient(circle at 50% 100%,rgba(255,255,255,.05) 10%,var(--fy-navy) 11%,var(--fy-navy) 23%,rgba(255,255,255,.05) 24%,rgba(255,255,255,.05) 30%,var(--fy-navy) 31%,var(--fy-navy) 43%,rgba(255,255,255,.05) 44%,rgba(255,255,255,.05) 50%,var(--fy-navy) 51%,var(--fy-navy) 63%,rgba(255,255,255,.05) 64%,rgba(255,255,255,.05) 71%,transparent 71%,transparent);
+	background-size:auto,100px 50px,100px 50px,100px 50px;
+}
+.fy-promo-popup-overlay.is-open .fy-promo-popup-box{transform:translateY(0)}
+.fy-promo-popup-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:10px;border:2px solid rgba(255,255,255,.7);background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:2;transition:background .2s ease,border-color .2s ease}
+.fy-promo-popup-close:hover{background:rgba(255,255,255,.15);border-color:#fff}
+.fy-promo-popup-media{flex:0 0 42%;max-width:42%;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06);align-self:stretch;min-height:420px}
+.fy-promo-popup-media .fy-pc-media-img{width:100%;height:100%;object-fit:cover;display:block}
+.fy-promo-popup-media .fy-pc-media-video{width:100%;height:100%}
+.fy-promo-popup-media .fy-pc-media-video video,
+.fy-promo-popup-media .fy-pc-media-video iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+.fy-promo-popup-body{flex:1 1 auto;min-width:0;padding:18px 26px 8px 40px;text-align:left}
+.fy-promo-popup-body h2{font-size:32px;color:#fff;margin:0 0 6px;line-height:1.2;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+.fy-promo-popup-body p{font-size:15px;color:rgba(255,255,255,.82);margin:0 0 18px;line-height:1.55}
+/* ---- Override form (nền tối) chỉ trong popup Trang chủ ---- */
+.fy-promo-popup-body .fy-franchise-form{gap:16px;margin-top:18px}
+.fy-promo-popup-body .fy-franchise-row{gap:16px}
+.fy-promo-popup-body .fy-franchise-label{color:#fff;font-size:12px}
+.fy-promo-popup-body .fy-franchise-control{border:none;border-radius:12px;padding:14px 18px;font-size:15px;color:#14306e;background-color:#fff;background-image:none}
+.fy-promo-popup-body .fy-franchise-control::placeholder{color:#9aa3b2}
+.fy-promo-popup-body .fy-franchise-control:focus{outline:2px solid rgba(255,255,255,.55);outline-offset:1px}
+.fy-promo-popup-body select.fy-franchise-control{background-color:#fff;background-repeat:no-repeat;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314306e' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-position:right 16px center;background-size:16px;padding-right:44px}
+.fy-promo-popup-body .fy-franchise-consent{align-self:flex-start;color:rgba(255,255,255,.85);text-align:left}
+.fy-promo-popup-body .fy-franchise-consent input{accent-color:#e11d2a}
+.fy-promo-popup-body .fy-franchise-recaptcha{align-self:flex-start}
+.fy-promo-popup-body .fy-franchise-submit{align-self:flex-start;background:#e11d2a;color:#fff;font-size:15px;padding:13px 30px;margin-top:4px}
+.fy-promo-popup-body .fy-franchise-submit:hover{background:#c2141f;color:#fff}
+.fy-promo-popup-body .fy-contact-alert{text-align:left}
+@media(max-width:820px){
+	.fy-promo-popup-box{flex-direction:column;padding:20px;max-width:460px}
+	.fy-promo-popup-media{flex:0 0 auto;max-width:100%;min-height:180px;max-height:240px}
+	.fy-promo-popup-body{padding:18px 6px 4px}
+	.fy-promo-popup-body h2{font-size:24px}
+	.fy-promo-popup-body .fy-franchise-row{flex-direction:column;gap:12px}
+	.fy-promo-popup-body .fy-franchise-field{flex:0 0 auto}
+}
